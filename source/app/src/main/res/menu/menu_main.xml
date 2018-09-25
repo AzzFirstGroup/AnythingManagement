@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="jp.co.azz_tokyo.azz_g1app.MainActivity">
+    <item
+        android:id="@+id/action_menuList1"
+        android:orderInCategory="100"
+        android:title="@string/action_menuList1"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_menuList2"
+        android:orderInCategory="100"
+        android:title="@string/action_menuList2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_menuList3"
+        android:orderInCategory="100"
+        android:title="@string/action_menuList3"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_menuList4"
+        android:orderInCategory="100"
+        android:title="@string/action_menuList4"
+        app:showAsActieon="never" />
+</menu>
