@@ -36,7 +36,18 @@ public class Data {
         editor.putString("genre",registData.getGenre());
         editor.putString("evaluate",registData.getEvaluate());
         editor.putString("memo",registData.getMemo());
-        editor.commit();
+        editor.apply();
     }
 
+    /**
+     * ジャンル読み出し
+     *
+     * @param genre
+     */
+    public Genre readGenre(Genre genre, Context context){
+        SharedPreferences prefs = context.getSharedPreferences("GenreData", Context.MODE_PRIVATE);
+        genre.setGenreName(prefs.getString("genreName" , ""));
+        genre.setColorInfo(prefs.getString("colorInfo" , ""));
+        return genre;
+    }
 }

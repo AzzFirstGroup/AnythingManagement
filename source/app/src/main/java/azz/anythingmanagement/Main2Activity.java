@@ -1,21 +1,21 @@
 package azz.anythingmanagement;
 
 import android.os.Bundle;
-import android.support.wearable.activity.WearableActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class Main2Activity extends WearableActivity {
+public class Main2Activity extends AppCompatActivity {
 
     private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
         mTextView = (TextView) findViewById(R.id.text);
 
         // Enables Always-on
-        setAmbientEnabled();
+        // setAmbientEnabled();
     }
 }
