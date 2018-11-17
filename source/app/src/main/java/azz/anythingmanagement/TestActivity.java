@@ -58,6 +58,14 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button genreListButton = findViewById(R.id.button2);
+        genreListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),GenreListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
