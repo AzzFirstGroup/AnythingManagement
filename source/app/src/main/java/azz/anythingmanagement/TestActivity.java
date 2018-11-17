@@ -1,5 +1,6 @@
 package azz.anythingmanagement;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,34 +18,17 @@ public class TestActivity extends AppCompatActivity {
 
     private TextView mTextView;
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set layout
         setContentView(R.layout.test_activity);
 
-        Genre genre = new Genre();
-        genre.setGenreName("テストジャンル");
-        genre.setColorInfo("テストカラー");
+        context = super.getApplicationContext();
 
-        RegistData registData = new RegistData();
-        registData.setTitle("テストタイトル");
-        registData.setRegistFlg("テスト登録フラグ");
-        registData.setImagePath("テスト画像パス");
-        registData.setSystemDate("テストシステム日付");
-        registData.setGenre("テストジャンル");
-        registData.setEvaluate("テスト評価");
-        registData.setMemo("テストメモ");
 
-        Data data = new Data();
-        data.registGenre(genre,super.getApplicationContext());
-        data.registData(registData,super.getApplicationContext());
-
-        Genre testGenre = new Genre();
-        testGenre = data.readGenre(testGenre,super.getApplicationContext());
-
-        String strGenre = testGenre.getGenreName() + testGenre.getColorInfo();
-        ((TextView)findViewById(R.id.textView1)).setText(strGenre);
 
         //set toolbar
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -54,8 +38,28 @@ public class TestActivity extends AppCompatActivity {
         xmlButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(),MainActivity.class);
-                startActivity(intent);
+                Genre genre = new Genre();
+                genre.setGenreName("テストジャンル");
+                genre.setColorInfo("テストカラー");
+
+                RegistData registData = new RegistData();
+                registData.setTitle("テストタイトル");
+                registData.setRegistFlg("テスト登録フラグ");
+                registData.setImagePath("テスト画像パス");
+                registData.setSystemDate("テストシステム日付");
+                registData.setGenre("テストジャンル");
+                registData.setEvaluate("テスト評価");
+                registData.setMemo("テストメモ");
+
+                Data data = new Data();
+                data.registGenre(genre,context);
+                data.registData(registData,context);
+
+                Genre testGenre = new Genre();
+                testGenre = data.readGenre(testGenre,context);
+
+                String strGenre = testGenre.getGenreName() + testGenre.getColorInfo();
+                ((TextView)findViewById(R.id.textView1)).setText(strGenre);
             }
         });
     }
