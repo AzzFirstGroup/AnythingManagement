@@ -15,4 +15,5 @@
     <string name="title8">"フッター"</string>
     <string name="title9">"XMLファイル"</string>
     <string name="title10">"カメラ起動"</string>
+    <string name="genruName">"未設定"</string>
 </resources>

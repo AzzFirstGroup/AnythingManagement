@@ -62,6 +62,14 @@ public class TestActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
             }
         });
+        Button genreListButton = findViewById(R.id.button2);
+        genreListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),GenreListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
