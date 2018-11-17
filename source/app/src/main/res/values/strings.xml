@@ -5,4 +5,14 @@
     <string name="action_menuList3">"新規作成"</string>
     <string name="action_menuList4">"データ一覧"</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title1">"機能選択"</string>
+    <string name="title2">"ジャンル一覧"</string>
+    <string name="title3">"ジャンル作成"</string>
+    <string name="title4">"データ登録詳細"</string>
+    <string name="title5">"データ一覧"</string>
+    <string name="title6">"ダイアログ"</string>
+    <string name="title7">"ヘッダー"</string>
+    <string name="title8">"フッター"</string>
+    <string name="title9">"XMLファイル"</string>
+    <string name="title10">"カメラ起動"</string>
 </resources>
