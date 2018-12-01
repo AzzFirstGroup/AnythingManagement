@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<LinearLayout
+<!--<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="320dp"
     android:layout_height="320dp"
@@ -14,9 +14,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent
-
-    >
-    <S
+-->
     <!--<RelativeLayout
         android:layout_width="320dp"
         android:layout_height="320dp"
@@ -29,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">-->
 
+<!--
         <Button
             android:id="@+id/genruList_botton"
             android:layout_width="80dp"
@@ -73,8 +72,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/genrelist_background"
             android:text="@string/genruName" />
+-->
 
-
-    </RelativeLayout>
-</LinearLayout>
+    <!--</RelativeLayout>-->
+<!--</LinearLayout>-->
 </android.support.constraint.ConstraintLayout>

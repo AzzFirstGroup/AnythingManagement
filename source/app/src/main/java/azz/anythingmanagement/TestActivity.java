@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import azz.anythingmanagement.xmlData.Genre;
 import azz.anythingmanagement.xmlData.RegistData;
 
@@ -39,8 +41,9 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Genre genre = new Genre();
-                genre.setGenreName("テストジャンル");
-                genre.setColorInfo("テストカラー");
+                genre.setGenreName("テストジャンル３");
+                genre.setColorInfo("テストカラー３");
+                genre.setSakujoFlg("1");
 
                 RegistData registData = new RegistData();
                 registData.setTitle("テストタイトル");
@@ -55,8 +58,9 @@ public class TestActivity extends AppCompatActivity {
                 data.registGenre(genre,context);
                 data.registData(registData,context);
 
-                Genre testGenre = new Genre();
-                testGenre = data.readGenre(testGenre,context);
+                ArrayList<Genre> arrayList = new ArrayList<>();
+                arrayList = data.readGenre(genre,context);
+                Genre testGenre = arrayList.get(0);
 
                 String strGenre = testGenre.getGenreName() + testGenre.getColorInfo();
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
