@@ -67,6 +67,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
         Button genreListButton = findViewById(R.id.button2);
+        //ボタンクリック時のアプリ内アクティビティの呼び出し
         genreListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
