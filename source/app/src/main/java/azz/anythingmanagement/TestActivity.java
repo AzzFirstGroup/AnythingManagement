@@ -3,15 +3,14 @@ package azz.anythingmanagement;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.ArrayList;
+import android.widget.TextView;
 
 import azz.anythingmanagement.xmlData.Genre;
 import azz.anythingmanagement.xmlData.RegistData;
@@ -41,9 +40,8 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Genre genre = new Genre();
-                genre.setGenreName("テストジャンル３");
-                genre.setColorInfo("テストカラー３");
-                genre.setSakujoFlg("1");
+                genre.setGenreName("テストジャンル");
+                genre.setColorInfo("テストカラー");
 
                 RegistData registData = new RegistData();
                 registData.setTitle("テストタイトル");
@@ -54,13 +52,13 @@ public class TestActivity extends AppCompatActivity {
                 registData.setEvaluate("テスト評価");
                 registData.setMemo("テストメモ");
 
+
                 Data data = new Data();
                 data.registGenre(genre,context);
                 data.registData(registData,context);
 
-                ArrayList<Genre> arrayList = new ArrayList<>();
-                arrayList = data.readGenre(genre,context);
-                Genre testGenre = arrayList.get(0);
+                Genre testGenre = new Genre();
+                testGenre = data.readGenre(testGenre,context);
 
                 String strGenre = testGenre.getGenreName() + testGenre.getColorInfo();
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
@@ -72,6 +70,40 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(),GenreListActivity.class);
                 startActivity(intent);
+            }
+        });
+        Button diaLogButton = findViewById(R.id.button6_1);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"dialog1");
+            }
+        });
+        diaLogButton = findViewById(R.id.button6_2);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"dialog2");
+            }
+        });
+
+        diaLogButton = findViewById(R.id.button6_3);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"dialog3");
+            }
+        });
+
+        diaLogButton = findViewById(R.id.button6_4);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"dialog4");
             }
         });
     }
@@ -94,6 +126,8 @@ public class TestActivity extends AppCompatActivity {
         if (id == R.id.action_menuList1) {
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -10,7 +10,10 @@
     <string name="title3">"ジャンル作成"</string>
     <string name="title4">"データ登録詳細"</string>
     <string name="title5">"データ一覧"</string>
-    <string name="title6">"ダイアログ"</string>
+    <string name="title6_1">"登録確認ダイアログ"</string>
+    <string name="title6_2">"画像取得ダイアログ"</string>
+    <string name="title6_3">"削除確認ダイアログ"</string>
+    <string name="title6_4">"破棄確認ダイアログ"</string>
     <string name="title7">"ヘッダー"</string>
     <string name="title8">"フッター"</string>
     <string name="title9">"XMLファイル"</string>
