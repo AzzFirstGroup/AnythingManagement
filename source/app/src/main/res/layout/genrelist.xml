@@ -5,75 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<!--<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="320dp"
-    android:layout_height="320dp"
-
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent
--->
-    <!--<RelativeLayout
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="320dp"
         android:layout_height="320dp"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">-->
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--
-        <Button
-            android:id="@+id/genruList_botton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/genrelist_background"
-            android:text="@string/genruName"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp" />
+        <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <Button
-            android:id="@+id/genruList_botton1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/genrelist_background"
-            android:text="@string/genruName" />
+        <RelativeLayout
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
 
-        <Button
-            android:id="@+id/genruList_botton2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/genrelist_background"
-            android:text="@string/genruName" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">-->
 
-        <Button
-            android:id="@+id/genruList_botton3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/genrelist_background"
-            android:text="@string/genruName" />
 
-        <Button
-            android:id="@+id/genruList_botton4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/genrelist_background"
-            android:text="@string/genruName" />
--->
+            <Button
+                android:id="@+id/genruList_botton1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/genrelist_background"
+                android:text="@string/genruName"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp" />
 
-    <!--</RelativeLayout>-->
-<!--</LinearLayout>-->
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
