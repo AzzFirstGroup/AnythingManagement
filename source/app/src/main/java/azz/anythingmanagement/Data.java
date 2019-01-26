@@ -207,7 +207,7 @@ public class Data {
     }
 
     /**
-     * 登録データ読み出し
+     * 登録データ全件読み出し
      *
      * 登録されている登録データの一覧を取得する
      *
@@ -232,5 +232,31 @@ public class Data {
         return jsonList;
     }
 
+    /**
+     * 登録データ1件読み出し
+     *
+     * キー情報（タイトル名、ジャンル名）に紐づく登録データを取得する
+     *
+     * @param context activityから取得したContextを設定
+     * @param title キー情報のタイトル名
+     * @param genre キー情報のジャンル名
+     * @return RegistData
+     */
+    public RegistData getRegistData(Context context, String title, String genre){
+
+        RegistData result = new RegistData();
+        // 一覧を取得
+        ArrayList<RegistData> dataList = readRegistData(context);
+
+        for(RegistData val : dataList){
+            // 一覧からキー情報（タイトル名、ジャンル名）が同じものを取得
+            if(title.equals(val.getTitle()) && genre.equals(val.getGenre())){
+                result = val;
+                break;
+            }
+        }
+
+        return result;
+    }
 
 }

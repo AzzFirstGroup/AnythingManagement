@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 import azz.anythingmanagement.xmlData.RegistData;
 
@@ -50,7 +51,7 @@ public class TestActivity extends AppCompatActivity {
                 registData.setImagePath("テスト画像パス");
                 registData.setSystemDate("テストシステム日付");
                 registData.setGenre("テストジャンル");
-                registData.setEvaluate("テスト評価");
+                registData.setEvaluate("4");
                 registData.setMemo("テストメモ");
 
                 Data data = new Data();
@@ -92,6 +93,19 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(),GenreListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button dataRegistDetailButton = findViewById(R.id.button4);
+        dataRegistDetailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),DataRegistDetailActivity.class);
+                intent.putExtra("mode", common.MODE_REGIST);
+                //intent.putExtra("mode", common.MODE_DETAIL);
+                //intent.putExtra("title", "テストタイトル");
+                //intent.putExtra("genre", "テストジャンル");
                 startActivity(intent);
             }
         });
