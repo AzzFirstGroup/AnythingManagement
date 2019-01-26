@@ -24,8 +24,13 @@
     </style>
 
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:textColorPrimary">@color/design_default_color_primary</item>
+        <!--<item name="android:textColorPrimary">#7DCCE9</item>-->
+        <item name="backgroundTint">#E7E7E7</item>
     </style>
+    <style name="DialogTitleStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColorPrimary">#7DCCE9</item>
+    </style>
+
     <!--
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
