@@ -1,9 +1,24 @@
 package azz.anythingmanagement;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +28,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +42,7 @@ import azz.anythingmanagement.xmlData.RegistData;
 public class DataRegistDetailActivity extends AppCompatActivity {
 
     Context context;
+    Context contextThis;
 
     // 評価値（初期値：3）
     String evaluate = "3";
@@ -33,6 +51,12 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     TextView memoText;
     TextView textDate;
     Spinner genreSpinner;
+    ImageButton imageButton;
+
+    private Uri m_uri;
+
+    // 画像選択機能呼び出し時の戻り値確認用ID
+    private static final int REQUEST_CHOOSER = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +64,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         //set layout
         setContentView(R.layout.data_regist_detail);
         context = super.getApplicationContext();
+        contextThis = this;
 
         titleText = (TextView)findViewById(R.id.titleName);
         memoText = (TextView)findViewById(R.id.memo);
@@ -222,6 +247,76 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
         }
 
+        // 画像クリック時のイベント
+        // TODO 連携準備が出来たら別途作成のダイアログ処理に置き換える
+        imageButton = (ImageButton)findViewById(R.id.imageSet);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO パーミッションの確認処理
+
+                showGallery();
+            }
+        });
+
+    }
+
+    private void showGallery(){
+        //カメラの起動Intentの用意
+        String photoName = System.currentTimeMillis() + ".jpg";
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.TITLE, photoName);
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        m_uri = getContentResolver()
+                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+        Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, m_uri);
+
+        // ギャラリー用のIntent作成
+        Intent intentGallery;
+        if (Build.VERSION.SDK_INT < 19) {
+            intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
+            intentGallery.setType("image/*");
+        } else {
+            intentGallery = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intentGallery.addCategory(Intent.CATEGORY_OPENABLE);
+            intentGallery.setType("image/jpeg");
+        }
+        Intent intent = Intent.createChooser(intentCamera, "画像の選択");
+        intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {intentGallery});
+        startActivityForResult(intent, REQUEST_CHOOSER);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+
+        if(requestCode == REQUEST_CHOOSER) {
+
+            if(resultCode != RESULT_OK) {
+                // キャンセル時
+                return ;
+            }
+
+            Uri resultUri = (resultData != null ? resultData.getData() : m_uri);
+
+            if(resultUri == null) {
+                // 取得失敗
+                return;
+            }
+
+            // ギャラリーへスキャンを促す
+            MediaScannerConnection.scanFile(
+                    this,
+                    new String[]{resultUri.getPath()},
+                    new String[]{"image/jpeg"},
+                    null
+            );
+
+            // 画像を設定
+            imageButton.setImageURI(resultUri);
+        }
     }
 
     @Override
