@@ -56,8 +56,8 @@ public class Genre {
 
     /**
      * カラー情報setter
-     *
      * @param sakujoFlg
+     *
      */
     public void setSakujoFlg(String sakujoFlg){
         this.sakujoFlg = sakujoFlg;
