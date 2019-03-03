@@ -4,5 +4,25 @@
     <string name="action_menuList2">"ジャンル作成"</string>
     <string name="action_menuList3">"新規作成"</string>
     <string name="action_menuList4">"データ一覧"</string>
+    <string name="action_menuList5">"新規登録"</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title1">"機能選択"</string>
+    <string name="title2">"ジャンル一覧"</string>
+    <string name="title3">"ジャンル作成"</string>
+    <string name="title4">"データ登録詳細"</string>
+    <string name="title5">"データ一覧"</string>
+    <string name="title6">"ダイアログ"</string>
+    <string name="title6_1">"登録確認ダイアログ"</string>
+    <string name="title6_2">"画像取得ダイアログ"</string>
+    <string name="title6_3">"削除確認ダイアログ"</string>
+    <string name="title6_4">"破棄確認ダイアログ"</string>
+    <string name="title7">"ヘッダー"</string>
+    <string name="title8">"フッター"</string>
+    <string name="title9">"XMLファイル"</string>
+    <string name="title10">"カメラ起動"</string>
+    <string name="unsetName">"未設定"</string>
+    <string name="titleName">"タイトル"</string>
+    <string name="dateName">"yyyy/MM/dd"</string>
+    <string name="memoName">"メモ"</string>
+    <string name="tempregistName">"登録（仮）"</string>
 </resources>
