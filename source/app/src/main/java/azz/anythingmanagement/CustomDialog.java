@@ -11,8 +11,6 @@ import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.R;
-
 
 public class CustomDialog extends DialogFragment {
 

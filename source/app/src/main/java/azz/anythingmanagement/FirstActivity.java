@@ -9,9 +9,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 
-import com.example.R;
-
-public class FirstViewActivity extends AppCompatActivity {
+public class FirstActivity extends AppCompatActivity {
     private Button bGenreList;
     private Button bNewCreate;
 
@@ -19,7 +17,7 @@ public class FirstViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set layout
-        setContentView(R.layout.first_view);
+        setContentView(R.layout.first);
 
         //set toolbar
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

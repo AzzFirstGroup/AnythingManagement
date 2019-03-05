@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.R;
-
+import azz.anythingmanagement.R;
 
 public class GenreIns extends AppCompatActivity {
 

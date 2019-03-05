@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.R;
-
 public class testDataListActivity extends AppCompatActivity{
 
         @Override
