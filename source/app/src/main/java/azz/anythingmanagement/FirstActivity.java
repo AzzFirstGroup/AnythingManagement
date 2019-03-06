@@ -50,9 +50,31 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // ジャンル一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList1) {
-            return true;
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // ジャンル作成に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList2) {
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // 新規作成に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList3) {
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // データ一覧に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList4) {
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
