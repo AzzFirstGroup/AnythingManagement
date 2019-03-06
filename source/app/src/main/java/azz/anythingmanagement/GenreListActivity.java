@@ -153,9 +153,6 @@ public class GenreListActivity extends AppCompatActivity {
                 total = pline.getWidth() + margin;
             }
         }
-        //set toolbar
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

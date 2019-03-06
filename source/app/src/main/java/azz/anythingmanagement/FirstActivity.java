@@ -6,49 +6,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.view.View.OnClickListener;
 
-public class FirstActivity extends AppCompatActivity {
-    private Button bGenreList;
-    private Button bNewCreate;
+public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set layout
+        // レイアウトの呼び出し
         setContentView(R.layout.first);
 
-        //set toolbar
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        //ボタンの設定
-        bGenreList = findViewById(R.id.bGenreList);
-        bNewCreate = findViewById(R.id.bNewCreate);
-
-        bGenreList.setOnClickListener((OnClickListener) this);
-        bNewCreate.setOnClickListener((OnClickListener) this);
-
+        // ボタンの設定
+        findViewById(R.id.bGenreList).setOnClickListener(this);
+        findViewById(R.id.bNewCreate).setOnClickListener(this);
     }
 
-    //ボタン押下時の挙動
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //ジャンル一覧画面へ遷移する
+            // ジャンル一覧画面へ遷移する
             case R.id.bGenreList:
                 Intent intent = new Intent (this, GenreListActivity.class);
                 startActivity(intent);
                 break;
-            //新規登録画面に遷移する(暫定としてMain2に遷移するようにする)
+            // 新規登録画面に遷移する
+            // TODO:: 仮でMain2Activityを設定しているが、新規登録画面ができたらここを変更する
             case R.id.bNewCreate:
-                Intent intent1 = new Intent (this, Main2Activity.class);
+                Intent intent1 = new Intent (this, DataRegistDetailActivity.class);
                 startActivity(intent1);
-
         }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
