@@ -1,4 +1,4 @@
-package azz.anythingmanagement;
+package azz.example.daiki.anythingmanagement;
 
 import org.junit.Test;
 

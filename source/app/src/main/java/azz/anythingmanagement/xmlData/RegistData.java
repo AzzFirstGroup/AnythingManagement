@@ -4,7 +4,7 @@ public class RegistData {
     /* タイトル */
     private String title;
     /* 登録済フラグ */
-    private String registFlg;
+    private String torokuFlg;
     /* 画像パス */
     private String imagePath;
     /* システム日付 */
@@ -15,6 +15,10 @@ public class RegistData {
     private String evaluate;
     /* メモ */
     private String memo;
+    /* 削除フラグ */
+    private String sakujoFlg;
+    /* テストRegistフラグ */
+    private String testRegistFlg;
 
     /**
      * タイトルgetter
@@ -37,19 +41,19 @@ public class RegistData {
     /**
      * 登録済フラグgetter
      *
-     * @return registFlg
+     * @return torokuFlg
      */
-    public String getRegistFlg(){
-        return this.registFlg;
+    public String getTorokuFlg(){
+        return this.torokuFlg;
     }
 
     /**
      * 登録済フラグsetter
      *
-     * @param registFlg
+     * @param torokuFlg
      */
-    public void setRegistFlg(String registFlg){
-        this.registFlg = registFlg;
+    public void setTorokuFlg(String torokuFlg){
+        this.torokuFlg = torokuFlg;
     }
 
     /**
@@ -140,6 +144,42 @@ public class RegistData {
      */
     public void setMemo(String memo){
         this.memo = memo;
+    }
+
+    /**
+     * 削除済フラグgetter
+     *
+     * @return sakujoFlg
+     */
+    public String getSakujoFlg(){
+        return this.sakujoFlg;
+    }
+
+    /**
+     * 削除済フラグsetter
+     *
+     * @param sakujoFlg
+     */
+    public void setSakujoFlg(String sakujoFlg){
+        this.sakujoFlg = sakujoFlg;
+    }
+
+    /**
+     * testフラグgetter
+     *
+     * @return sakujoFlg
+     */
+    public String getTestRegistFlg(){
+        return this.testRegistFlg;
+    }
+
+    /**
+     * testフラグsetter
+     *
+     * @param testRegistFlg
+     */
+    public void setTestRegistFlg(String testRegistFlg){
+        this.testRegistFlg = testRegistFlg;
     }
 
 }
