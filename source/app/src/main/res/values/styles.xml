@@ -26,6 +26,9 @@
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <!--<item name="android:textColorPrimary">#7DCCE9</item>-->
         <item name="backgroundTint">#E7E7E7</item>
+        <item name="android:windowMinWidthMajor">1000px</item>
+        <item name="android:windowMinWidthMinor">1000px</item>
+        <item name="android:textSize">50px</item>
     </style>
     <style name="DialogTitleStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:textColorPrimary">#7DCCE9</item>
