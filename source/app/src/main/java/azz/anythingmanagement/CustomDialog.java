@@ -3,7 +3,10 @@ package azz.anythingmanagement;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -14,10 +17,12 @@ import android.widget.Toast;
 
 public class CustomDialog extends DialogFragment {
 
-    String title1="登録確認ダイアログ";
-    String title2="画像取得ダイアログ";
-    String title3="削除確認ダイアログ";
-    String title4="破棄確認ダイアログ";
+    private static final int REQUEST_CHOOSER = 1000;
+
+    String title1="登録確認";
+    String title2="画像取得";
+    String title3="削除確認";
+    String title4="作成中です";
 
 
     // ダイアログが生成された時に呼ばれるメソッド ※必須
@@ -33,7 +38,6 @@ public class CustomDialog extends DialogFragment {
                 TextView textView = new TextView(getActivity());
                 // タイトル部分を編集
                 textView = TitleStyle(title);
-//                zdivider.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
                 // タイトル部分を設定
                 dialogBuilder.setCustomTitle(textView);
 
@@ -86,6 +90,19 @@ public class CustomDialog extends DialogFragment {
                         // TODO フォルダを開く処理(現在：トーストを出すのみ)
                         Toast toast = Toast.makeText(getActivity(), "フォルダを開きます", Toast.LENGTH_SHORT);
                         toast.show();
+
+                        Intent intentGallery;
+                        if (Build.VERSION.SDK_INT < 19) {
+                            //SDKバージョン19未満の場合
+                            intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
+                            intentGallery.setType("image/*");
+                        } else {
+                            //SDKバージョン19以上の場合
+                            intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intentGallery.setType("image/jpeg");
+                        }
+                        Intent intent = Intent.createChooser(intentGallery, "画像の選択");
+                        startActivityForResult(intent, REQUEST_CHOOSER);
                     }
                 });
 
@@ -162,10 +179,8 @@ public class CustomDialog extends DialogFragment {
         TextView textView = new TextView(getActivity());
         // タイトルの文字色
         textView.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.holo_blue_light));
-
-
         //文字サイズ
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         //タイトルテキスト設定
         textView.setText(titleText);
         return textView;
