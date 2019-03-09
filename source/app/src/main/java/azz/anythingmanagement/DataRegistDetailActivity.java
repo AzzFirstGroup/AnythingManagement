@@ -54,6 +54,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     ImageButton imageButton;
 
     private Uri m_uri;
+    private Uri imageUri;
 
     // 画像選択機能呼び出し時の戻り値確認用ID
     private static final int REQUEST_CHOOSER = 1000;
@@ -70,6 +71,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         memoText = (TextView)findViewById(R.id.memo);
         textDate = (TextView)findViewById(R.id.date);
         genreSpinner = (Spinner)findViewById(R.id.genrelist);
+        imageButton = (ImageButton)findViewById(R.id.imageSet);
 
         // 現在日時の取得
         Date now = new Date(System.currentTimeMillis());
@@ -153,7 +155,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             }
         });
 
-        // （テスト用）登録ボタンが押下時の処理
+        // （テスト用）登録ボタン押下時の処理
         Button registButton = (Button)findViewById(R.id.torokuButton);
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +166,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                 registData.setMemo(memoText.getText().toString());
                 registData.setEvaluate(evaluate);
                 registData.setGenre(genreSpinner.getSelectedItem().toString());
+                registData.setImagePath(imageUri.toString());
 
                 Data data = new Data();
                 data.registRegistData(registData,context);
@@ -202,6 +205,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             // 評価値設定
             switch (registData.getEvaluate()){
                 case "1":
+                    evaluate = "1";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
@@ -209,6 +213,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "2":
+                    evaluate = "2";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
@@ -216,6 +221,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "3":
+                    evaluate = "3";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
@@ -223,6 +229,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "4":
+                    evaluate = "4";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
@@ -230,6 +237,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "5":
+                    evaluate = "5";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
@@ -237,6 +245,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_on);
                     break;
                 default:
+                    evaluate = "0";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_off);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
@@ -245,11 +254,14 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     break;
             }
 
+            // 画像設定
+            imageUri = Uri.parse(registData.getImagePath());
+            imageButton.setImageURI(imageUri);
+
         }
 
         // 画像クリック時のイベント
         // TODO 連携準備が出来たら別途作成のダイアログ処理に置き換える
-        imageButton = (ImageButton)findViewById(R.id.imageSet);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,6 +270,8 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                 showGallery();
             }
         });
+
+
 
     }
 
@@ -316,6 +330,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
             // 画像を設定
             imageButton.setImageURI(resultUri);
+            imageUri = resultUri;
         }
     }
 
