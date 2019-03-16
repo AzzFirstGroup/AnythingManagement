@@ -20,14 +20,14 @@ public class TestActivity extends AppCompatActivity {
     private TextView mTextView;
 
     Context context;
+    boolean gudgeResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set layout
         setContentView(R.layout.test_activity);
-
-        context = super.getApplicationContext();
+      
 
 
 
@@ -77,7 +77,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog1");
+                dialog.show(getSupportFragmentManager(),"regist");
             }
         });
         diaLogButton = findViewById(R.id.button6_2);
@@ -85,7 +85,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog2");
+                dialog.show(getSupportFragmentManager(),"image");
             }
         });
 
@@ -94,7 +94,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog3");
+                dialog.show(getSupportFragmentManager(),"delete");
             }
         });
 
@@ -103,9 +103,18 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog4");
+                dialog.show(getSupportFragmentManager(),"discard");
             }
         });
+    }
+
+    public void setResultView(boolean resultValue){
+        if(resultValue){
+            Intent intent = new Intent(getApplication(),GenreListActivity.class);
+            startActivity(intent);
+        }else{
+            //何もしない
+        }
     }
 
     @Override

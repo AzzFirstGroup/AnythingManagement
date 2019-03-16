@@ -32,8 +32,9 @@ public class CustomDialog extends DialogFragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
 
         String dialogTag = this.getTag();
+        boolean resultValue = false;
         switch(dialogTag) {
-            case "dialog1": // 登録確認ダイアログ
+            case "regist": // 登録確認ダイアログ
 
                 String title = title1;
                 TextView textView = new TextView(getActivity());
@@ -47,12 +48,12 @@ public class CustomDialog extends DialogFragment {
 
                 // 登録確認ボタン作成
                 dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO 登録画面へ遷移(現在：トーストを出すのみ)
                         Toast toast = Toast.makeText(getActivity(), "登録されました。", Toast.LENGTH_SHORT);
                         toast.show();
+                         OkButton();
                     }
                 });
 
@@ -61,7 +62,7 @@ public class CustomDialog extends DialogFragment {
 
                 break;
 
-            case "dialog2": // 画像取得ダイアログ
+            case "image": // 画像取得ダイアログ
 
                 title = title2;
                 textView = new TextView(getActivity());
@@ -129,7 +130,7 @@ public class CustomDialog extends DialogFragment {
                 });
                 break;
 
-            case "dialog3": // 削除確認ダイアログ
+            case "delete": // 削除確認ダイアログ
 
                 title = title3;
                 textView = new TextView(getActivity());
@@ -148,6 +149,7 @@ public class CustomDialog extends DialogFragment {
                         // TODO 削除処理(現在：トーストを出すのみ)
                         Toast toast = Toast.makeText(getActivity(), "削除されました。", Toast.LENGTH_SHORT);
                         toast.show();
+                        OkButton();
                     }
                 });
 
@@ -156,7 +158,7 @@ public class CustomDialog extends DialogFragment {
 
                 break;
 
-            case "dialog4": //破棄確認ダイアログ
+            case "discard": //破棄確認ダイアログ
 
                 title = title4;
                 textView = new TextView(getActivity());
@@ -175,6 +177,7 @@ public class CustomDialog extends DialogFragment {
                         // TODO 破棄処理(現在：トーストを出すのみ)
                         Toast toast = Toast.makeText(getActivity(), "破棄されました。", Toast.LENGTH_SHORT);
                         toast.show();
+                        OkButton();
                     }
                 });
 
@@ -199,6 +202,16 @@ public class CustomDialog extends DialogFragment {
         textView.setText(titleText);
         return textView;
     }
+
+    private void OkButton(){
+        // editTextの内容を元画面に反映する
+        // editTextから値を取得
+        boolean returnValue = true;
+        // MainActivityのインスタンスを取得
+        TestActivity mainActivity = (TestActivity) getActivity();
+        mainActivity.setResultView(returnValue);
+    }
+
     private void NgButton(AlertDialog.Builder dialogBuilder){
         // NGボタン作成
         dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
