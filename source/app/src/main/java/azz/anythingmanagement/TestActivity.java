@@ -102,8 +102,21 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(),DataRegistDetailActivity.class);
-                intent.putExtra("mode", common.MODE_DETAIL);
+                intent.putExtra("mode", common.MODE_REGIST);
                 //intent.putExtra("mode", common.MODE_DETAIL);
+                //intent.putExtra("title", "ねこ");
+                //intent.putExtra("genre", "テストジャンル");
+                startActivity(intent);
+            }
+        });
+
+        Button dataDetailButton = findViewById(R.id.button1);
+        dataDetailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),DataRegistDetailActivity.class);
+                //intent.putExtra("mode", common.MODE_REGIST);
+                intent.putExtra("mode", common.MODE_DETAIL);
                 intent.putExtra("title", "ねこ");
                 intent.putExtra("genre", "テストジャンル");
                 startActivity(intent);
