@@ -48,13 +48,14 @@ public class DataListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datalist);
+        context = super.getApplicationContext();
 
         final ListView listView = findViewById(R.id.dataListView);
         final TextView dataGenreNameTextView = findViewById(R.id.dataGenreName);
 
         // リストデータの生成
         // TODO :: contextの取得方法を確認する。
-        // List<Map<String, String>> regDataMapList = convertRegistDataListToMapList(data.getRegistDataList(context));
+        //regDataMapList = convertRegistDataListToMapList(data.getRegistDataList(context));
         regDataMapList = convertRegistDataListToMapList(this.getMockRegistData());
 
         // ジャンル名設定
@@ -87,13 +88,13 @@ public class DataListActivity extends Activity {
                 // 削除ダイアログ表示
                 CustomDialog dialog = new CustomDialog();
 
-                // ここに削除処理を追加する。
-                String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
-                RegistData delData = new RegistData();
-                delData.setGenre(genreName);
-                delData.setTitle(dataTitle);
-                data = new Data();
-                data.deleteRegistData(delData,  context);
+                // 削除処理
+                 String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
+                 RegistData delData = new RegistData();
+                 delData.setGenre(genreName);
+                 delData.setTitle(dataTitle);
+                 data = new Data();
+                 data.deleteRegistData(delData,  context);
 
                 return true;
             }
@@ -156,7 +157,14 @@ public class DataListActivity extends Activity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     checkList.put(position, isChecked);
                     Log.i("onItemClick", position + "番目のチェックイベント dataTitle:" + regDataMapList.get(position).get("dataTitle"));
-// ここにデータのフラグだけを更新する処理を追加する。
+                    // 更新処理
+                    String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
+                    RegistData updData = new RegistData();
+                    updData.setGenre(genreName);
+                    updData.setTitle(dataTitle);
+                    updData.setTorokuFlg(isChecked ? "1" : "0");
+                    data = new Data();
+                    data.registRegistData(updData,  context);
                 }
             });
             return view;
@@ -167,7 +175,7 @@ public class DataListActivity extends Activity {
     private ArrayList<RegistData> getMockRegistData() {
         ArrayList<RegistData> list = new ArrayList<RegistData>();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 8; i++) {
             RegistData data = new RegistData();
             data.setGenre("Genre1");
             data.setTitle("タイトル" + String.valueOf(i));
