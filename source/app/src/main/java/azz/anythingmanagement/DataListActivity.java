@@ -2,6 +2,7 @@ package azz.anythingmanagement;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.RegistData;
 
 /**
@@ -72,7 +74,13 @@ public class DataListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataListActivity.this.setTitle(String.valueOf(position) + "番目がクリックされました。");
                 Log.i("onItemClick", position + "番目のクリックイベント dataTitle:" + regDataMapList.get(position).get("dataTitle"));
-// ここに詳細画面移動処理を追加する。
+                // 詳細画面移動処理
+                String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
+                Intent intent = new Intent (getApplication(), DataRegistDetailActivity.class);
+                intent.putExtra("mode", common.MODE_DETAIL);
+                intent.putExtra("genre", genreName);
+                intent.putExtra("title", dataTitle);
+                startActivity(intent);
             }
         });
         // ListView長押しクリックイベント
