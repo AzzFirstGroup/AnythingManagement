@@ -17,8 +17,6 @@ public class RegistData {
     private String memo;
     /* 削除フラグ */
     private String sakujoFlg;
-    /* テストRegistフラグ */
-    private String testRegistFlg;
 
     /**
      * タイトルgetter
@@ -164,22 +162,5 @@ public class RegistData {
         this.sakujoFlg = sakujoFlg;
     }
 
-    /**
-     * testフラグgetter
-     *
-     * @return sakujoFlg
-     */
-    public String getTestRegistFlg(){
-        return this.testRegistFlg;
-    }
-
-    /**
-     * testフラグsetter
-     *
-     * @param testRegistFlg
-     */
-    public void setTestRegistFlg(String testRegistFlg){
-        this.testRegistFlg = testRegistFlg;
-    }
 
 }

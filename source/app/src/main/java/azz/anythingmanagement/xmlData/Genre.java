@@ -6,8 +6,6 @@ public class Genre {
     private String genreName;
     /* カラー情報 */
     private String colorInfo;
-    /* ジャンルID */
-    private String genreId;
     /* 削除フラグ */
     private String sakujoFlg;
 
@@ -48,24 +46,6 @@ public class Genre {
     }
 
     /**
-     * ジャンルIDgetter
-     *
-     * @return genreId
-     */
-    public String getGenreId(){
-        return this.genreId;
-    }
-
-    /**
-     * ジャンルIDsetter
-     *
-     * @param genreName
-     */
-    public void setGenreId(String genreName){
-        this.genreId = genreId;
-    }
-
-    /**
      * 削除フラグgetter
      *
      * @return sakujoFlg
@@ -75,7 +55,7 @@ public class Genre {
     }
 
     /**
-     * 削除フラグsetter
+     * カラー情報setter
      *
      * @param sakujoFlg
      */

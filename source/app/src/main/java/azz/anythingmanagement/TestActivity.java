@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 import azz.anythingmanagement.xmlData.RegistData;
 
@@ -39,37 +40,55 @@ public class TestActivity extends AppCompatActivity {
         xmlButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Genre genre = new Genre();
-                genre.setGenreName("テストジャンル３");
-                genre.setColorInfo("テストカラー３");
-                genre.setSakujoFlg("1");
+                RegistData registData = new RegistData();
                 genre.setGenreName("テストジャンル");
                 genre.setColorInfo("テストカラー");
 
-                RegistData registData = new RegistData();
                 registData.setTitle("テストタイトル");
-                registData.setTestRegistFlg("テスト登録フラグ");
+                registData.setTorokuFlg("1");
                 registData.setImagePath("テスト画像パス");
                 registData.setSystemDate("テストシステム日付");
                 registData.setGenre("テストジャンル");
-                registData.setEvaluate("テスト評価");
+                registData.setEvaluate("4");
                 registData.setMemo("テストメモ");
 
                 Data data = new Data();
+
                 data.registGenreData(genre,context);
                 data.registRegistData(registData,context);
+                //data.deleteGenreData(genre,context);
+                //data.deleteRegistData(registData,context);
+//                RegistData afterData = new RegistData();
+//                afterData.setTitle("変更後タイトル");
+//                afterData.setTorokuFlg("0");
+//                afterData.setImagePath("変更後画像パス");
+//                afterData.setSystemDate("変更後システム日付");
+//                afterData.setGenre("変更後ジャンル");
+//                afterData.setEvaluate("変更後評価");
+//                afterData.setMemo("変更後メモ");
+//                data.updateRegistData(registData,afterData,context);
 
                 ArrayList<Genre> arrayList = new ArrayList<>();
                 arrayList = data.getGenreList(context);
-                Genre testGenre = arrayList.get(0);
+                Genre testGenre = new Genre();
+                if(arrayList.size() > 0){
+                    testGenre = arrayList.get(0);
+                }
 
-                String strGenre = testGenre.getGenreName() + testGenre.getColorInfo();
+                ArrayList<RegistData> dataList = new ArrayList<>();
+                dataList = data.getRegistDataList(context);
+                RegistData registdata = new RegistData();
+                if(dataList.size() > 0){
+                    registdata = dataList.get(0);
+                }
+
+                String strGenre = testGenre.getGenreName() + testGenre.getColorInfo() + registdata.getTitle() + registdata.getEvaluate();
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
             }
         });
-
         Button genreListButton = findViewById(R.id.button2);
-        //ボタンクリック時のアプリ内アクティビティの呼び出し
         genreListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,41 +96,32 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button diaLogButton = findViewById(R.id.button6_1);
-        diaLogButton.setOnClickListener(new View.OnClickListener() {
+
+        Button dataRegistDetailButton = findViewById(R.id.button4);
+        dataRegistDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog1");
-            }
-        });
-        diaLogButton = findViewById(R.id.button6_2);
-        diaLogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog2");
+                Intent intent = new Intent(getApplication(),DataRegistDetailActivity.class);
+                intent.putExtra("mode", common.MODE_REGIST);
+                //intent.putExtra("mode", common.MODE_DETAIL);
+                //intent.putExtra("title", "ねこ");
+                //intent.putExtra("genre", "テストジャンル");
+                startActivity(intent);
             }
         });
 
-        diaLogButton = findViewById(R.id.button6_3);
-        diaLogButton.setOnClickListener(new View.OnClickListener() {
+        Button dataDetailButton = findViewById(R.id.button1);
+        dataDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog3");
+                Intent intent = new Intent(getApplication(),DataRegistDetailActivity.class);
+                //intent.putExtra("mode", common.MODE_REGIST);
+                intent.putExtra("mode", common.MODE_DETAIL);
+                intent.putExtra("title", "ねこ");
+                intent.putExtra("genre", "テストジャンル");
+                startActivity(intent);
             }
         });
-
-        diaLogButton = findViewById(R.id.button6_4);
-        diaLogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomDialog dialog = new CustomDialog();
-                dialog.show(getSupportFragmentManager(),"dialog4");
-            }
-        });
-
     }
 
     @Override
