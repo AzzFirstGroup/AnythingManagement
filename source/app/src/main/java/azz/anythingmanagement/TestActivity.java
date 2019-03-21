@@ -122,8 +122,49 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+        Button diaLogButton = findViewById(R.id.button6_1);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"regist");
+            }
+        });
+        diaLogButton = findViewById(R.id.button6_2);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"image");
+            }
+        });
 
+        diaLogButton = findViewById(R.id.button6_3);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"delete");
+            }
+        });
+
+        diaLogButton = findViewById(R.id.button6_4);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"discard");
+            }
+        });
+    }
+    public void setResultView(boolean resultValue){
+        if(resultValue){
+            Intent intent = new Intent(getApplication(),GenreListActivity.class);
+            startActivity(intent);
+        }else{
+            //何もしない
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
