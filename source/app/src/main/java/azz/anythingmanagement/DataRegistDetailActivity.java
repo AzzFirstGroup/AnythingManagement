@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     TextView textDate;
     Spinner genreSpinner;
     ImageButton imageButton;
+    CheckBox zumiCheck;
 
     private Uri m_uri;
     private Uri imageUri;
@@ -76,6 +78,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         textDate = (TextView)findViewById(R.id.date);
         genreSpinner = (Spinner)findViewById(R.id.genrelist);
         imageButton = (ImageButton)findViewById(R.id.imageSet);
+        zumiCheck = (CheckBox)findViewById(R.id.torokucheckBox);
 
         // 現在日時の取得
         Date now = new Date(System.currentTimeMillis());
@@ -171,6 +174,11 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                 registData.setEvaluate(evaluate);
                 registData.setGenre(genreSpinner.getSelectedItem().toString());
                 registData.setImagePath(imageUri.toString());
+                if(zumiCheck.isChecked()){
+                    registData.setTorokuFlg(common.CHECKED);
+                }else{
+                    registData.setTorokuFlg(common.UNCHECKED);
+                }
 
                 Data data = new Data();
                 data.registRegistData(registData,context);
@@ -191,6 +199,13 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
             // タイトル設定
             titleText.setText(registData.getTitle());
+
+            // 未済チェックボックス設定
+            if(registData.getTorokuFlg().equals(common.CHECKED)){
+                zumiCheck.setChecked(true);
+            }else{
+                zumiCheck.setChecked(false);
+            }
 
             // メモ設定
             memoText.setText(registData.getMemo());
