@@ -110,7 +110,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        Button dataDetailButton = findViewById(R.id.button1);
+        Button dataDetailButton = findViewById(R.id.button5);
         dataDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +119,15 @@ public class TestActivity extends AppCompatActivity {
                 intent.putExtra("mode", common.MODE_DETAIL);
                 intent.putExtra("title", "ねこ");
                 intent.putExtra("genre", "テストジャンル");
+                startActivity(intent);
+            }
+        });
+
+        Button ferstButton = findViewById(R.id.button1);
+        ferstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),FirstActivity.class);
                 startActivity(intent);
             }
         });
