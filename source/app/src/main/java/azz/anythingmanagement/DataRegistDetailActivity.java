@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -65,6 +66,8 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     // 画像選択機能呼び出し時の戻り値確認用ID
     private static final int REQUEST_CHOOSER = 1000;
 
+    private static final String GENRE_DEFAULT = common.GENRE_UNSET;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +96,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         Data data = new Data();
         ArrayList<Genre> genreList = data.getGenreList(this);
         ArrayList<String> nameList = new ArrayList();
+        nameList.add(GENRE_DEFAULT);
         for (Genre genre : genreList) {
             nameList.add(genre.getGenreName());
         }
@@ -167,22 +171,26 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegistData registData = new RegistData();
 
-                registData.setTitle(titleText.getText().toString());
-                registData.setMemo(memoText.getText().toString());
-                registData.setEvaluate(evaluate);
-                registData.setGenre(genreSpinner.getSelectedItem().toString());
-                registData.setImagePath(imageUri.toString());
-                if(zumiCheck.isChecked()){
-                    registData.setTorokuFlg(common.CHECKED);
-                }else{
-                    registData.setTorokuFlg(common.UNCHECKED);
+                if(titleText.getText().toString() == null || titleText.getText().toString().equals("")){
+                    Toast.makeText(context,"タイトルを入力してください",Toast.LENGTH_LONG).show();
+                } else {
+                    RegistData registData = new RegistData();
+
+                    registData.setTitle(titleText.getText().toString());
+                    registData.setMemo(memoText.getText().toString());
+                    registData.setEvaluate(evaluate);
+                    registData.setGenre(genreSpinner.getSelectedItem().toString());
+                    registData.setImagePath(imageUri.toString());
+                    if(zumiCheck.isChecked()){
+                        registData.setTorokuFlg(common.CHECKED);
+                    }else{
+                        registData.setTorokuFlg(common.UNCHECKED);
+                    }
+
+                    Data data = new Data();
+                    data.registRegistData(registData,context);
                 }
-
-                Data data = new Data();
-                data.registRegistData(registData,context);
-
             }
         });
 
@@ -222,60 +230,64 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             genreSpinner.setSelection(index);
 
             // 評価値設定
-            switch (registData.getEvaluate()){
-                case "1":
-                    evaluate = "1";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "2":
-                    evaluate = "2";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "3":
-                    evaluate = "3";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "4":
-                    evaluate = "4";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "5":
-                    evaluate = "5";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_on);
-                    break;
-                default:
-                    evaluate = "0";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
+            if(registData.getEvaluate() != null){
+                switch (registData.getEvaluate()){
+                    case "1":
+                        evaluate = "1";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "2":
+                        evaluate = "2";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "3":
+                        evaluate = "3";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "4":
+                        evaluate = "4";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "5":
+                        evaluate = "5";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_on);
+                        break;
+                    default:
+                        evaluate = "0";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                }
             }
 
             // 画像設定
-            imageUri = Uri.parse(registData.getImagePath());
-            imageButton.setImageURI(imageUri);
+            if(registData.getImagePath() != null){
+                imageUri = Uri.parse(registData.getImagePath());
+                imageButton.setImageURI(imageUri);
+            }
 
         }
 

@@ -1,9 +1,11 @@
 package azz.anythingmanagement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class testDataListActivity extends AppCompatActivity{
 
@@ -12,6 +14,11 @@ public class testDataListActivity extends AppCompatActivity{
             super.onCreate(savedInstanceState);
             //レイアウトの設定
             setContentView(R.layout.test_datalist);
+            Intent intent = getIntent();
+            String genre = intent.getStringExtra("genre");
+
+            TextView textview = (TextView)findViewById(R.id.test);
+            textview.setText(genre);
 
             //set toolbar
             //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -43,8 +43,8 @@ public class TestActivity extends AppCompatActivity {
 
                 Genre genre = new Genre();
                 RegistData registData = new RegistData();
-                genre.setGenreName("テストジャンル");
-                genre.setColorInfo("テストカラー");
+                genre.setGenreName("ジャンル１");
+                genre.setColorInfo("#FFFF00");
 
                 registData.setTitle("テストタイトル");
                 registData.setTorokuFlg("1");
@@ -58,6 +58,14 @@ public class TestActivity extends AppCompatActivity {
 
                 data.registGenreData(genre,context);
                 data.registRegistData(registData,context);
+
+                genre.setGenreName("ジャンル２");
+                genre.setColorInfo("#00FFFF");
+                data.registGenreData(genre,context);
+
+                genre.setGenreName("ジャンル３");
+                genre.setColorInfo("#FF00FF");
+                data.registGenreData(genre,context);
                 //data.deleteGenreData(genre,context);
                 //data.deleteRegistData(registData,context);
 //                RegistData afterData = new RegistData();
