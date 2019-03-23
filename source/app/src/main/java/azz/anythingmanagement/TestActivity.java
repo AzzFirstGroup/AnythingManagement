@@ -106,6 +106,15 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+        Button genreInsButton = findViewById(R.id.button3);
+        genreInsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),GenreIns.class);
+                startActivity(intent);
+            }
+        });
+
         Button dataRegistDetailButton = findViewById(R.id.button4);
         dataRegistDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override

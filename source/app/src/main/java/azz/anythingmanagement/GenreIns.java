@@ -1,16 +1,20 @@
 package azz.anythingmanagement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreIns extends AppCompatActivity {
@@ -37,6 +41,8 @@ public class GenreIns extends AppCompatActivity {
         final Button skyblue = findViewById(R.id.ButtonSBL);
         final Button vaiolet = findViewById(R.id.ButtonVA);
 
+        // テキストボックスの背景を白くする
+        et.setBackgroundColor(Color.WHITE);
         // 登録用ボタン
         // ジャンル名、カラーを登録
         bt.setOnClickListener(new View.OnClickListener() {
@@ -158,5 +164,49 @@ public class GenreIns extends AppCompatActivity {
                 et.setTextColor(color_code);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        // ジャンル一覧に遷移(メニューボタン)
+        if (id == R.id.action_menuList1) {
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // ジャンル作成に遷移(メニューボタン)
+        if (id == R.id.action_menuList2) {
+            Intent intent = new Intent (this, GenreIns.class);
+            startActivity(intent);
+        }
+
+        // 新規作成に遷移(メニューボタン)
+        // TODO:: 仮でDataRegistDetailActivity設定
+        if (id == R.id.action_menuList3) {
+            Intent intent = new Intent (this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
+            startActivity(intent);
+        }
+
+        // データ一覧に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList4) {
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
