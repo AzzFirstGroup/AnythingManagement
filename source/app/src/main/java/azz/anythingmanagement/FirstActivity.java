@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import azz.anythingmanagement.common.common;
+
 public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -22,17 +24,20 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        // 各ボタンアクションで使用するintentをここで呼んでおく
+        Intent intent;
         switch (v.getId()) {
             // ジャンル一覧画面へ遷移する
             case R.id.bGenreList:
-                Intent intent = new Intent (this, GenreListActivity.class);
+                intent = new Intent (this, GenreListActivity.class);
                 startActivity(intent);
                 break;
             // 新規登録画面に遷移する
-            // TODO:: 仮でMain2Activityを設定しているが、新規登録画面ができたらここを変更する
+            // TODO:: 仮でDataRegistDetailActivityを設定しているが、新規登録画面ができたらここを変更する
             case R.id.bNewCreate:
-                Intent intent1 = new Intent (this, DataRegistDetailActivity.class);
-                startActivity(intent1);
+                intent = new Intent (this, DataRegistDetailActivity.class);
+                intent.putExtra("mode", common.MODE_REGIST);
+                startActivity(intent);
         }
     }
 
@@ -66,7 +71,8 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         // 新規作成に遷移(メニューボタン)
         // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList3) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
             startActivity(intent);
         }
 

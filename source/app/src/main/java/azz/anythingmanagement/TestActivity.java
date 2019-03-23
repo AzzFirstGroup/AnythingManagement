@@ -88,6 +88,15 @@ public class TestActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
             }
         });
+
+        Button ferstButton = findViewById(R.id.button1);
+        ferstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),FirstActivity.class);
+                startActivity(intent);
+            }
+        });
         Button genreListButton = findViewById(R.id.button2);
         genreListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +119,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        Button dataDetailButton = findViewById(R.id.button1);
+        Button dataDetailButton = findViewById(R.id.button5);
         dataDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
