@@ -5,8 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/japanese_paper_00030"
     tools:context=".FirstActivity">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/japanese_paper_00030"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/bGenreList"
@@ -19,6 +28,7 @@
         android:backgroundTint="@color/MediumSpringGreen"
         android:onClick="onClick"
         android:text="@string/action_menuList1"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bNewCreate"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +45,7 @@
         android:backgroundTint="@color/colorAccent"
         android:onClick="onClick"
         android:text="@string/action_menuList5"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bGenreList"

@@ -1,23 +1,37 @@
 package azz.anythingmanagement;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,8 +54,13 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     TextView textDate;
     Spinner genreSpinner;
     ImageButton imageButton;
+    CheckBox zumiCheck;
 
     private Uri m_uri;
+    private Uri imageUri;
+
+    private boolean permissionCameraResult = false;
+    private boolean permissionReadDataResult = false;
 
     // 画像選択機能呼び出し時の戻り値確認用ID
     private static final int REQUEST_CHOOSER = 1000;
@@ -58,6 +77,8 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         memoText = (TextView)findViewById(R.id.memo);
         textDate = (TextView)findViewById(R.id.date);
         genreSpinner = (Spinner)findViewById(R.id.genrelist);
+        imageButton = (ImageButton)findViewById(R.id.imageSet);
+        zumiCheck = (CheckBox)findViewById(R.id.torokucheckBox);
 
         // 現在日時の取得
         Date now = new Date(System.currentTimeMillis());
@@ -141,7 +162,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             }
         });
 
-        // （テスト用）登録ボタンが押下時の処理
+        // （テスト用）登録ボタン押下時の処理
         Button registButton = (Button)findViewById(R.id.torokuButton);
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +173,12 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                 registData.setMemo(memoText.getText().toString());
                 registData.setEvaluate(evaluate);
                 registData.setGenre(genreSpinner.getSelectedItem().toString());
+                registData.setImagePath(imageUri.toString());
+                if(zumiCheck.isChecked()){
+                    registData.setTorokuFlg(common.CHECKED);
+                }else{
+                    registData.setTorokuFlg(common.UNCHECKED);
+                }
 
                 Data data = new Data();
                 data.registRegistData(registData,context);
@@ -173,6 +200,13 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             // タイトル設定
             titleText.setText(registData.getTitle());
 
+            // 未済チェックボックス設定
+            if(registData.getTorokuFlg().equals(common.CHECKED)){
+                zumiCheck.setChecked(true);
+            }else{
+                zumiCheck.setChecked(false);
+            }
+
             // メモ設定
             memoText.setText(registData.getMemo());
 
@@ -190,6 +224,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             // 評価値設定
             switch (registData.getEvaluate()){
                 case "1":
+                    evaluate = "1";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
@@ -197,6 +232,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "2":
+                    evaluate = "2";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
@@ -204,6 +240,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "3":
+                    evaluate = "3";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
@@ -211,6 +248,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "4":
+                    evaluate = "4";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
@@ -218,6 +256,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
                     break;
                 case "5":
+                    evaluate = "5";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
@@ -225,6 +264,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_on);
                     break;
                 default:
+                    evaluate = "0";
                     imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_off);
                     imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
                     imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
@@ -233,17 +273,32 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     break;
             }
 
+            // 画像設定
+            imageUri = Uri.parse(registData.getImagePath());
+            imageButton.setImageURI(imageUri);
+
         }
 
         // 画像クリック時のイベント
-        // TODO 連携準備が出来たら別途作成のダイアログ処理に置き換える
-        imageButton = (ImageButton)findViewById(R.id.imageSet);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO パーミッションの確認処理
+                //  パーミッションの確認処理
+                int permissionCheckCamera = ContextCompat.checkSelfPermission(context,Manifest.permission.CAMERA);
+                int permissionCheckReadStrage = ContextCompat.checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE);
 
-                showGallery();
+                // カメラ使用か外部ストレージ使用のパーミッションが許可されていない場合、
+                if(permissionCheckCamera != PackageManager.PERMISSION_GRANTED || permissionCheckReadStrage != PackageManager.PERMISSION_GRANTED){
+                    final int REQUEST_CODE = 1;
+                    ActivityCompat.requestPermissions(DataRegistDetailActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_CODE);
+                    // カメラ使用と外部ストレージ使用のパーミッションが許可された場合
+                    if(permissionCameraResult && permissionReadDataResult){
+                        showGallery();
+                    }
+                }else{
+                    showGallery();
+                }
+
             }
         });
 
@@ -304,6 +359,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
             // 画像を設定
             imageButton.setImageURI(resultUri);
+            imageUri = resultUri;
         }
     }
 
@@ -333,5 +389,35 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arr);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        final int REQUEST_CODE = 1;
+        if (requestCode == REQUEST_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                final String permission = permissions[i];
+                final int grantResult = grantResults[i];
+
+                switch (permission) {
+                    case Manifest.permission.CAMERA:
+                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                            //カメラ使用許可
+                            permissionCameraResult = true;
+                        }
+                        break;
+                    case Manifest.permission.READ_EXTERNAL_STORAGE:
+                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                            //外部ストレージ使用許可
+                            permissionReadDataResult = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

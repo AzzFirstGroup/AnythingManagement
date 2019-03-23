@@ -15,4 +15,9 @@ public class common {
     public static String MODE_REGIST = "1";
     /* データ登録詳細画面処理モード：詳細 */
     public static String MODE_DETAIL = "2";
+
+    /* チェックボックス設定状態 */
+    public static String CHECKED = "1";
+    /* チェックボックス未設定状態 */
+    public static String UNCHECKED = "0";
 }
