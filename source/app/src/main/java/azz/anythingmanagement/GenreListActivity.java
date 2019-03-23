@@ -104,6 +104,18 @@ public class GenreListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        boolean gudge = false;
+        Button diaLogButton = findViewById(R.id.button6_1);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog cstmDialog = new CustomDialog();
+                String a = String.valueOf(R.id.button6_1);
+                cstmDialog.show(getSupportFragmentManager(),a);
+                boolean gudge = cstmDialog.delete();
+
+            }
+        });
     }
     //ここから幅計算
     @Override
@@ -208,5 +220,13 @@ public class GenreListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void setResultView(boolean resultValue){
+        if(resultValue){
+            Intent intent = new Intent(getApplication(),GenreListActivity.class);
+            startActivity(intent);
+        }else{
+            //何もしない
+        }
     }
 }
