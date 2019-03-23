@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -41,7 +43,7 @@ public class DataListActivity extends Activity {
     private Data data;
     private Context context;
     private List<Map<String, Object>> regDataMapList = null;
-    private String genreName;
+    private String intentGenreName = "";
 
     /**
      * 画面一覧表示
@@ -55,13 +57,19 @@ public class DataListActivity extends Activity {
         final ListView listView = findViewById(R.id.dataListView);
         final TextView dataGenreNameTextView = findViewById(R.id.dataGenreName);
 
-        // リストデータの生成
-        // TODO :: contextの取得方法を確認する。
-        //regDataMapList = convertRegistDataListToMapList(data.getRegistDataList(context));
-        regDataMapList = convertRegistDataListToMapList(this.getMockRegistData());
-
         // ジャンル名設定
-        dataGenreNameTextView.setText(this.genreName);
+        Intent intent = getIntent();
+        intentGenreName = intent.getStringExtra("genre");
+        if (intentGenreName == null) {
+            dataGenreNameTextView.setText("ジャンル未選択");
+        } else {
+            dataGenreNameTextView.setText(this.intentGenreName);
+        }
+
+        // リストデータの生成
+        data = new Data();
+        regDataMapList = convertRegistDataListToMapList(intentGenreName, data.getRegistDataList(this));
+        //regDataMapList = convertRegistDataListToMapList(this.getMockRegistData());
 
         // アダプターの設定
         MyAdapter adapter = new MyAdapter(DataListActivity.this,
@@ -73,12 +81,13 @@ public class DataListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataListActivity.this.setTitle(String.valueOf(position) + "番目がクリックされました。");
-                Log.i("onItemClick", position + "番目のクリックイベント dataTitle:" + regDataMapList.get(position).get("dataTitle"));
+                Log.i("onItemClickNo.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                 // 詳細画面移動処理
                 String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
-                Intent intent = new Intent (getApplication(), DataRegistDetailActivity.class);
+                String dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
+                Intent intent = new Intent(getApplication(), DataRegistDetailActivity.class);
                 intent.putExtra("mode", common.MODE_DETAIL);
-                intent.putExtra("genre", genreName);
+                intent.putExtra("genre", dataGenreName);
                 intent.putExtra("title", dataTitle);
                 startActivity(intent);
             }
@@ -92,21 +101,67 @@ public class DataListActivity extends Activity {
              * @param id 選択した項目のID
              */
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("OnItemLongClickListener", position + "番目の長押しクリックイベント dataTitle:" + regDataMapList.get(position).get("dataTitle"));
+                Log.i("OnItemLongClick No.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                 // 削除ダイアログ表示
                 CustomDialog dialog = new CustomDialog();
 
                 // 削除処理
-                 String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
-                 RegistData delData = new RegistData();
-                 delData.setGenre(genreName);
-                 delData.setTitle(dataTitle);
-                 data = new Data();
-                 data.deleteRegistData(delData,  context);
+                String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
+                String dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
+                RegistData delData = new RegistData();
+                delData.setGenre(dataGenreName);
+                delData.setTitle(dataTitle);
+                data = new Data();
+                data.deleteRegistData(delData, context);
 
                 return true;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        // ジャンル一覧に遷移(メニューボタン)
+        if (id == R.id.action_menuList1) {
+            Intent intent = new Intent(this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // ジャンル作成に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList2) {
+            Intent intent = new Intent(this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // 新規作成に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList3) {
+            Intent intent = new Intent(this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
+            startActivity(intent);
+        }
+
+        // データ一覧に遷移(メニューボタン)
+        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
+        if (id == R.id.action_menuList4) {
+            Intent intent = new Intent(this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -115,23 +170,43 @@ public class DataListActivity extends Activity {
      * @param regDataList 登録データList
      * @return regDataMapList 登録データMapList
      */
-    private List<Map<String, Object>> convertRegistDataListToMapList(ArrayList<RegistData> regDataList) {
+    private List<Map<String, Object>> convertRegistDataListToMapList(String intentGenreName, ArrayList<RegistData> regDataList) {
 
         List<Map<String, Object>> regDataMapList = new ArrayList<Map<String, Object>>();
 
         int index = 1;
-        for (RegistData regData : regDataList) {
-            genreName = regData.getGenre();
-            Map<String, Object> regDataMap = new HashMap<String, Object>();
-            regDataMap.put("dataIndex", String.valueOf(index));
-            regDataMap.put("dataTitle", regData.getTitle());
-            if ("0".equals(regData.getTorokuFlg())) {
-                regDataMap.put("isDataReading", false);
-            } else {
-                regDataMap.put("isDataReading", true);
+        if (intentGenreName != null) {
+            // ジャンル名がある場合は、ジャンルで絞って表示
+            for (RegistData regData : regDataList) {
+                if (intentGenreName.equals(regData.getGenre())) {
+                    Map<String, Object> regDataMap = new HashMap<String, Object>();
+                    regDataMap.put("dataIndex", String.valueOf(index));
+                    regDataMap.put("dataGenre", regData.getGenre());
+                    regDataMap.put("dataTitle", regData.getTitle());
+                    if ("0".equals(regData.getTorokuFlg())) {
+                        regDataMap.put("isDataReading", false);
+                    } else {
+                        regDataMap.put("isDataReading", true);
+                    }
+                    regDataMapList.add(regDataMap);
+                    ++index;
+                }
             }
-            regDataMapList.add(regDataMap);
-            ++index;
+        } else {
+            // ジャンル名がない場合は、全件表示
+            for (RegistData regData : regDataList) {
+                Map<String, Object> regDataMap = new HashMap<String, Object>();
+                regDataMap.put("dataIndex", String.valueOf(index));
+                regDataMap.put("dataGenre", regData.getGenre());
+                regDataMap.put("dataTitle", regData.getTitle());
+                if ("0".equals(regData.getTorokuFlg())) {
+                    regDataMap.put("isDataReading", false);
+                } else {
+                    regDataMap.put("isDataReading", true);
+                }
+                regDataMapList.add(regDataMap);
+                ++index;
+            }
         }
 
         return regDataMapList;
@@ -164,38 +239,19 @@ public class DataListActivity extends Activity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     checkList.put(position, isChecked);
-                    Log.i("onItemClick", position + "番目のチェックイベント dataTitle:" + regDataMapList.get(position).get("dataTitle"));
+                    Log.i("OnChecked No.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                     // 更新処理
                     String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
+                    String dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
                     RegistData updData = new RegistData();
-                    updData.setGenre(genreName);
+                    updData.setGenre(dataGenreName);
                     updData.setTitle(dataTitle);
                     updData.setTorokuFlg(isChecked ? "1" : "0");
                     data = new Data();
-                    data.registRegistData(updData,  context);
+                    data.registRegistData(updData, context);
                 }
             });
             return view;
         }
     }
-
-    // TODO ::  Mockなので後で消す。
-    private ArrayList<RegistData> getMockRegistData() {
-        ArrayList<RegistData> list = new ArrayList<RegistData>();
-
-        for (int i = 0; i < 8; i++) {
-            RegistData data = new RegistData();
-            data.setGenre("Genre1");
-            data.setTitle("タイトル" + String.valueOf(i));
-            if (i == 1 || i == 3) {
-                data.setTorokuFlg("1");
-            } else {
-                data.setTorokuFlg("0");
-            }
-            list.add(data);
-        }
-
-        return list;
-    }
-
 }
