@@ -1,9 +1,9 @@
 package azz.anythingmanagement;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +34,7 @@ import azz.anythingmanagement.xmlData.RegistData;
  * @author c.morita
  * @version 1.0
  */
-public class DataListActivity extends Activity {
+public class DataListActivity extends AppCompatActivity {
 
     // Mapのキー
     private final String[] FROM = {"dataIndex", "dataTitle", "isDataReading"};

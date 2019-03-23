@@ -89,7 +89,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
         // データ一覧
-        Button dataListButton = findViewById(R.id.buttonDataList);
+        Button dataListButton = findViewById(R.id.button5);
         dataListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
