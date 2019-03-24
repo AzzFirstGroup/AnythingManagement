@@ -1,5 +1,6 @@
 package azz.anythingmanagement;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,16 +106,28 @@ public class GenreListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        boolean gudge = false;
-        Button diaLogButton = findViewById(R.id.button6_1);
-        diaLogButton.setOnClickListener(new View.OnClickListener() {
+        Button registDialogButton = findViewById(R.id.button6_1);
+        registDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomDialog cstmDialog = new CustomDialog();
-                String a = String.valueOf(R.id.button6_1);
-                cstmDialog.show(getSupportFragmentManager(),a);
-                boolean gudge = cstmDialog.delete();
-
+                RegistDialog deleteDialog = new RegistDialog();
+                deleteDialog.show(getSupportFragmentManager(),"");
+            }
+        });
+        Button deleteDiaLogButton = findViewById(R.id.button6_3);
+        deleteDiaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteDialog deleteDialog = new DeleteDialog();
+                deleteDialog.show(getSupportFragmentManager(),"");
+            }
+        });
+        Button discardDialogButton = findViewById(R.id.button6_4);
+        discardDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DiscardDialog deleteDialog = new DiscardDialog();
+                deleteDialog.show(getSupportFragmentManager(),"");
             }
         });
     }
@@ -222,9 +236,10 @@ public class GenreListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void setResultView(boolean resultValue){
+        Context context = getApplicationContext();
         if(resultValue){
-            Intent intent = new Intent(getApplication(),GenreListActivity.class);
-            startActivity(intent);
+            Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
+                        toast.show();
         }else{
             //何もしない
         }
