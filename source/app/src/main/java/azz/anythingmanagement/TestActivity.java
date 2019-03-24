@@ -43,7 +43,7 @@ public class TestActivity extends AppCompatActivity {
 
                 Genre genre = new Genre();
                 RegistData registData = new RegistData();
-                genre.setGenreName("テストジャンル");
+                genre.setGenreName("Genre1");
                 genre.setColorInfo("テストカラー");
 
                 registData.setTitle("テストタイトル");
@@ -88,7 +88,16 @@ public class TestActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
             }
         });
-
+        // データ一覧
+        Button dataListButton = findViewById(R.id.button5);
+        dataListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),DataListActivity.class);
+                //intent.putExtra("genre", "Genre1");
+                startActivity(intent);
+            }
+        });
         Button ferstButton = findViewById(R.id.button1);
         ferstButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +137,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        Button dataDetailButton = findViewById(R.id.button5);
+        Button dataDetailButton = findViewById(R.id.button4);
         dataDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
