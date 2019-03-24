@@ -18,49 +18,35 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
-public class GenreListActivity extends AppCompatActivity {
+public class GenreListActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set layout
+        // set layout
         setContentView(R.layout.genrelist);
 
+        // ジャンル作成ボタンの初期設定
+        findViewById(R.id.insert_button).setOnClickListener(this);
 
-        //ジャンル一覧を取得
+        // ジャンル一覧を取得
         List<Genre> genreList = new ArrayList<Genre>();
-        Data data = new Data();
-        //（テスト用スタブ使用）
-        //genreList = data.readGenre(Genre genre, Context context);
-        //テスト用
-
-        for(int i=0; i < 10; i++){
-            Genre genre = new Genre();
-            genre.setGenreName("ジャンル名 "+i);
-            genre.setColorInfo("#FF"+i+i+i+i);
-            genre.setSakujoFlg("0");
-            genreList.add(genre);
-            System.out.println(genre.getGenreName());
-            System.out.println(genre.getColorInfo());
-            System.out.println(genre.getSakujoFlg()+i);
+        // ここでDBからジャンル情報を取得なければ未設定のみを表示するようにする
+        if(genreList.isEmpty()) {
+            return;
         }
 
+        // ここでDBの件数分ボタンを設定する。
         //ジャンル一覧ボタン生成
         for (int i = 0; i < genreList.size(); i++) {
             String genreName = genreList.get(i).getGenreName();
             String genreColorInfo = genreList.get(i).getColorInfo();
-            int num = i + 1;
-            //String sakujoFlg = genreList.get(i).getSakujoFlg();
 
+            // ボタンの生成
             Button btn = new Button(this);
-            /*ViewGroup.LayoutParams lp = btn.getLayoutParams();
-            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)lp;
-            mlp.setMargins(20,20, mlp.rightMargin, mlp.bottomMargin);
-            //マージンを設定
-            btn.setLayoutParams(mlp);*/
-
             RelativeLayout.LayoutParams prm = new RelativeLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,	//文字列の幅に合わせる
                     LinearLayout.LayoutParams.WRAP_CONTENT);	//文字列の高さに合わせる
@@ -81,18 +67,7 @@ public class GenreListActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            RelativeLayout r = (RelativeLayout) findViewById(R.id.rl);
-            r.addView(btn,prm);
         }
-
-        //set toolbar
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-        });*/
 
         //ボタンのインスタンス生成
         Button genreButton = findViewById(R.id.genruList_botton);
@@ -104,66 +79,19 @@ public class GenreListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
-    //ここから幅計算
+
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl);
-        // 子供の数を取得
-        int l = rl.getChildCount();
-        // 無いなら何もしない
-        if (l == 0) {
-            System.out.println("**************************  "+l+"  *********************************************************************");
-            return;
+    public void onClick(View v) {
+        // 各ボタンアクションで使用するintentをここで呼んでおく
+        Intent intent;
+        int id = v.getId();
+        // ジャンル登録画面へ遷移する
+        if(id == R.id.insert_button) {
+            intent = new Intent(this, GenreIns.class);
+            startActivity(intent);
         }
-        System.out.println("----------------------------------   "+l+"   ---------------------------------------------------------------------------------");
-
-        // ディスプレイの横幅を取得
-        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        //int max = display.getWidth();
-        Point size = new Point();
-        display.getSize(size);
-        //画面サイズ
-        int screenWidth = size.x;
-        int screenHeight = size.y;
-
-        int margin = 0;
-        // 一番最初は基点となるので何もしない
-        View pline = rl.getChildAt(0);
-        // 一行全体の長さ
-        int total = pline.getWidth() + margin;
-        for (int i = 1; i < l; i++) {
-            int w = rl.getChildAt(i).getWidth() + margin;
-            RelativeLayout.LayoutParams prm = (RelativeLayout.LayoutParams) rl
-                    .getChildAt(i).getLayoutParams();
-            // 横幅を超えないなら前のボタンの右に出す
-            if (screenWidth > total + w) {
-                total += w;
-                prm.addRule(RelativeLayout.ALIGN_TOP, i);
-                prm.addRule(RelativeLayout.RIGHT_OF, i);
-            }
-            // 超えたら下に出す
-            else {
-                prm.addRule(RelativeLayout.BELOW, pline.getId());
-                // 基点を変更
-                pline = rl.getChildAt(i);
-                // 長さをリセット
-                total = pline.getWidth() + margin;
-            }
-        }
-
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
     }
 
     @Override
@@ -187,23 +115,21 @@ public class GenreListActivity extends AppCompatActivity {
         }
 
         // ジャンル作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList2) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, GenreIns.class);
             startActivity(intent);
         }
 
         // 新規作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList3) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
             startActivity(intent);
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataListActivity.class);
             startActivity(intent);
         }
 

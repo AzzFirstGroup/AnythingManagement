@@ -193,7 +193,6 @@ public class GenreIns extends AppCompatActivity {
         }
 
         // 新規作成に遷移(メニューボタン)
-        // TODO:: 仮でDataRegistDetailActivity設定
         if (id == R.id.action_menuList3) {
             Intent intent = new Intent (this, DataRegistDetailActivity.class);
             intent.putExtra("mode", common.MODE_REGIST);
@@ -201,9 +200,8 @@ public class GenreIns extends AppCompatActivity {
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataListActivity.class);
             startActivity(intent);
         }
 
