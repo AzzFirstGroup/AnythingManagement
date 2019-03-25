@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -418,6 +419,17 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                         break;
                 }
             }
+        }
+    }
+    boolean dialogResult = false; // Dialogから取得したboolean用の変数
+    public void setResultView(boolean resultValue) {
+        Context context = getApplicationContext();
+        dialogResult = resultValue; // Dialogからの戻り値を設定
+        if (dialogResult) {
+            Toast toast = Toast.makeText(context, "登録します。", Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            //何もしない
         }
     }
 }

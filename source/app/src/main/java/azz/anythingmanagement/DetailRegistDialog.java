@@ -10,15 +10,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import azz.anythingmanagement.R;
-import azz.anythingmanagement.TestActivity;
 
 /*
- ジャンル作成用登録ダイアログ
+ データ登録用ダイアログ
  */
-public class RegistDialog extends DialogFragment {
+public class DetailRegistDialog extends DialogFragment {
 
     String title="登録確認";
 
@@ -50,8 +46,8 @@ public class RegistDialog extends DialogFragment {
 
                         boolean returnValue = true;
                         // MainActivityのインスタンスを取得
-                        //TODO GenreIns genreInsActivity = (GenreIns) getActivity(); (ジャンル作成用登録に実装する際はこっち)
-                        //TODO genreInsActivity.setResultView(returnValue);
+                        // TODO DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity(); (ジャンル作成用登録に実装する際はこっち)
+                        // TODO dataRegistDetailActivity.setResultView(returnValue);
                         GenreListActivity genreInsActivity = (GenreListActivity) getActivity();
                         genreInsActivity.setResultView(returnValue);
                     }

@@ -235,15 +235,16 @@ public class GenreListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    boolean a = false;
+    boolean dialogResult = false; // Dialogから取得したboolean用の変数
     public void setResultView(boolean resultValue){
         Context context = getApplicationContext();
-        a = resultValue;
-        if(a){
+        dialogResult = resultValue; // Dialogからの戻り値を設定
+        if(dialogResult){
             Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
-                        toast.show();
+            toast.show();
         }else{
             //何もしない
         }
     }
+
 }
