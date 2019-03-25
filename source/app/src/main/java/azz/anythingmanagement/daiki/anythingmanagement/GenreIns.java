@@ -1,5 +1,6 @@
 package azz.anythingmanagement.daiki.anythingmanagement;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import azz.anythingmanagement.R;
 
@@ -149,5 +151,17 @@ public class GenreIns extends AppCompatActivity {
           // 登録対象:ジャンル名,カラー情報
 
           //
+    }
+
+    boolean a = false;
+    public void setResultView(boolean resultValue){
+        Context context = getApplicationContext();
+        a = resultValue;
+        if(a){
+            Toast toast = Toast.makeText(context, "登録します。", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            //何もしない
+        }
     }
 }

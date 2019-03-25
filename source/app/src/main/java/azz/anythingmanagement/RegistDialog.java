@@ -14,7 +14,11 @@ import android.widget.Toast;
 
 import azz.anythingmanagement.R;
 import azz.anythingmanagement.TestActivity;
+import azz.anythingmanagement.daiki.anythingmanagement.GenreIns;
 
+/*
+ ジャンル作成用登録ダイアログ
+ */
 public class RegistDialog extends DialogFragment {
 
     String title="登録確認";
@@ -39,18 +43,16 @@ public class RegistDialog extends DialogFragment {
                 // 表示する文章設定
                 dialogBuilder.setMessage("登録しますか？");
 
-                // 削除確認ボタン作成
+                // 登録確認ボタン作成
                 dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO 登録処理(現在：トーストを出すのみ)
-                        Toast toast = Toast.makeText(getActivity(), "登録します。", Toast.LENGTH_SHORT);
-                        toast.show();
-//                        boolean returnValue = true;
-//                        // MainActivityのインスタンスを取得
-//                        TestActivity mainActivity = (TestActivity) getActivity();
-//                        mainActivity.setResultView(returnValue);
+
+                        boolean returnValue = true;
+                        // MainActivityのインスタンスを取得
+                        GenreIns genreInsActivity = (GenreIns) getActivity();
+                        genreInsActivity.setResultView(returnValue);
                     }
                 });
 

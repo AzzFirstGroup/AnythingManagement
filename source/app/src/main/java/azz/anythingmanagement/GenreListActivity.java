@@ -235,9 +235,11 @@ public class GenreListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    boolean a = false;
     public void setResultView(boolean resultValue){
         Context context = getApplicationContext();
-        if(resultValue){
+        a = resultValue;
+        if(a){
             Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
                         toast.show();
         }else{

@@ -11,7 +11,9 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/*
+ ジャンル一覧用削除ダイアログ
+ */
 public class DeleteDialog extends DialogFragment {
 
     String title="削除確認";
@@ -41,13 +43,11 @@ public class DeleteDialog extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO 削除処理(現在：トーストを出すのみ)
-                        Toast toast = Toast.makeText(getActivity(), "削除します。", Toast.LENGTH_SHORT);
-                        toast.show();
-//                        boolean returnValue = true;
-//                        // MainActivityのインスタンスを取得
-//                        TestActivity mainActivity = (TestActivity) getActivity();
-//                        mainActivity.setResultView(returnValue);
+
+                        boolean returnValue = true;
+                        // MainActivityのインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.setResultView(returnValue);
                     }
                 });
 
