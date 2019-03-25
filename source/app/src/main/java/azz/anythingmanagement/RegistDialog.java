@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import azz.anythingmanagement.R;
 import azz.anythingmanagement.TestActivity;
-import azz.anythingmanagement.daiki.anythingmanagement.GenreIns;
 
 /*
  ジャンル作成用登録ダイアログ
@@ -51,7 +50,8 @@ public class RegistDialog extends DialogFragment {
 
                         boolean returnValue = true;
                         // MainActivityのインスタンスを取得
-                        GenreIns genreInsActivity = (GenreIns) getActivity();
+//                        GenreIns genreInsActivity = (GenreIns) getActivity(); (ジャンル作成用登録に実装する際はこっち)
+                        GenreListActivity genreInsActivity = (GenreListActivity) getActivity();
                         genreInsActivity.setResultView(returnValue);
                     }
                 });
