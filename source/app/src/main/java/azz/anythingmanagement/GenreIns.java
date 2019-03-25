@@ -30,6 +30,8 @@ public class GenreIns extends AppCompatActivity {
 
         final Context cont = super.getApplicationContext();
 
+        final Intent intent = new Intent (this, FirstActivity.class);
+
         final Button bt = findViewById(R.id.button);
         final Button red = findViewById(R.id.ButtonR);
         final Button blue = findViewById(R.id.ButtonB);
@@ -58,14 +60,13 @@ public class GenreIns extends AppCompatActivity {
                 String str2 = str.replaceAll("^..","#");
 
                 Data reg_date = new Data();
-                tv.setText(text);
-                tv2.setText(str2);
                 et.setText("");
                 et.setTextColor(Color.BLACK);
                 genre.setGenreName(text);
                 genre.setColorInfo(str2);
                 reg_date.registGenreData(genre,cont);
 
+                startActivity(intent);
             }
         });
 
