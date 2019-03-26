@@ -2,84 +2,73 @@ package azz.anythingmanagement;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreListActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Data data;
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // set layout
         setContentView(R.layout.genrelist);
-
         // ジャンル作成ボタンの初期設定
         findViewById(R.id.insert_button).setOnClickListener(this);
+        // DB取得のための初期設定
+        context = super.getApplicationContext();
 
         // ジャンル一覧を取得
-        List<Genre> genreList = new ArrayList<Genre>();
-        // ここでDBからジャンル情報を取得なければ未設定のみを表示するようにする
+        data = new Data();
+        ArrayList<Genre> genreList = data.getGenreList(context);
+
+        // DBからジャンル情報を取得できない場合は未設定のみボタンを表示する
+        Button non_btn = findViewById(R.id.genruList_botton);
+        non_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), DataListActivity.class);
+                startActivity(intent);
+            }
+        });
         if(genreList.isEmpty()) {
             return;
         }
 
-        // ここでDBの件数分ボタンを設定する。
-        //ジャンル一覧ボタン生成
+        // 動的にボタンを生成しているように設定する
         for (int i = 0; i < genreList.size(); i++) {
-            String genreName = genreList.get(i).getGenreName();
-            String genreColorInfo = genreList.get(i).getColorInfo();
+            // 9ボタン以上は設定しない
+            if(i == 9)
+            {
+                return;
+            }
 
-            // ボタンの生成
-            Button btn = new Button(this);
-            RelativeLayout.LayoutParams prm = new RelativeLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,	//文字列の幅に合わせる
-                    LinearLayout.LayoutParams.WRAP_CONTENT);	//文字列の高さに合わせる
-            // ボタン間のマージン
-            prm.setMargins(20, 20, 0, 0);
-            //ボタン名称
-            btn.setText(genreName);
-            //ボタン背景色
-            btn.setBackgroundColor(Color.parseColor(genreColorInfo));
-            //ボタンのID
-            btn.setId(i + 1);
-            btn.setWidth(80);
-            btn.setHeight(80);
+            Button btn;
+            int y = i + 1;
+            btn = findViewById(R.id.genruList_botton+y);
+            btn.setVisibility(View.VISIBLE);
+            final String genrename = String.valueOf(genreList.get(i).getGenreName());
+            btn.setText(genrename);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplication(), testDataListActivity.class);
+                    Intent intent = new Intent(getApplication(), DataListActivity.class);
+                    intent.putExtra("genre", genrename);
                     startActivity(intent);
                 }
             });
         }
-
-        //ボタンのインスタンス生成
-        Button genreButton = findViewById(R.id.genruList_botton);
-        //ボタンクリック時のアプリ内アクティビティの呼び出し
-        genreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), testDataListActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
