@@ -17,9 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.RegistData;
@@ -39,11 +42,12 @@ public class DataListActivity extends AppCompatActivity {
     // Mapのキー
     private final String[] FROM = {"dataIndex", "dataTitle", "isDataReading"};
     // リソースのコントロールID
-    private final int[] TO = {R.id.dataIndex, R.id.dataTitle, R.id.isDataReading};
+    private final int[] TO = {R.id.dataIndex,  R.id.dataTitle, R.id.isDataReading};
     private Data data;
     private Context context;
     private List<Map<String, Object>> regDataMapList = null;
     private String intentGenreName = "";
+    private DataListAdapter adapter;
 
     /**
      * 画面一覧表示
@@ -69,10 +73,9 @@ public class DataListActivity extends AppCompatActivity {
         // リストデータの生成
         data = new Data();
         regDataMapList = convertRegistDataListToMapList(intentGenreName, data.getRegistDataList(this));
-        //regDataMapList = convertRegistDataListToMapList(this.getMockRegistData());
 
         // アダプターの設定
-        MyAdapter adapter = new MyAdapter(DataListActivity.this,
+        adapter = new DataListAdapter(DataListActivity.this,
                 regDataMapList, R.layout.datalist_detail, FROM, TO);
         listView.setAdapter(adapter);
 
@@ -113,6 +116,9 @@ public class DataListActivity extends AppCompatActivity {
                 delData.setTitle(dataTitle);
                 data = new Data();
                 data.deleteRegistData(delData, context);
+
+                regDataMapList.remove(position);
+                adapter.notifyDataSetChanged();
 
                 return true;
             }
@@ -196,7 +202,7 @@ public class DataListActivity extends AppCompatActivity {
             // ジャンル名がない場合は、全件表示
             for (RegistData regData : regDataList) {
                 Map<String, Object> regDataMap = new HashMap<String, Object>();
-                regDataMap.put("dataIndex", String.valueOf(index));
+                regDataMap.put("dataIndex", String.valueOf(index) + " / " + regData.getGenre());
                 regDataMap.put("dataGenre", regData.getGenre());
                 regDataMap.put("dataTitle", regData.getTitle());
                 if ("0".equals(regData.getTorokuFlg())) {
@@ -212,13 +218,13 @@ public class DataListActivity extends AppCompatActivity {
         return regDataMapList;
     }
 
-    // カスタムアダプター
-    private class MyAdapter extends SimpleAdapter {
+     // カスタムアダプター
+    private class DataListAdapter extends SimpleAdapter {
 
         // 外部から呼び出し可能なマップ
         public Map<Integer, Boolean> checkList = new HashMap<>();
 
-        public MyAdapter(Context context, List<? extends Map<String, ?>> data,
+        public DataListAdapter(Context context, List<? extends Map<String, ?>> data,
                          int resource, String[] from, int[] to) {
             super(context, data, resource, from, to);
 
