@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -82,6 +83,12 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         genreSpinner = (Spinner)findViewById(R.id.genrelist);
         imageButton = (ImageButton)findViewById(R.id.imageSet);
         zumiCheck = (CheckBox)findViewById(R.id.torokucheckBox);
+
+        // 入力要素があるものの背景色を白に変更
+        titleText.setBackgroundColor(Color.WHITE);
+        memoText.setBackgroundColor(Color.WHITE);
+        genreSpinner.setBackgroundColor(Color.WHITE);
+        zumiCheck.setBackgroundColor(Color.WHITE);
 
         // 現在日時の取得
         Date now = new Date(System.currentTimeMillis());
