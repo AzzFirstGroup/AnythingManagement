@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -29,6 +30,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     Context contextThis;
 
     // 評価値（初期値：3）
-    String evaluate = "3";
+    String evaluate;
 
     TextView titleText;
     TextView memoText;
@@ -65,6 +67,8 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     // 画像選択機能呼び出し時の戻り値確認用ID
     private static final int REQUEST_CHOOSER = 1000;
 
+    private static final String GENRE_DEFAULT = common.GENRE_UNSET;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,11 +84,23 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         imageButton = (ImageButton)findViewById(R.id.imageSet);
         zumiCheck = (CheckBox)findViewById(R.id.torokucheckBox);
 
+        // 入力要素があるものの背景色を白に変更
+        titleText.setBackgroundColor(Color.WHITE);
+        memoText.setBackgroundColor(Color.WHITE);
+        genreSpinner.setBackgroundColor(Color.WHITE);
+        zumiCheck.setBackgroundColor(Color.WHITE);
+
         // 現在日時の取得
         Date now = new Date(System.currentTimeMillis());
         // 日時フォーマット作成
         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String nowText = sdf.format(now);
+
+        // チェックボックス初期値設定（未設定：false）
+        zumiCheck.setChecked(false);
+
+        // 評価値初期設定（=3）
+        evaluate = "3" ;
 
         // 日付表示
         textDate.setText(nowText);
@@ -93,6 +109,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         Data data = new Data();
         ArrayList<Genre> genreList = data.getGenreList(this);
         ArrayList<String> nameList = new ArrayList();
+        nameList.add(GENRE_DEFAULT);
         for (Genre genre : genreList) {
             nameList.add(genre.getGenreName());
         }
@@ -167,22 +184,29 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegistData registData = new RegistData();
 
-                registData.setTitle(titleText.getText().toString());
-                registData.setMemo(memoText.getText().toString());
-                registData.setEvaluate(evaluate);
-                registData.setGenre(genreSpinner.getSelectedItem().toString());
-                registData.setImagePath(imageUri.toString());
-                if(zumiCheck.isChecked()){
-                    registData.setTorokuFlg(common.CHECKED);
-                }else{
-                    registData.setTorokuFlg(common.UNCHECKED);
+                if(titleText.getText().toString() == null || titleText.getText().toString().equals("")){
+                    Toast.makeText(context,"タイトルを入力してください",Toast.LENGTH_LONG).show();
+                } else {
+                    RegistData registData = new RegistData();
+
+                    registData.setTitle(titleText.getText().toString());
+                    registData.setMemo(memoText.getText().toString());
+                    registData.setEvaluate(evaluate);
+                    registData.setGenre(genreSpinner.getSelectedItem().toString());
+                    if(imageUri != null){
+                        registData.setImagePath(imageUri.toString());
+                    }
+
+                    if(zumiCheck.isChecked()){
+                        registData.setTorokuFlg(common.CHECKED);
+                    }else{
+                        registData.setTorokuFlg(common.UNCHECKED);
+                    }
+
+                    Data data = new Data();
+                    data.registRegistData(registData,context);
                 }
-
-                Data data = new Data();
-                data.registRegistData(registData,context);
-
             }
         });
 
@@ -222,60 +246,64 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             genreSpinner.setSelection(index);
 
             // 評価値設定
-            switch (registData.getEvaluate()){
-                case "1":
-                    evaluate = "1";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "2":
-                    evaluate = "2";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "3":
-                    evaluate = "3";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "4":
-                    evaluate = "4";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
-                case "5":
-                    evaluate = "5";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_on);
-                    break;
-                default:
-                    evaluate = "0";
-                    imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
-                    imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
-                    break;
+            if(registData.getEvaluate() != null){
+                switch (registData.getEvaluate()){
+                    case "1":
+                        evaluate = "1";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "2":
+                        evaluate = "2";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "3":
+                        evaluate = "3";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "4":
+                        evaluate = "4";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                    case "5":
+                        evaluate = "5";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_on);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_on);
+                        break;
+                    default:
+                        evaluate = "0";
+                        imageButtonStar1.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar2.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar4.setImageResource(android.R.drawable.btn_star_big_off);
+                        imageButtonStar5.setImageResource(android.R.drawable.btn_star_big_off);
+                        break;
+                }
             }
 
             // 画像設定
-            imageUri = Uri.parse(registData.getImagePath());
-            imageButton.setImageURI(imageUri);
+            if(registData.getImagePath() != null){
+                imageUri = Uri.parse(registData.getImagePath());
+                imageButton.setImageURI(imageUri);
+            }
 
         }
 

@@ -20,4 +20,7 @@ public class common {
     public static String CHECKED = "1";
     /* チェックボックス未設定状態 */
     public static String UNCHECKED = "0";
+
+    /* ジャンル未設定状態文字列 */
+    public static String GENRE_UNSET = "未設定";
 }

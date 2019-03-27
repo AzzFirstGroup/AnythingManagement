@@ -2,6 +2,7 @@ package azz.anythingmanagement;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -57,9 +58,19 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             Button btn;
             int y = i + 1;
             btn = findViewById(R.id.genruList_botton+y);
+            // ボタンの非透明化
             btn.setVisibility(View.VISIBLE);
             final String genrename = String.valueOf(genreList.get(i).getGenreName());
+            // ボタンに登録したジャンル名を設定
             btn.setText(genrename);
+            String genreColorInfo = genreList.get(i).getColorInfo();
+            // カラーコードが不正なものはデフォルトカラー
+            if(!colorCdCheck(genreColorInfo)){
+                genreColorInfo = "#00FA9A";
+            }
+            // ボタンのカラーコードを設定
+            btn.setBackgroundColor(Color.parseColor(genreColorInfo));
+            // 各ボタン押下時の挙動設定
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,5 +134,31 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * カラーコード文字列チェック
+     *
+     * 文字列が16進数のカラーコードであるかチェックするメソッド
+     * 16進数の文字列の場合、trueを返却
+     *
+     * @param str 判定文字列
+     * @return boolean
+     */
+    public boolean colorCdCheck(String str){
+        boolean result = false;
+
+        // 正規表現文字列
+        String matchStr = "#[a-zA-Z0-9]*";
+
+        if(str.length() != 7){
+            // 文字列長が7文字以外の場合
+            result = false;
+        }else if(str.matches(matchStr)){
+            // 正規表現と一致する場合、16進数カラーコードと判定
+            result = true;
+        }
+
+        return result;
     }
 }
