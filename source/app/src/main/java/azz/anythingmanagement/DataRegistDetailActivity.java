@@ -49,7 +49,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     Context contextThis;
 
     // 評価値（初期値：3）
-    String evaluate = "3";
+    String evaluate;
 
     TextView titleText;
     TextView memoText;
@@ -95,6 +95,12 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         // 日時フォーマット作成
         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String nowText = sdf.format(now);
+
+        // チェックボックス初期値設定（未設定：false）
+        zumiCheck.setChecked(false);
+
+        // 評価値初期設定（=3）
+        evaluate = "3" ;
 
         // 日付表示
         textDate.setText(nowText);
@@ -188,7 +194,10 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                     registData.setMemo(memoText.getText().toString());
                     registData.setEvaluate(evaluate);
                     registData.setGenre(genreSpinner.getSelectedItem().toString());
-                    registData.setImagePath(imageUri.toString());
+                    if(imageUri != null){
+                        registData.setImagePath(imageUri.toString());
+                    }
+
                     if(zumiCheck.isChecked()){
                         registData.setTorokuFlg(common.CHECKED);
                     }else{
