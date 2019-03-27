@@ -43,8 +43,9 @@ public class TestActivity extends AppCompatActivity {
 
                 Genre genre = new Genre();
                 RegistData registData = new RegistData();
-                genre.setGenreName("ジャンル１");
-                genre.setColorInfo("#FFFF00");
+
+                genre.setGenreName("Genre1");
+                genre.setColorInfo("テストカラー");
 
                 registData.setTitle("テストタイトル");
                 registData.setTorokuFlg("1");
@@ -96,11 +97,38 @@ public class TestActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.textView1)).setText(strGenre);
             }
         });
+        // データ一覧
+        Button dataListButton = findViewById(R.id.button5);
+        dataListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),DataListActivity.class);
+                //intent.putExtra("genre", "Genre1");
+                startActivity(intent);
+            }
+        });
+        Button ferstButton = findViewById(R.id.button1);
+        ferstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),FirstActivity.class);
+                startActivity(intent);
+            }
+        });
         Button genreListButton = findViewById(R.id.button2);
         genreListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(),GenreListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button genreInsButton = findViewById(R.id.button3);
+        genreInsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(),GenreIns.class);
                 startActivity(intent);
             }
         });
@@ -118,7 +146,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        Button dataDetailButton = findViewById(R.id.button5);
+        Button dataDetailButton = findViewById(R.id.button4);
         dataDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,17 +158,49 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Button ferstButton = findViewById(R.id.button1);
-        ferstButton.setOnClickListener(new View.OnClickListener() {
+        Button diaLogButton = findViewById(R.id.button6_1);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(),FirstActivity.class);
-                startActivity(intent);
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"regist");
+            }
+        });
+        diaLogButton = findViewById(R.id.button6_2);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"image");
+            }
+        });
+
+        diaLogButton = findViewById(R.id.button6_3);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"delete");
+            }
+        });
+
+        diaLogButton = findViewById(R.id.button6_4);
+        diaLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog dialog = new CustomDialog();
+                dialog.show(getSupportFragmentManager(),"discard");
             }
         });
     }
-
+    public void setResultView(boolean resultValue){
+        if(resultValue){
+            Intent intent = new Intent(getApplication(),GenreListActivity.class);
+            startActivity(intent);
+        }else{
+            //何もしない
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
