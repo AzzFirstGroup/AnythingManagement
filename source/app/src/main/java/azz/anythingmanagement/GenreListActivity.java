@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -134,6 +135,18 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    boolean dialogResult = false; // Dialogから取得したboolean用の変数
+    public void setResultView(boolean resultValue){
+        Context context = getApplicationContext();
+        dialogResult = resultValue; // Dialogからの戻り値を設定
+        if(dialogResult){
+            Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            //何もしない
+        }
     }
 
     /**

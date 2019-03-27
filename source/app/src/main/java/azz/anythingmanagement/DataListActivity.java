@@ -106,7 +106,7 @@ public class DataListActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("OnItemLongClick No.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                 // 削除ダイアログ表示
-                CustomDialog dialog = new CustomDialog();
+                //CustomDialog dialog = new CustomDialog();
 
                 // 削除処理
                 String dataTitle = regDataMapList.get(position).get("dataTitle").toString();

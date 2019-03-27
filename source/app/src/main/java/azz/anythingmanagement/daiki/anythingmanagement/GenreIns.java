@@ -1,22 +1,18 @@
-package azz.anythingmanagement;
+package azz.anythingmanagement.daiki.anythingmanagement;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import azz.anythingmanagement.common.common;
-import azz.anythingmanagement.xmlData.Genre;
+import azz.anythingmanagement.R;
 
 public class GenreIns extends AppCompatActivity {
 
@@ -29,49 +25,35 @@ public class GenreIns extends AppCompatActivity {
         final TextView tv = findViewById(R.id.textView);
         final TextView tv2 = findViewById(R.id.textView2);
 
-        final Context cont = super.getApplicationContext();
+        Button bt = findViewById(R.id.button);
+        Button red = findViewById(R.id.ButtonR);
+        Button blue = findViewById(R.id.ButtonB);
+        Button yello = findViewById(R.id.ButtonY);
+        Button green = findViewById(R.id.ButtonG);
+        Button mizblue = findViewById(R.id.ButtonMB);
+        Button puple = findViewById(R.id.ButtonPl);
+        Button yamabuki = findViewById(R.id.ButtonYB);
+        Button skyblue = findViewById(R.id.ButtonSBL);
+        Button vaiolet = findViewById(R.id.ButtonVA);
 
-        final Button bt = findViewById(R.id.button);
-        final Button red = findViewById(R.id.ButtonR);
-        final Button blue = findViewById(R.id.ButtonB);
-        final Button yello = findViewById(R.id.ButtonY);
-        final Button green = findViewById(R.id.ButtonG);
-        final Button mizblue = findViewById(R.id.ButtonMB);
-        final Button puple = findViewById(R.id.ButtonPl);
-        final Button yamabuki = findViewById(R.id.ButtonYB);
-        final Button skyblue = findViewById(R.id.ButtonSBL);
-        final Button vaiolet = findViewById(R.id.ButtonVA);
-
-        // テキストボックスの背景を白くする
-        et.setBackgroundColor(Color.WHITE);
         // 登録用ボタン
-        // ジャンル名、カラーを登録
         bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = et.getText().toString();
-                ColorStateList colorlist = et.getTextColors();
+         @Override
+         public void onClick(View v) {
+             String text = et.getText().toString();
+             ColorStateList colorlist = et.getTextColors();
 
-                Genre genre = new Genre();
+             int colordate = colorlist.getDefaultColor();
+             String str = Integer.toHexString(colordate);
+             String str2 = str.replaceAll("^..","#");
 
-                int colordate = colorlist.getDefaultColor();
-                String str = Integer.toHexString(colordate);
-                String str2 = str.replaceAll("^..","#");
-
-                Data reg_date = new Data();
-                tv.setText(text);
-                tv2.setText(str2);
-                et.setText("");
-                et.setTextColor(Color.BLACK);
-                genre.setGenreName(text);
-                genre.setColorInfo(str2);
-                reg_date.registGenreData(genre,cont);
-
-            }
+             tv.setText(text);
+             tv2.setText(str2);
+             et.setText("");
+             et.setTextColor(Color.BLACK);
+         }
         });
 
-        // カラー選択
-        // デフォルトは白
 
         // 赤色選択
         red.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +61,6 @@ public class GenreIns extends AppCompatActivity {
             public void onClick(View v) {
                 v.setBackgroundColor(Color.RED);
                 et.setTextColor(Color.RED);
-                // 選択枠の設定
-
             }
         });
 
@@ -88,7 +68,6 @@ public class GenreIns extends AppCompatActivity {
         blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.BLUE);
                 et.setTextColor(Color.BLUE);
             }
         });
@@ -165,57 +144,23 @@ public class GenreIns extends AppCompatActivity {
                 et.setTextColor(color_code);
             }
         });
+         // デフォルトは白
+
+          // 登録ボタン
+          // 入力した文字列,選択したカラーがxmlに記述されること
+          // 登録対象:ジャンル名,カラー情報
+
+          //
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        // ジャンル一覧に遷移(メニューボタン)
-        if (id == R.id.action_menuList1) {
-            Intent intent = new Intent (this, GenreListActivity.class);
-            startActivity(intent);
-        }
-
-        // ジャンル作成に遷移(メニューボタン)
-        if (id == R.id.action_menuList2) {
-            Intent intent = new Intent (this, GenreIns.class);
-            startActivity(intent);
-        }
-
-        // 新規作成に遷移(メニューボタン)
-        if (id == R.id.action_menuList3) {
-            Intent intent = new Intent (this, DataRegistDetailActivity.class);
-            intent.putExtra("mode", common.MODE_REGIST);
-            startActivity(intent);
-        }
-
-        // データ一覧に遷移(メニューボタン)
-        if (id == R.id.action_menuList4) {
-            Intent intent = new Intent (this, DataListActivity.class);
-            startActivity(intent);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     boolean a = false;
-    public void setResultView(boolean resultValue) {
+    public void setResultView(boolean resultValue){
         Context context = getApplicationContext();
         a = resultValue;
-        if (a) {
+        if(a){
             Toast toast = Toast.makeText(context, "登録します。", Toast.LENGTH_SHORT);
             toast.show();
-        } else {
+        }else{
             //何もしない
         }
     }
