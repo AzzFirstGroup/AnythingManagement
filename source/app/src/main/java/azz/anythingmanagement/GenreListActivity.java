@@ -14,13 +14,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreListActivity extends AppCompatActivity {
+
+    String buttonGenreName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +30,26 @@ public class GenreListActivity extends AppCompatActivity {
         //set layout
         setContentView(R.layout.genrelist);
 
-
         //ジャンル一覧を取得
         List<Genre> genreList = new ArrayList<Genre>();
         Data data = new Data();
+        genreList = data.getGenreList(this);
+
         //（テスト用スタブ使用）
         //genreList = data.readGenre(Genre genre, Context context);
+
         //テスト用
 
-        for(int i=0; i < 10; i++){
-            Genre genre = new Genre();
-            genre.setGenreName("ジャンル名 "+i);
-            genre.setColorInfo("#FF"+i+i+i+i);
-            genre.setSakujoFlg("0");
-            genreList.add(genre);
-            System.out.println(genre.getGenreName());
-            System.out.println(genre.getColorInfo());
-            System.out.println(genre.getSakujoFlg()+i);
-        }
+//        for(int i=0; i < 10; i++){
+//            Genre genre = new Genre();
+//            genre.setGenreName("ジャンル名 "+i);
+//            genre.setColorInfo("#FF"+i+i+i+i);
+//            genre.setSakujoFlg("0");
+//            genreList.add(genre);
+//            System.out.println(genre.getGenreName());
+//            System.out.println(genre.getColorInfo());
+//            System.out.println(genre.getSakujoFlg()+i);
+//        }
 
         //ジャンル一覧ボタン生成
         for (int i = 0; i < genreList.size(); i++) {
@@ -53,6 +57,20 @@ public class GenreListActivity extends AppCompatActivity {
             String genreColorInfo = genreList.get(i).getColorInfo();
             int num = i + 1;
             //String sakujoFlg = genreList.get(i).getSakujoFlg();
+            buttonGenreName = genreName;
+
+            // ジャンル名が設定されていないものは読み飛ばす
+            if(genreName == null || genreName.isEmpty()){
+                continue;
+            }
+            // カラーコードが設定されていないものは読み飛ばす
+            if(genreColorInfo == null || genreName.isEmpty()){
+                continue;
+            }
+            // カラーコードが不正なものは読み飛ばす
+            if(!colorCdCheck(genreColorInfo)){
+                continue;
+            }
 
             Button btn = new Button(this);
             /*ViewGroup.LayoutParams lp = btn.getLayoutParams();
@@ -75,9 +93,14 @@ public class GenreListActivity extends AppCompatActivity {
             btn.setWidth(80);
             btn.setHeight(80);
             btn.setOnClickListener(new View.OnClickListener() {
+
+                String buttonName = buttonGenreName;
+
                 @Override
                 public void onClick(View v) {
+
                     Intent intent = new Intent(getApplication(), testDataListActivity.class);
+                    intent.putExtra("genre",buttonName);
                     startActivity(intent);
                 }
             });
@@ -101,6 +124,7 @@ public class GenreListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(), testDataListActivity.class);
+                intent.putExtra("genre", common.GENRE_UNSET);
                 startActivity(intent);
             }
         });
@@ -208,5 +232,31 @@ public class GenreListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * カラーコード文字列チェック
+     *
+     * 文字列が16進数のカラーコードであるかチェックするメソッド
+     * 16進数の文字列の場合、trueを返却
+     *
+     * @param str 判定文字列
+     * @return boolean
+     */
+    public boolean colorCdCheck(String str){
+        boolean result = false;
+
+        // 正規表現文字列
+        String matchStr = "#[a-zA-Z0-9]*";
+
+        if(str.length() != 7){
+            // 文字列長が7文字以外の場合
+            result = false;
+        }else if(str.matches(matchStr)){
+            // 正規表現と一致する場合、16進数カラーコードと判定
+            result = true;
+        }
+
+        return result;
     }
 }
