@@ -92,6 +92,7 @@ public class GenreIns extends AppCompatActivity {
                 tv.setTextColor(Color.WHITE);
 
                 // 登録後はジャンル一覧画面に遷移
+                finish();
                 startActivity(intent);
             }
         });
