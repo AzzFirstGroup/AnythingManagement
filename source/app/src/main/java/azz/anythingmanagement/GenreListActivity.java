@@ -20,6 +20,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
 
     private Data data;
     private Context context;
+    private int button_count = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +52,16 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
 
         // 動的にボタンを生成しているように設定する
         for (int i = 0; i < genreList.size(); i++) {
-            // 9ボタン以上は設定しない(暫定対応)
-            if(i == 9)
-            {
+
+            // button生成時の上限設定
+            int y = i + 1;
+            if(y > button_count) {
                 return;
             }
 
             Button btn;
-            int y = i + 1;
             btn = findViewById(R.id.genruList_botton + y);
+            System.out.print(btn);
             // ボタンの非透明化
             btn.setVisibility(View.VISIBLE);
             final String genrename = String.valueOf(genreList.get(i).getGenreName());
@@ -99,7 +101,6 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
                     finish();
                     Intent intent = new Intent(getApplication(), GenreListActivity.class);
                     startActivity(intent);
-
                     return true;
                 }
             });
@@ -108,13 +109,21 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        // 各ボタンアクションで使用するintentをここで呼んでおく
-        Intent intent;
-        int id = v.getId();
-        // ジャンル登録画面へ遷移する
-        if(id == R.id.insert_button) {
-            intent = new Intent(this, GenreIns.class);
-            startActivity(intent);
+        // ジャンル一覧を取得
+        data = new Data();
+        ArrayList<Genre> genreList = data.getGenreList(context);
+        // 9件以上登録され無いようにする（暫定対応）
+        if(genreList.size() < button_count) {
+            // 各ボタンアクションで使用するintentをここで呼んでおく
+            Intent intent;
+            int id = v.getId();
+            // ジャンル登録画面へ遷移する
+            if (id == R.id.insert_button) {
+                intent = new Intent(this, GenreIns.class);
+                startActivity(intent);
+            }
+        }else{
+            return;
         }
     }
 
