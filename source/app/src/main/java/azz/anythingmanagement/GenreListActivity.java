@@ -137,18 +137,6 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
-    boolean dialogResult = false; // Dialogから取得したboolean用の変数
-    public void setResultView(boolean resultValue){
-        Context context = getApplicationContext();
-        dialogResult = resultValue; // Dialogからの戻り値を設定
-        if(dialogResult){
-            Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
-            toast.show();
-        }else{
-            //何もしない
-        }
-    }
-
     /**
      * カラーコード文字列チェック
      *
@@ -173,5 +161,17 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         }
 
         return result;
+    }
+
+    boolean dialogResult = false; // Dialogから取得したboolean用の変数
+    public void setResultView(boolean resultValue){
+        Context context = getApplicationContext();
+        dialogResult = resultValue; // Dialogからの戻り値を設定
+        if(dialogResult){
+            Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            //何もしない
+        }
     }
 }
