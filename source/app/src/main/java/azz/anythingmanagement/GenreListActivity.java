@@ -34,6 +34,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         // ジャンル一覧を取得
         data = new Data();
         ArrayList<Genre> genreList = data.getGenreList(context);
+        // TODO::登録順にソートする処理が入る想定
 
         // DBからジャンル情報を取得できない場合は未設定のみボタンを表示する
         Button non_btn = findViewById(R.id.genruList_botton);
@@ -50,7 +51,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
 
         // 動的にボタンを生成しているように設定する
         for (int i = 0; i < genreList.size(); i++) {
-            // 9ボタン以上は設定しない
+            // 9ボタン以上は設定しない(暫定対応)
             if(i == 9)
             {
                 return;
@@ -58,7 +59,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
 
             Button btn;
             int y = i + 1;
-            btn = findViewById(R.id.genruList_botton+y);
+            btn = findViewById(R.id.genruList_botton + y);
             // ボタンの非透明化
             btn.setVisibility(View.VISIBLE);
             final String genrename = String.valueOf(genreList.get(i).getGenreName());
@@ -66,7 +67,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             btn.setText(genrename);
             String genreColorInfo = genreList.get(i).getColorInfo();
             // カラーコードが不正なものはデフォルトカラー
-            if(!colorCdCheck(genreColorInfo)){
+            if (!colorCdCheck(genreColorInfo)) {
                 genreColorInfo = "#00FA9A";
             }
             // ボタンのカラーコードを設定
@@ -78,6 +79,28 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
                     Intent intent = new Intent(getApplication(), DataListActivity.class);
                     intent.putExtra("genre", genrename);
                     startActivity(intent);
+                }
+            });
+
+            // 各ボタン長押し時の挙動
+            btn.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    // 削除ダイアログ表示
+                    //CustomDialog dialog = new CustomDialog();
+
+                    // 削除処理
+                    String GenreName = "４";
+                    Genre delData = new Genre();
+                    delData.setGenreName(GenreName);
+                    data = new Data();
+                    data.deleteGenreData(delData, context);
+
+                    // 登録後はジャンル一覧画面を再描画
+                    finish();
+                    Intent intent = new Intent(getApplication(), GenreListActivity.class);
+                    startActivity(intent);
+
+                    return true;
                 }
             });
         }

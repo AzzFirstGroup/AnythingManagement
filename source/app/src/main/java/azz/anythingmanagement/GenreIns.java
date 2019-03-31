@@ -21,7 +21,7 @@ import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreIns extends AppCompatActivity {
-    private int registrationorder = 1;
+    private int defaultregistrationorder = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class GenreIns extends AppCompatActivity {
 
         final EditText et = findViewById(R.id.editText);
         final TextView tv = findViewById(R.id.textView);
+        tv.setTextColor(Color.WHITE);
 
         final Context cont = super.getApplicationContext();
         final Intent intent = new Intent (this, GenreListActivity.class);
@@ -56,6 +57,11 @@ public class GenreIns extends AppCompatActivity {
                 String text = et.getText().toString();
                 ColorStateList colorlist = tv.getTextColors();
 
+                // テキストに何も記載が無かったら登録しない
+                if(text.isEmpty()) {
+                    return;
+                }
+
                 int colordate = colorlist.getDefaultColor();
                 String str = Integer.toHexString(colordate);
                 String str2 = str.replaceAll("^..","#");
@@ -71,9 +77,10 @@ public class GenreIns extends AppCompatActivity {
                 // 登録順序を設定
                 ArrayList<Genre> genreList = reg_date.getGenreList(cont);
                 if(genreList.isEmpty()){
-                    genre.setregistrationOrder(registrationorder);
+                    genre.setregistrationOrder(defaultregistrationorder);
                 }else{
-                    int count = genreList.size();
+                    int key = genreList.size() - 1;
+                    int count = genreList.get(key).getregistrationOrder();
                     genre.setregistrationOrder(count + 1);
                 }
 
@@ -82,7 +89,7 @@ public class GenreIns extends AppCompatActivity {
 
                 // 入力したデータの初期化
                 et.setText("");
-                tv.setTextColor(Color.BLACK);
+                tv.setTextColor(Color.WHITE);
 
                 // 登録後はジャンル一覧画面に遷移
                 startActivity(intent);
