@@ -6,6 +6,8 @@ public class Genre {
     private String genreName;
     /* カラー情報 */
     private String colorInfo;
+    /* 登録順情報 */
+    private int registrationOrder;
     /* 削除フラグ */
     private String sakujoFlg;
 
@@ -46,6 +48,22 @@ public class Genre {
     }
 
     /**
+     * 登録順情報フラグgetter
+     *
+     * @return registrationOrder
+     */
+    public int getregistrationOrder(){
+        return this.registrationOrder;
+    }
+
+    /**
+     * 登録順情報フラグsetter
+     *
+     * @param registrationOrder
+     */
+    public void setregistrationOrder(int registrationOrder){ this.registrationOrder = registrationOrder; }
+
+    /**
      * 削除フラグgetter
      *
      * @return sakujoFlg
@@ -55,7 +73,7 @@ public class Genre {
     }
 
     /**
-     * カラー情報setter
+     * 削除フラグsetter
      *
      * @param sakujoFlg
      */

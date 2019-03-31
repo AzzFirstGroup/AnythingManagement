@@ -33,7 +33,6 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             // 新規登録画面に遷移する
-            // TODO:: 仮でDataRegistDetailActivityを設定しているが、新規登録画面ができたらここを変更する
             case R.id.bNewCreate:
                 intent = new Intent (this, DataRegistDetailActivity.class);
                 intent.putExtra("mode", common.MODE_REGIST);
@@ -68,7 +67,6 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         }
 
         // 新規作成に遷移(メニューボタン)
-        // TODO:: 仮でDataRegistDetailActivity設定
         if (id == R.id.action_menuList3) {
             Intent intent = new Intent (this, DataRegistDetailActivity.class);
             intent.putExtra("mode", common.MODE_REGIST);
@@ -76,9 +74,8 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataListActivity.class);
             startActivity(intent);
         }
 

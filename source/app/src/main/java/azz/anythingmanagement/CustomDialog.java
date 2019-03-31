@@ -23,8 +23,15 @@ public class CustomDialog extends DialogFragment {
     String title2="画像取得";
     String title3="削除確認";
     String title4="作成中です";
+
+    boolean returnValue = false;
+
     private static final int REQUEST_CHOOSER = 1000;
     private Uri m_uri;
+
+
+    // TODO ★ここが怪しい★ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
+    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
 
     // ダイアログが生成された時に呼ばれるメソッド ※必須
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -34,7 +41,7 @@ public class CustomDialog extends DialogFragment {
         String dialogTag = this.getTag();
         boolean resultValue = false;
         switch(dialogTag) {
-            case "regist": // 登録確認ダイアログ
+            case "regist": // 登録確認ダイアログ(ジャンル作成)
 
                 String title = title1;
                 TextView textView = new TextView(getActivity());
@@ -53,84 +60,137 @@ public class CustomDialog extends DialogFragment {
                         // TODO 登録画面へ遷移(現在：トーストを出すのみ)
                         Toast toast = Toast.makeText(getActivity(), "登録されました。", Toast.LENGTH_SHORT);
                         toast.show();
-                         OkButton();
+//                         OkButton();
+                        boolean returnValue = true;
+                        // ジャンル作成のインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.setResultView(returnValue);
                     }
                 });
 
                 // NGボタン作成
-                NgButton(dialogBuilder);
+                dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean returnValue = false;
+                        // ジャンル作成のインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.setResultView(returnValue);
+                    }
+                });
+//                NgButton(dialogBuilder);
                 break;
-
-            case "image": // 画像取得ダイアログ
-
-                title = title2;
-                textView = new TextView(getActivity());
-                // タイトル部分を編集
-                textView = TitleStyle(title);
-                // タイトル部分を設定
-                dialogBuilder.setCustomTitle(textView);
-                // 表示する文章設定
-                dialogBuilder.setMessage("どのパターンのダイアログを表示しますか？");
-
-                // カメラ起動確認ボタン作成
-                dialogBuilder.setPositiveButton("カメラ", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO カメラ起動処理(現在：トーストを出すのみ)
-                        Toast toast = Toast.makeText(getActivity(), "カメラ起動", Toast.LENGTH_SHORT);
-                        toast.show();
-
-                        //カメラの起動Intentの用意
-                        String photoName = System.currentTimeMillis() + ".jpg";
-                        ContentValues contentValues = new ContentValues();
-                        contentValues.put(MediaStore.Images.Media.TITLE, photoName);
-                        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                        m_uri = getContext().getContentResolver()
-                                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-                        Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, m_uri);
-
-                        Intent intent = Intent.createChooser(intentCamera, "画像の選択");
-                        startActivityForResult(intent, REQUEST_CHOOSER);
-                    }
-                });
-
-                // フォルダ開くボタン作成
-                dialogBuilder.setNegativeButton("フォルダを開く", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO フォルダを開く処理(現在：トーストを出すのみ)
-                        Toast toast = Toast.makeText(getActivity(), "フォルダを開きます", Toast.LENGTH_SHORT);
-                        toast.show();
-
-                        Intent intentGallery;
-                        if (Build.VERSION.SDK_INT < 19) {
-                            intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
-                            intentGallery.setType("image/*");
-                        } else {
-                            intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intentGallery.setType("image/jpeg");
-                        }
-                        Intent intent = Intent.createChooser(intentGallery, "画像の選択");
-                        startActivityForResult(intent, REQUEST_CHOOSER);
-                    }
-
-                });
-
-                dialogBuilder.setNeutralButton("キャンセル", new DialogInterface.OnClickListener(){
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 何もしないで閉じる
-                    }
-                });
-                break;
-
-            case "delete": // 削除確認ダイアログ
+//            case R.id.button6_1: // 登録確認ダイアログ(データ登録詳細)
+//
+//                title = title1;
+//                textView = new TextView(getActivity());
+//                // タイトル部分を編集
+//                textView = TitleStyle(title);
+//                // タイトル部分を設定
+//                dialogBuilder.setCustomTitle(textView);
+//
+//                // 表示する文章設定
+//                dialogBuilder.setMessage("登録しますか？");
+//
+//                // 登録確認ボタン作成
+//                dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+////                        Toast toast = Toast.makeText(getActivity(), "登録されました。", Toast.LENGTH_SHORT);
+////                        toast.show();
+////                         OkButton();
+//                        boolean returnValue = true;
+//                        // データ登録詳細のインスタンスを取得
+//                        DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
+//                        dataRegistDetailActivity.setResultView(returnValue);
+//                    }
+//                });
+//
+//                // NGボタン作成
+//                dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        boolean returnValue = false;
+//                        // ジャンル作成のインスタンスを取得
+//                        DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
+//                        dataRegistDetailActivity.setResultView(returnValue);
+//                    }
+//                });
+////                NgButton(dialogBuilder);
+//
+//                break;
+//
+//            case R.id.button6_2: // 画像取得ダイアログ
+//
+//                title = title2;
+//                textView = new TextView(getActivity());
+//                // タイトル部分を編集
+//                textView = TitleStyle(title);
+//                // タイトル部分を設定
+//                dialogBuilder.setCustomTitle(textView);
+//                // 表示する文章設定
+//                dialogBuilder.setMessage("どのパターンのダイアログを表示しますか？");
+//
+//                // カメラ起動確認ボタン作成
+//                dialogBuilder.setPositiveButton("カメラ", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // TODO カメラ起動処理(現在：トーストを出すのみ)
+//                        Toast toast = Toast.makeText(getActivity(), "カメラ起動", Toast.LENGTH_SHORT);
+//                        toast.show();
+//
+//                        //カメラの起動Intentの用意
+//                        String photoName = System.currentTimeMillis() + ".jpg";
+//                        ContentValues contentValues = new ContentValues();
+//                        contentValues.put(MediaStore.Images.Media.TITLE, photoName);
+//                        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+//                        m_uri = getContext().getContentResolver()
+//                                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+//
+//                        Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, m_uri);
+//
+//                        Intent intent = Intent.createChooser(intentCamera, "画像の選択");
+//                        startActivityForResult(intent, REQUEST_CHOOSER);
+//                    }
+//                });
+//
+//                // フォルダ開くボタン作成
+//                dialogBuilder.setNegativeButton("フォルダを開く", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // TODO フォルダを開く処理(現在：トーストを出すのみ)
+//                        Toast toast = Toast.makeText(getActivity(), "フォルダを開きます", Toast.LENGTH_SHORT);
+//                        toast.show();
+//
+//                        Intent intentGallery;
+//                        if (Build.VERSION.SDK_INT < 19) {
+//                            intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
+//                            intentGallery.setType("image/*");
+//                        } else {
+//                            intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                            intentGallery.setType("image/jpeg");
+//                        }
+//                        Intent intent = Intent.createChooser(intentGallery, "画像の選択");
+//                        startActivityForResult(intent, REQUEST_CHOOSER);
+//                    }
+//
+//                });
+//
+//                dialogBuilder.setNeutralButton("キャンセル", new DialogInterface.OnClickListener(){
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // 何もしないで閉じる
+//                    }
+//                });
+//                break;
+//
+            case "delete": // 削除確認ダイアログ(ジャンル一覧)
 
                 title = title3;
                 textView = new TextView(getActivity());
@@ -149,46 +209,93 @@ public class CustomDialog extends DialogFragment {
                         // TODO 削除処理(現在：トーストを出すのみ)
                         Toast toast = Toast.makeText(getActivity(), "削除されました。", Toast.LENGTH_SHORT);
                         toast.show();
-                        OkButton();
+//                        OkButton();
+                        boolean returnValue = true;
+                        // ジャンル一覧のインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.setResultView(returnValue);
                     }
                 });
 
                 // NGボタン作成
-                NgButton(dialogBuilder);
-
-                break;
-
-            case "discard": //破棄確認ダイアログ
-
-                title = title4;
-                textView = new TextView(getActivity());
-                // タイトル部分を編集
-                textView = TitleStyle(title);
-                // タイトル部分を設定
-                dialogBuilder.setCustomTitle(textView);
-                // 表示する文章設定
-                dialogBuilder.setMessage("破棄しますか？");
-
-                // 破棄確認ボタン作成
-                dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO 破棄処理(現在：トーストを出すのみ)
-                        Toast toast = Toast.makeText(getActivity(), "破棄されました。", Toast.LENGTH_SHORT);
-                        toast.show();
-                        OkButton();
+                        boolean returnValue = false;
+                        // ジャンル一覧のインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.setResultView(returnValue);
                     }
                 });
-
-                // NGボタン作成
-                NgButton(dialogBuilder);
-
-                break;
+////                NgButton(dialogBuilder);
+//
+//                break;
+//
+//            case R.id.button6_4: //破棄確認ダイアログ
+//
+//                title = title4;
+//                textView = new TextView(getActivity());
+//                // タイトル部分を編集
+//                textView = TitleStyle(title);
+//                // タイトル部分を設定
+//                dialogBuilder.setCustomTitle(textView);
+//                // 表示する文章設定
+//                dialogBuilder.setMessage("破棄しますか？");
+//
+//                // 破棄確認ボタン作成
+//                dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // TODO 破棄処理(現在：トーストを出すのみ)
+//                        Toast toast = Toast.makeText(getActivity(), "破棄されました。", Toast.LENGTH_SHORT);
+//                        toast.show();
+////                        OkButton();
+//                        boolean returnValue = true;
+//                        // 画面のインスタンスを取得
+//                        TestActivity mainActivity = (TestActivity) getActivity();
+//                        mainActivity.setResultView(returnValue);
+//                    }
+//                });
+//
+//                // NGボタン作成
+//                NgButton(dialogBuilder);
+//
+//                break;
         }
 
         // dialogBulderを返す
         return dialogBuilder.create();
+    }
+    public boolean delete(){
+        String title = title3;
+        TextView textView = new TextView(getActivity());
+        // タイトル部分を編集
+        textView = TitleStyle(title);
+        // タイトル部分を設定
+        dialogBuilder.setCustomTitle(textView);
+        // 表示する文章設定
+        dialogBuilder.setMessage("削除しますか？");
+
+        // 削除確認ボタン作成
+        dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                returnValue = true;
+            }
+        });
+
+        // NGボタン作成
+        dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 何もしない
+            }
+        });
+        return returnValue;
     }
 
     private TextView TitleStyle(String titleText){
@@ -203,14 +310,14 @@ public class CustomDialog extends DialogFragment {
         return textView;
     }
 
-    private void OkButton(){
-        // editTextの内容を元画面に反映する
-        // editTextから値を取得
-        boolean returnValue = true;
-        // MainActivityのインスタンスを取得
-        TestActivity mainActivity = (TestActivity) getActivity();
-        mainActivity.setResultView(returnValue);
-    }
+//    private void OkButton(){
+//        // editTextの内容を元画面に反映する
+//        // editTextから値を取得
+//        boolean returnValue = true;
+//        // MainActivityのインスタンスを取得
+//        TestActivity mainActivity = (TestActivity) getActivity();
+//        mainActivity.setResultView(returnValue);
+//    }
 
     private void NgButton(AlertDialog.Builder dialogBuilder){
         // NGボタン作成

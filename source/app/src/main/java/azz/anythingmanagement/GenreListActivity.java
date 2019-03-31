@@ -3,191 +3,119 @@ package azz.anythingmanagement;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
-public class GenreListActivity extends AppCompatActivity {
+public class GenreListActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String buttonGenreName;
+    private Data data;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set layout
+        // set layout
         setContentView(R.layout.genrelist);
+        // ジャンル作成ボタンの初期設定
+        findViewById(R.id.insert_button).setOnClickListener(this);
+        // DB取得のための初期設定
+        context = super.getApplicationContext();
 
-        //ジャンル一覧を取得
-        List<Genre> genreList = new ArrayList<Genre>();
-        Data data = new Data();
-        genreList = data.getGenreList(this);
+        // ジャンル一覧を取得
+        data = new Data();
+        ArrayList<Genre> genreList = data.getGenreList(context);
+        // TODO::登録順にソートする処理が入る想定
 
-        //（テスト用スタブ使用）
-        //genreList = data.readGenre(Genre genre, Context context);
-
-        //テスト用
-
-//        for(int i=0; i < 10; i++){
-//            Genre genre = new Genre();
-//            genre.setGenreName("ジャンル名 "+i);
-//            genre.setColorInfo("#FF"+i+i+i+i);
-//            genre.setSakujoFlg("0");
-//            genreList.add(genre);
-//            System.out.println(genre.getGenreName());
-//            System.out.println(genre.getColorInfo());
-//            System.out.println(genre.getSakujoFlg()+i);
-//        }
-
-        //ジャンル一覧ボタン生成
-        for (int i = 0; i < genreList.size(); i++) {
-            String genreName = genreList.get(i).getGenreName();
-            String genreColorInfo = genreList.get(i).getColorInfo();
-            int num = i + 1;
-            //String sakujoFlg = genreList.get(i).getSakujoFlg();
-            buttonGenreName = genreName;
-
-            // ジャンル名が設定されていないものは読み飛ばす
-            if(genreName == null || genreName.isEmpty()){
-                continue;
-            }
-            // カラーコードが設定されていないものは読み飛ばす
-            if(genreColorInfo == null || genreName.isEmpty()){
-                continue;
-            }
-            // カラーコードが不正なものは読み飛ばす
-            if(!colorCdCheck(genreColorInfo)){
-                continue;
-            }
-
-            Button btn = new Button(this);
-            /*ViewGroup.LayoutParams lp = btn.getLayoutParams();
-            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)lp;
-            mlp.setMargins(20,20, mlp.rightMargin, mlp.bottomMargin);
-            //マージンを設定
-            btn.setLayoutParams(mlp);*/
-
-            RelativeLayout.LayoutParams prm = new RelativeLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,	//文字列の幅に合わせる
-                    LinearLayout.LayoutParams.WRAP_CONTENT);	//文字列の高さに合わせる
-            // ボタン間のマージン
-            prm.setMargins(20, 20, 0, 0);
-            //ボタン名称
-            btn.setText(genreName);
-            //ボタン背景色
-            btn.setBackgroundColor(Color.parseColor(genreColorInfo));
-            //ボタンのID
-            btn.setId(i + 1);
-            btn.setWidth(80);
-            btn.setHeight(80);
-            btn.setOnClickListener(new View.OnClickListener() {
-
-                String buttonName = buttonGenreName;
-
-                @Override
-                public void onClick(View v) {
-
-                    Intent intent = new Intent(getApplication(), testDataListActivity.class);
-                    intent.putExtra("genre",buttonName);
-                    startActivity(intent);
-                }
-            });
-            RelativeLayout r = (RelativeLayout) findViewById(R.id.rl);
-            r.addView(btn,prm);
-        }
-
-        //set toolbar
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-        });*/
-
-        //ボタンのインスタンス生成
-        Button genreButton = findViewById(R.id.genruList_botton);
-        //ボタンクリック時のアプリ内アクティビティの呼び出し
-        genreButton.setOnClickListener(new View.OnClickListener() {
+        // DBからジャンル情報を取得できない場合は未設定のみボタンを表示する
+        Button non_btn = findViewById(R.id.genruList_botton);
+        non_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), testDataListActivity.class);
-                intent.putExtra("genre", common.GENRE_UNSET);
+                Intent intent = new Intent(getApplication(), DataListActivity.class);
                 startActivity(intent);
             }
         });
-    }
-    //ここから幅計算
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl);
-        // 子供の数を取得
-        int l = rl.getChildCount();
-        // 無いなら何もしない
-        if (l == 0) {
-            System.out.println("**************************  "+l+"  *********************************************************************");
+        if(genreList.isEmpty()) {
             return;
         }
-        System.out.println("----------------------------------   "+l+"   ---------------------------------------------------------------------------------");
 
-        // ディスプレイの横幅を取得
-        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        //int max = display.getWidth();
-        Point size = new Point();
-        display.getSize(size);
-        //画面サイズ
-        int screenWidth = size.x;
-        int screenHeight = size.y;
+        // 動的にボタンを生成しているように設定する
+        for (int i = 0; i < genreList.size(); i++) {
+            // 9ボタン以上は設定しない(暫定対応)
+            if(i == 9)
+            {
+                return;
+            }
 
-        int margin = 0;
-        // 一番最初は基点となるので何もしない
-        View pline = rl.getChildAt(0);
-        // 一行全体の長さ
-        int total = pline.getWidth() + margin;
-        for (int i = 1; i < l; i++) {
-            int w = rl.getChildAt(i).getWidth() + margin;
-            RelativeLayout.LayoutParams prm = (RelativeLayout.LayoutParams) rl
-                    .getChildAt(i).getLayoutParams();
-            // 横幅を超えないなら前のボタンの右に出す
-            if (screenWidth > total + w) {
-                total += w;
-                prm.addRule(RelativeLayout.ALIGN_TOP, i);
-                prm.addRule(RelativeLayout.RIGHT_OF, i);
+            Button btn;
+            int y = i + 1;
+            btn = findViewById(R.id.genruList_botton + y);
+            // ボタンの非透明化
+            btn.setVisibility(View.VISIBLE);
+            final String genrename = String.valueOf(genreList.get(i).getGenreName());
+            // ボタンに登録したジャンル名を設定
+            btn.setText(genrename);
+            String genreColorInfo = genreList.get(i).getColorInfo();
+            // カラーコードが不正なものはデフォルトカラー
+            if (!colorCdCheck(genreColorInfo)) {
+                genreColorInfo = "#00FA9A";
             }
-            // 超えたら下に出す
-            else {
-                prm.addRule(RelativeLayout.BELOW, pline.getId());
-                // 基点を変更
-                pline = rl.getChildAt(i);
-                // 長さをリセット
-                total = pline.getWidth() + margin;
-            }
+            // ボタンのカラーコードを設定
+            btn.setBackgroundColor(Color.parseColor(genreColorInfo));
+            // 各ボタン押下時の挙動設定
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplication(), DataListActivity.class);
+                    intent.putExtra("genre", genrename);
+                    startActivity(intent);
+                }
+            });
+
+            // 各ボタン長押し時の挙動
+            btn.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    // TODO::削除ダイアログ表示
+                    //CustomDialog dialog = new CustomDialog();
+                    
+                    // 削除処理
+                    String GenreName = btn.getText().toString();
+                    Genre delData = new Genre();
+                    delData.setGenreName(GenreName);
+                    data = new Data();
+                    data.deleteGenreData(delData, context);
+
+                    // 登録後はジャンル一覧画面を再描画
+                    finish();
+                    Intent intent = new Intent(getApplication(), GenreListActivity.class);
+                    startActivity(intent);
+
+                    return true;
+                }
+            });
         }
+    }
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
+    @Override
+    public void onClick(View v) {
+        // 各ボタンアクションで使用するintentをここで呼んでおく
+        Intent intent;
+        int id = v.getId();
+        // ジャンル登録画面へ遷移する
+        if(id == R.id.insert_button) {
+            intent = new Intent(this, GenreIns.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -211,23 +139,21 @@ public class GenreListActivity extends AppCompatActivity {
         }
 
         // ジャンル作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList2) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, GenreIns.class);
             startActivity(intent);
         }
 
         // 新規作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList3) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
             startActivity(intent);
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataListActivity.class);
             startActivity(intent);
         }
 
@@ -258,5 +184,17 @@ public class GenreListActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    boolean dialogResult = false; // Dialogから取得したboolean用の変数
+    public void setResultView(boolean resultValue){
+        Context context = getApplicationContext();
+        dialogResult = resultValue; // Dialogからの戻り値を設定
+        if(dialogResult){
+            Toast toast = Toast.makeText(context, "削除します。", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            //何もしない
+        }
     }
 }

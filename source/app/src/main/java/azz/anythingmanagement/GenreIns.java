@@ -13,11 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreIns extends AppCompatActivity {
+    private int defaultregistrationorder = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,10 @@ public class GenreIns extends AppCompatActivity {
 
         final EditText et = findViewById(R.id.editText);
         final TextView tv = findViewById(R.id.textView);
-        final TextView tv2 = findViewById(R.id.textView2);
+        tv.setTextColor(Color.WHITE);
 
         final Context cont = super.getApplicationContext();
+        final Intent intent = new Intent (this, GenreListActivity.class);
 
         final Button bt = findViewById(R.id.button);
         final Button red = findViewById(R.id.ButtonR);
@@ -48,24 +53,46 @@ public class GenreIns extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 入力したデータの取得
                 String text = et.getText().toString();
-                ColorStateList colorlist = et.getTextColors();
+                ColorStateList colorlist = tv.getTextColors();
 
-                Genre genre = new Genre();
+                // テキストに何も記載が無かったら登録しない
+                if(text.isEmpty()) {
+                    return;
+                }
 
                 int colordate = colorlist.getDefaultColor();
                 String str = Integer.toHexString(colordate);
                 String str2 = str.replaceAll("^..","#");
 
+                // DBアクセス用の初期化
                 Data reg_date = new Data();
-                tv.setText(text);
-                tv2.setText(str2);
-                et.setText("");
-                et.setTextColor(Color.BLACK);
+                Genre genre = new Genre();
+
+                // DB登録用データ
                 genre.setGenreName(text);
                 genre.setColorInfo(str2);
+
+                // 登録順序を設定
+                ArrayList<Genre> genreList = reg_date.getGenreList(cont);
+                if(genreList.isEmpty()){
+                    genre.setregistrationOrder(defaultregistrationorder);
+                }else{
+                    int key = genreList.size() - 1;
+                    int count = genreList.get(key).getregistrationOrder();
+                    genre.setregistrationOrder(count + 1);
+                }
+
+                // DBに登録
                 reg_date.registGenreData(genre,cont);
 
+                // 入力したデータの初期化
+                et.setText("");
+                tv.setTextColor(Color.WHITE);
+
+                // 登録後はジャンル一覧画面に遷移
+                startActivity(intent);
             }
         });
 
@@ -77,9 +104,8 @@ public class GenreIns extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.setBackgroundColor(Color.RED);
-                et.setTextColor(Color.RED);
-                // 選択枠の設定
-
+                tv.setTextColor(Color.RED);
+                tv.setBackgroundColor(Color.RED);
             }
         });
 
@@ -88,7 +114,8 @@ public class GenreIns extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.setBackgroundColor(Color.BLUE);
-                et.setTextColor(Color.BLUE);
+                tv.setTextColor(Color.BLUE);
+                tv.setBackgroundColor(Color.BLUE);
             }
         });
 
@@ -97,7 +124,8 @@ public class GenreIns extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.setBackgroundColor(Color.YELLOW);
-                et.setTextColor(Color.YELLOW);
+                tv.setTextColor(Color.YELLOW);
+                tv.setBackgroundColor(Color.YELLOW);
             }
         });
 
@@ -106,7 +134,8 @@ public class GenreIns extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.setBackgroundColor(Color.GREEN);
-                et.setTextColor(Color.GREEN);
+                tv.setTextColor(Color.GREEN);
+                tv.setBackgroundColor(Color.GREEN);
             }
         });
 
@@ -117,7 +146,8 @@ public class GenreIns extends AppCompatActivity {
                 Resources res = getResources();
                 int color_code = res.getColor(R.color.buttonColormiz);
                 v.setBackgroundColor(color_code);
-                et.setTextColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
@@ -128,7 +158,8 @@ public class GenreIns extends AppCompatActivity {
                 Resources res = getResources();
                 int color_code = res.getColor(R.color.buttonColorpoplr);
                 v.setBackgroundColor(color_code);
-                et.setTextColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
@@ -139,7 +170,8 @@ public class GenreIns extends AppCompatActivity {
                 Resources res = getResources();
                 int color_code = res.getColor(R.color.buttonColorgold);
                 v.setBackgroundColor(color_code);
-                et.setTextColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
@@ -150,7 +182,8 @@ public class GenreIns extends AppCompatActivity {
                 Resources res = getResources();
                 int color_code = res.getColor(R.color.buttonColorskyblue);
                 v.setBackgroundColor(color_code);
-                et.setTextColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
@@ -161,10 +194,12 @@ public class GenreIns extends AppCompatActivity {
                 Resources res = getResources();
                 int color_code = res.getColor(R.color.buttonColorviolet);
                 v.setBackgroundColor(color_code);
-                et.setTextColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -193,7 +228,6 @@ public class GenreIns extends AppCompatActivity {
         }
 
         // 新規作成に遷移(メニューボタン)
-        // TODO:: 仮でDataRegistDetailActivity設定
         if (id == R.id.action_menuList3) {
             Intent intent = new Intent (this, DataRegistDetailActivity.class);
             intent.putExtra("mode", common.MODE_REGIST);
@@ -201,12 +235,23 @@ public class GenreIns extends AppCompatActivity {
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent (this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataListActivity.class);
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    boolean a = false;
+    public void setResultView(boolean resultValue) {
+        Context context = getApplicationContext();
+        a = resultValue;
+        if (a) {
+            Toast toast = Toast.makeText(context, "登録します。", Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            //何もしない
+        }
     }
 }
