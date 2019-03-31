@@ -85,11 +85,11 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             // 各ボタン長押し時の挙動
             btn.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
-                    // 削除ダイアログ表示
+                    // TODO::削除ダイアログ表示
                     //CustomDialog dialog = new CustomDialog();
-
+                    
                     // 削除処理
-                    String GenreName = "４";
+                    String GenreName = btn.getText().toString();
                     Genre delData = new Genre();
                     delData.setGenreName(GenreName);
                     data = new Data();
