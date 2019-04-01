@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,10 +22,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/dataGenreName"
@@ -39,18 +37,10 @@
         <ListView
             android:id="@+id/dataListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-        </ListView>
-
-        <Button
-            android:id="@+id/button_dataListToDataReg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="新規作成"
-            android:textSize="25sp" />
+            android:layout_height="928dp"></ListView>
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
 

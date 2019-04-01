@@ -10,17 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.RegistData;
@@ -40,7 +42,7 @@ public class DataListActivity extends AppCompatActivity {
     // Mapのキー
     private final String[] FROM = {"dataIndex", "dataTitle", "isDataReading"};
     // リソースのコントロールID
-    private final int[] TO = {R.id.dataIndex, R.id.dataTitle, R.id.isDataReading};
+    private final int[] TO = {R.id.dataIndex,  R.id.dataTitle, R.id.isDataReading};
     private Data data;
     private Context context;
     private List<Map<String, Object>> regDataMapList = null;
@@ -121,16 +123,6 @@ public class DataListActivity extends AppCompatActivity {
                 return true;
             }
         });
-        // 登録ボタン
-        Button dataRegistDetailButton = findViewById(R.id.button_dataListToDataReg);
-        dataRegistDetailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), DataRegistDetailActivity.class);
-                intent.putExtra("mode", common.MODE_REGIST);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -149,29 +141,26 @@ public class DataListActivity extends AppCompatActivity {
 
         // ジャンル一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList1) {
-            Intent intent = new Intent(this, GenreListActivity.class);
+            Intent intent = new Intent (this, GenreListActivity.class);
             startActivity(intent);
         }
 
         // ジャンル作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList2) {
-            Intent intent = new Intent(this, GenreListActivity.class);
+            Intent intent = new Intent (this, GenreIns.class);
             startActivity(intent);
         }
 
         // 新規作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList3) {
-            Intent intent = new Intent(this, DataRegistDetailActivity.class);
+            Intent intent = new Intent (this, DataRegistDetailActivity.class);
             intent.putExtra("mode", common.MODE_REGIST);
             startActivity(intent);
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent(this, GenreListActivity.class);
+            Intent intent = new Intent (this, DataListActivity.class);
             startActivity(intent);
         }
 
@@ -226,14 +215,14 @@ public class DataListActivity extends AppCompatActivity {
         return regDataMapList;
     }
 
-    // カスタムアダプター
+     // カスタムアダプター
     private class DataListAdapter extends SimpleAdapter {
 
         // 外部から呼び出し可能なマップ
         public Map<Integer, Boolean> checkList = new HashMap<>();
 
         public DataListAdapter(Context context, List<? extends Map<String, ?>> data,
-                               int resource, String[] from, int[] to) {
+                         int resource, String[] from, int[] to) {
             super(context, data, resource, from, to);
 
             // 初期値を設定する
@@ -253,7 +242,6 @@ public class DataListActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     checkList.put(position, isChecked);
-
                     Log.i("OnChecked No.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                     // 更新処理
                     String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
