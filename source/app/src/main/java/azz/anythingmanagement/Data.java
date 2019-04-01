@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import azz.anythingmanagement.common.common;
@@ -25,6 +27,14 @@ public class Data {
      */
     public ArrayList<Genre> getGenreList(Context context){
         ArrayList<Genre> resultList = readGenre(context);
+
+        Collections.sort(resultList, new Comparator<Genre>() {
+            @Override
+            public int compare(Genre o1, Genre o2) {
+                return o1.getregistrationOrder().compareTo(o2.getregistrationOrder());
+            }
+        });
+
         return resultList;
     }
 

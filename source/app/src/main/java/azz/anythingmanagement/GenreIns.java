@@ -15,13 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import azz.anythingmanagement.common.common;
 import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreIns extends AppCompatActivity {
-    private int defaultregistrationorder = 1;
+    private String nowDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +77,14 @@ public class GenreIns extends AppCompatActivity {
                 genre.setGenreName(text);
                 genre.setColorInfo(str2);
 
+                // 現在日時（yyyyMMddhhmmss）取得
+                Date now = new Date(System.currentTimeMillis());
+                DateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+                nowDate = sdf.format(now);
+
                 // 登録順序を設定
                 ArrayList<Genre> genreList = reg_date.getGenreList(cont);
-                if(genreList.isEmpty()){
-                    genre.setregistrationOrder(defaultregistrationorder);
-                }else{
-                    int key = genreList.size() - 1;
-                    int count = genreList.get(key).getregistrationOrder();
-                    genre.setregistrationOrder(count + 1);
-                }
+                genre.setregistrationOrder(nowDate);
 
                 // DBに登録
                 reg_date.registGenreData(genre,cont);
