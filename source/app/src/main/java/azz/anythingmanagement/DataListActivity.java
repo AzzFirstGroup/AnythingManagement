@@ -37,7 +37,7 @@ import azz.anythingmanagement.xmlData.RegistData;
  * @author c.morita
  * @version 1.0
  */
-public class DataListActivity extends AppCompatActivity {
+public class DataListActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Mapのキー
     private final String[] FROM = {"dataIndex", "dataTitle", "isDataReading"};
@@ -123,6 +123,22 @@ public class DataListActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        //String dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
+        // TODO::ここでジャンルを取得する想定
+        Intent intent;
+        int id = v.getId();
+        // 詳細登録画面へ遷移する
+        if (id == R.id.data_insert_button) {
+            intent = new Intent(this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
+            intent.putExtra("genre", "未選択");
+            finish();
+            startActivity(intent);
+        }
     }
 
     @Override
