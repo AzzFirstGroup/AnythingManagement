@@ -88,23 +88,28 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             btn.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
                     // TODO::削除ダイアログ表示
-                    //CustomDialog dialog = new CustomDialog();
-                    
-                    // 削除処理
+                    DeleteDialog dialog = new DeleteDialog();
                     String GenreName = btn.getText().toString();
-                    Genre delData = new Genre();
-                    delData.setGenreName(GenreName);
-                    data = new Data();
-                    data.deleteGenreData(delData, context);
-
-                    // 登録後はジャンル一覧画面を再描画
-                    finish();
-                    Intent intent = new Intent(getApplication(), GenreListActivity.class);
-                    startActivity(intent);
+                    dialog.show(getSupportFragmentManager(),GenreName);
                     return true;
                 }
             });
         }
+    }
+    public boolean deleteProcess(String genreName, boolean dialogResult) {
+        if(dialogResult) {
+            // 削除処理
+            Genre delData = new Genre();
+            delData.setGenreName(genreName);
+            data = new Data();
+            data.deleteGenreData(delData, context);
+
+            // 登録後はジャンル一覧画面を再描画
+            finish();
+            Intent intent = new Intent(getApplication(), GenreListActivity.class);
+            startActivity(intent);
+        }
+        return true;
     }
 
     @Override

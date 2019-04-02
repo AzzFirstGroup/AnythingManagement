@@ -47,7 +47,7 @@ public class DeleteDialog extends DialogFragment {
                         boolean returnValue = true;
                         // MainActivityのインスタンスを取得
                         GenreListActivity genreListActivity = (GenreListActivity) getActivity();
-                        genreListActivity.setResultView(returnValue);
+                        genreListActivity.deleteProcess(dialogTag, returnValue);
                     }
                 });
 
