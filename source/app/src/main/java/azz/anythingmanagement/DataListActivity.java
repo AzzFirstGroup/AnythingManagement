@@ -81,7 +81,7 @@ public class DataListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DataListActivity.this.setTitle(String.valueOf(position) + "番目がクリックされました。");
+                // DataListActivity.this.setTitle(String.valueOf(position) + "番目がクリックされました。");
                 Log.i("onItemClickNo.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                 // 詳細画面移動処理
                 String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
@@ -115,8 +115,8 @@ public class DataListActivity extends AppCompatActivity {
                 data = new Data();
                 data.deleteRegistData(delData, context);
 
-                regDataMapList.remove(position);
-                adapter.notifyDataSetChanged();
+                finish();
+                startActivity(getIntent());
 
                 return true;
             }
@@ -149,7 +149,7 @@ public class DataListActivity extends AppCompatActivity {
 
         // ジャンル一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList1) {
-            Intent intent = new Intent(this, GenreListActivity.class);
+            Intent intent = new Intent(this, GenreIns.class);
             startActivity(intent);
         }
 
@@ -171,7 +171,7 @@ public class DataListActivity extends AppCompatActivity {
         // データ一覧に遷移(メニューボタン)
         // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
-            Intent intent = new Intent(this, GenreListActivity.class);
+            Intent intent = new Intent(this, DataListActivity.class);
             startActivity(intent);
         }
 
@@ -197,10 +197,10 @@ public class DataListActivity extends AppCompatActivity {
                     regDataMap.put("dataIndex", String.valueOf(index));
                     regDataMap.put("dataGenre", regData.getGenre());
                     regDataMap.put("dataTitle", regData.getTitle());
-                    if ("0".equals(regData.getTorokuFlg())) {
-                        regDataMap.put("isDataReading", false);
-                    } else {
+                    if (common.CHECKED.equals(regData.getTorokuFlg())) {
                         regDataMap.put("isDataReading", true);
+                    } else {
+                        regDataMap.put("isDataReading", false);
                     }
                     regDataMapList.add(regDataMap);
                     ++index;
@@ -213,10 +213,10 @@ public class DataListActivity extends AppCompatActivity {
                 regDataMap.put("dataIndex", String.valueOf(index) + " / " + regData.getGenre());
                 regDataMap.put("dataGenre", regData.getGenre());
                 regDataMap.put("dataTitle", regData.getTitle());
-                if ("0".equals(regData.getTorokuFlg())) {
-                    regDataMap.put("isDataReading", false);
-                } else {
+                if (common.CHECKED.equals(regData.getTorokuFlg())) {
                     regDataMap.put("isDataReading", true);
+                } else {
+                    regDataMap.put("isDataReading", false);
                 }
                 regDataMapList.add(regDataMap);
                 ++index;
@@ -237,9 +237,11 @@ public class DataListActivity extends AppCompatActivity {
             super(context, data, resource, from, to);
 
             // 初期値を設定する
-            for (int i = 0; i < data.size(); i++) {
-                Map map = (Map) data.get(i);
-                checkList.put(i, (Boolean) map.get("isDataReading"));
+            for (Map<String, ?> mapData : data) {
+                //  ジャンル未設定の場合、"1 / 未設定"などの様になっているため
+                String index[] = String.valueOf(mapData.get("dataIndex")).split("/");
+                // indexは"1"始まりのため -1 する
+                checkList.put(Integer.valueOf(index[0].trim()) - 1, Boolean.valueOf(String.valueOf(mapData.get("isDataReading"))));
             }
         }
 
@@ -252,8 +254,7 @@ public class DataListActivity extends AppCompatActivity {
             ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    checkList.put(position, isChecked);
-
+                    checkList.put(position, !isChecked);
                     Log.i("OnChecked No.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                     // 更新処理
                     String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
@@ -261,7 +262,7 @@ public class DataListActivity extends AppCompatActivity {
                     RegistData updData = new RegistData();
                     updData.setGenre(dataGenreName);
                     updData.setTitle(dataTitle);
-                    updData.setTorokuFlg(isChecked ? "1" : "0");
+                    updData.setTorokuFlg(!isChecked ? "1" : "0");
                     data = new Data();
                     data.registRegistData(updData, context);
                 }
