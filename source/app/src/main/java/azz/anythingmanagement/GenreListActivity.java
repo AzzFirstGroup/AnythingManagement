@@ -35,7 +35,6 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         // ジャンル一覧を取得
         data = new Data();
         ArrayList<Genre> genreList = data.getGenreList(context);
-        // TODO::登録順にソートする処理が入る想定
 
         // DBからジャンル情報を取得できない場合は未設定のみボタンを表示する
         Button non_btn = findViewById(R.id.genruList_botton);
@@ -84,10 +83,9 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
                 }
             });
 
-            // 各ボタン長押し時の挙動
+            // 各ボタン長押し時の挙動(ボタンの削除)
             btn.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
-                    // TODO::削除ダイアログ表示
                     DeleteDialog dialog = new DeleteDialog();
                     String GenreName = btn.getText().toString();
                     dialog.show(getSupportFragmentManager(),GenreName);

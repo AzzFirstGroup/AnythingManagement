@@ -149,19 +149,17 @@ public class DataListActivity extends AppCompatActivity {
 
         // ジャンル一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList1) {
-            Intent intent = new Intent(this, GenreIns.class);
-            startActivity(intent);
-        }
-
-        // ジャンル作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
-        if (id == R.id.action_menuList2) {
             Intent intent = new Intent(this, GenreListActivity.class);
             startActivity(intent);
         }
 
+        // ジャンル作成に遷移(メニューボタン)
+        if (id == R.id.action_menuList2) {
+            Intent intent = new Intent(this, GenreIns.class);
+            startActivity(intent);
+        }
+
         // 新規作成に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList3) {
             Intent intent = new Intent(this, DataRegistDetailActivity.class);
             intent.putExtra("mode", common.MODE_REGIST);
@@ -169,7 +167,6 @@ public class DataListActivity extends AppCompatActivity {
         }
 
         // データ一覧に遷移(メニューボタン)
-        // TODO:: まだ画面がないため、ジャンル一覧画面を仮設定
         if (id == R.id.action_menuList4) {
             Intent intent = new Intent(this, DataListActivity.class);
             startActivity(intent);
