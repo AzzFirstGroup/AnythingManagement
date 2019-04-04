@@ -55,7 +55,10 @@ public class DeleteDialog extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       // 何もしない
+                        boolean returnValue = false;
+                        // MainActivityのインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.deleteProcess(returnValue);
                     }
                 });
 

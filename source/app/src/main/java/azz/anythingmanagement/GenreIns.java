@@ -24,19 +24,24 @@ import azz.anythingmanagement.xmlData.Genre;
 
 public class GenreIns extends AppCompatActivity {
     private String nowDate;
+    private String text;
+    private ColorStateList colorlist;
+    private Context cont;
+
+    private EditText et;
+    private TextView tv;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.genre_insret);
 
-        final EditText et = findViewById(R.id.editText);
-        final TextView tv = findViewById(R.id.textView);
+        cont = super.getApplicationContext();
+        et = findViewById(R.id.editText);
+        tv = findViewById(R.id.textView);
         tv.setTextColor(Color.WHITE);
-
-        final Context cont = super.getApplicationContext();
-        final Intent intent = new Intent (this, GenreListActivity.class);
-
+        intent = new Intent (this, GenreListActivity.class);
         final Button bt = findViewById(R.id.button);
         final Button red = findViewById(R.id.ButtonR);
         final Button blue = findViewById(R.id.ButtonB);
@@ -56,44 +61,47 @@ public class GenreIns extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 入力したデータの取得
-                String text = et.getText().toString();
-                ColorStateList colorlist = tv.getTextColors();
+                text = et.getText().toString();
+                colorlist = tv.getTextColors();
 
                 // テキストに何も記載が無かったら登録しない
                 if(text.isEmpty()) {
                     return;
                 }
+                // 登録ダイアログ表示
+                RegistDialog dialog = new RegistDialog();
+                dialog.show(getSupportFragmentManager(),"DetailRegist");
 
-                int colordate = colorlist.getDefaultColor();
-                String str = Integer.toHexString(colordate);
-                String str2 = str.replaceAll("^..","#");
-
-                // DBアクセス用の初期化
-                Data reg_date = new Data();
-                Genre genre = new Genre();
-
-                // DB登録用データ
-                genre.setGenreName(text);
-                genre.setColorInfo(str2);
-
-                // 現在日時（yyyyMMddhhmmss）取得
-                Date now = new Date(System.currentTimeMillis());
-                DateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
-                nowDate = sdf.format(now);
-
-                // 登録順序を設定
-                genre.setregistrationOrder(nowDate);
-
-                // DBに登録
-                reg_date.registGenreData(genre,cont);
-
-                // 入力したデータの初期化
-                et.setText("");
-                tv.setTextColor(Color.WHITE);
-
-                // 登録後はジャンル一覧画面に遷移
-                finish();
-                startActivity(intent);
+//                int colordate = colorlist.getDefaultColor();
+//                String str = Integer.toHexString(colordate);
+//                String str2 = str.replaceAll("^..","#");
+//
+//                // DBアクセス用の初期化
+//                Data reg_date = new Data();
+//                Genre genre = new Genre();
+//
+//                // DB登録用データ
+//                genre.setGenreName(text);
+//                genre.setColorInfo(str2);
+//
+//                // 現在日時（yyyyMMddhhmmss）取得
+//                Date now = new Date(System.currentTimeMillis());
+//                DateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+//                nowDate = sdf.format(now);
+//
+//                // 登録順序を設定
+//                genre.setregistrationOrder(nowDate);
+//
+//                // DBに登録
+//                reg_date.registGenreData(genre,cont);
+//
+//                // 入力したデータの初期化
+//                et.setText("");
+//                tv.setTextColor(Color.WHITE);
+//
+//                // 登録後はジャンル一覧画面に遷移
+//                finish();
+//                startActivity(intent);
             }
         });
 
@@ -199,6 +207,41 @@ public class GenreIns extends AppCompatActivity {
                 tv.setBackgroundColor(color_code);
             }
         });
+    }
+
+    public void registProcess(boolean dialogResult){
+        if(dialogResult) {
+            int colordate = colorlist.getDefaultColor();
+            String str = Integer.toHexString(colordate);
+            String str2 = str.replaceAll("^..", "#");
+
+            // DBアクセス用の初期化
+            Data reg_date = new Data();
+            Genre genre = new Genre();
+
+            // DB登録用データ
+            genre.setGenreName(text);
+            genre.setColorInfo(str2);
+
+            // 現在日時（yyyyMMddhhmmss）取得
+            Date now = new Date(System.currentTimeMillis());
+            DateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+            nowDate = sdf.format(now);
+
+            // 登録順序を設定
+            genre.setregistrationOrder(nowDate);
+
+            // DBに登録
+            reg_date.registGenreData(genre, cont);
+
+            // 入力したデータの初期化
+            et.setText("");
+            tv.setTextColor(Color.WHITE);
+
+            // 登録後はジャンル一覧画面に遷移
+            finish();
+            startActivity(intent);
+        }
     }
 
 
