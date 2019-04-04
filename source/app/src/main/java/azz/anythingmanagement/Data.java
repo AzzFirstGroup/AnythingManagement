@@ -75,6 +75,13 @@ public class Data {
      */
     public ArrayList<RegistData> getRegistDataList(Context context){
         ArrayList<RegistData> resultList = readRegistData(context);
+
+        Collections.sort(resultList, new Comparator<RegistData>() {
+            @Override
+            public int compare(RegistData o1, RegistData o2) {
+                return o1.getGenre().compareTo(o2.getGenre());
+            }
+        });
         return resultList;
     }
 

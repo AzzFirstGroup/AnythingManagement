@@ -236,14 +236,21 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
             // ジャンル名プルダウン表示
             int index = 0;
+            boolean genreSetFlg = false;
             // 遷移元画面から取得したジャンル名からプルダウンに設定したジャンル名リストを比較する
             for(;index < nameList.size(); index++){
                 if(nameList.get(index).equals(genre)){
+                    genreSetFlg = true;
                     break;
                 }
             }
             // 一致するジャンル名をプルダウンの初期値に設定する
-            genreSpinner.setSelection(index);
+            if(genreSetFlg){
+                genreSpinner.setSelection(index);
+            }else{
+                genreSpinner.setSelection(0);
+            }
+
 
             // 評価値設定
             if(registData.getEvaluate() != null){

@@ -83,7 +83,6 @@ public class GenreIns extends AppCompatActivity {
                 nowDate = sdf.format(now);
 
                 // 登録順序を設定
-                ArrayList<Genre> genreList = reg_date.getGenreList(cont);
                 genre.setregistrationOrder(nowDate);
 
                 // DBに登録
