@@ -12,11 +12,11 @@ import android.util.TypedValue;
 import android.widget.TextView;
 
 /*
- データ登録用ダイアログ
+ データ一覧用削除ダイアログ
  */
-public class DetailRegistDialog extends DialogFragment {
+public class DeleteDateListDialog extends DialogFragment {
 
-    String title="登録確認";
+    String title="削除確認";
 
     boolean answer = false;
 
@@ -36,18 +36,18 @@ public class DetailRegistDialog extends DialogFragment {
                 // タイトル部分を設定
                 dialogBuilder.setCustomTitle(textView);
                 // 表示する文章設定
-                dialogBuilder.setMessage("登録しますか？");
+                dialogBuilder.setMessage("削除しますか？");
 
-                // 登録確認ボタン作成
+                // 削除確認ボタン作成
                 dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         boolean returnValue = true;
-                        // DataRegistDetailActivityのインスタンスを取得
-                        DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                        dataRegistDetailActivity.registProcess(returnValue);
+                        // MainActivityのインスタンスを取得
+                        DataListActivity dataListActivity = (DataListActivity) getActivity();
+                        dataListActivity.deleteProcess(returnValue);
                     }
                 });
 
@@ -56,7 +56,10 @@ public class DetailRegistDialog extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       // 何もしない
+                        boolean returnValue = false;
+                        // MainActivityのインスタンスを取得
+                        DataListActivity dataListActivity = (DataListActivity) getActivity();
+                        dataListActivity.deleteProcess(returnValue);
                     }
                 });
 

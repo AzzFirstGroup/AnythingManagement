@@ -11,12 +11,15 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.widget.TextView;
 
+import azz.anythingmanagement.DataRegistDetailActivity;
+import azz.anythingmanagement.R;
+
 /*
  データ登録用ダイアログ
  */
-public class DetailRegistDialog extends DialogFragment {
+public class ContinueRegistDialog extends DialogFragment {
 
-    String title="登録確認";
+    String title="登録しました";
 
     boolean answer = false;
 
@@ -36,7 +39,7 @@ public class DetailRegistDialog extends DialogFragment {
                 // タイトル部分を設定
                 dialogBuilder.setCustomTitle(textView);
                 // 表示する文章設定
-                dialogBuilder.setMessage("登録しますか？");
+                dialogBuilder.setMessage("続けて登録しますか？");
 
                 // 登録確認ボタン作成
                 dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
@@ -44,10 +47,10 @@ public class DetailRegistDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        boolean returnValue = true;
+                        boolean resultValue = true;
                         // DataRegistDetailActivityのインスタンスを取得
                         DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                        dataRegistDetailActivity.registProcess(returnValue);
+                        dataRegistDetailActivity.continueProcess(resultValue);
                     }
                 });
 
@@ -56,7 +59,10 @@ public class DetailRegistDialog extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       // 何もしない
+                        boolean resultValue = false;
+                        // DataRegistDetailActivityのインスタンスを取得
+                        DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
+                        dataRegistDetailActivity.continueProcess(resultValue);
                     }
                 });
 

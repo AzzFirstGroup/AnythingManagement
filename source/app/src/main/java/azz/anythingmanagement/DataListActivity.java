@@ -46,6 +46,8 @@ public class DataListActivity extends AppCompatActivity {
     private List<Map<String, Object>> regDataMapList = null;
     private String intentGenreName = "";
     private DataListAdapter adapter;
+    private String dataTitle = null;
+    private String dataGenreName = null;
 
     /**
      * 画面一覧表示
@@ -103,20 +105,13 @@ public class DataListActivity extends AppCompatActivity {
              */
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("OnItemLongClick No.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
+
+                dataTitle = regDataMapList.get(position).get("dataTitle").toString();
+                dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
+
                 // 削除ダイアログ表示
-                //CustomDialog dialog = new CustomDialog();
-
-                // 削除処理
-                String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
-                String dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
-                RegistData delData = new RegistData();
-                delData.setGenre(dataGenreName);
-                delData.setTitle(dataTitle);
-                data = new Data();
-                data.deleteRegistData(delData, context);
-
-                finish();
-                startActivity(getIntent());
+                DeleteDateListDialog dialog = new DeleteDateListDialog();
+                dialog.show(getSupportFragmentManager(),"DeleteDateList");
 
                 return true;
             }
@@ -133,6 +128,20 @@ public class DataListActivity extends AppCompatActivity {
         });
     }
 
+    public boolean deleteProcess(boolean dialogResult) {
+        if(dialogResult) {
+          // 削除処理
+          RegistData delData = new RegistData();
+          delData.setGenre(dataGenreName);
+          delData.setTitle(dataTitle);
+          data = new Data();
+          data.deleteRegistData(delData, context);
+
+          finish();
+          startActivity(getIntent());
+        }
+        return true;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -27,7 +27,6 @@ public class DeleteDialog extends DialogFragment {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
 
-        String dialogTag = this.getTag();
         boolean resultValue = false;
 
                 TextView textView = new TextView(getActivity());
@@ -47,7 +46,7 @@ public class DeleteDialog extends DialogFragment {
                         boolean returnValue = true;
                         // MainActivityのインスタンスを取得
                         GenreListActivity genreListActivity = (GenreListActivity) getActivity();
-                        genreListActivity.deleteProcess(dialogTag, returnValue);
+                        genreListActivity.deleteProcess(returnValue);
                     }
                 });
 
@@ -56,7 +55,10 @@ public class DeleteDialog extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       // 何もしない
+                        boolean returnValue = false;
+                        // MainActivityのインスタンスを取得
+                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
+                        genreListActivity.deleteProcess(returnValue);
                     }
                 });
 
