@@ -10,11 +10,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.widget.TextView;
-import android.widget.Toast;
+
 /*
- ジャンル一覧用削除ダイアログ
+ データ一覧用削除ダイアログ
  */
-public class DeleteDialog extends DialogFragment {
+public class DeleteDateListDialog extends DialogFragment {
 
     String title="削除確認";
 
@@ -27,6 +27,7 @@ public class DeleteDialog extends DialogFragment {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
 
+        String dialogTag = this.getTag();
         boolean resultValue = false;
 
                 TextView textView = new TextView(getActivity());
@@ -45,8 +46,8 @@ public class DeleteDialog extends DialogFragment {
 
                         boolean returnValue = true;
                         // MainActivityのインスタンスを取得
-                        GenreListActivity genreListActivity = (GenreListActivity) getActivity();
-                        genreListActivity.deleteProcess(returnValue);
+                        DataListActivity dataListActivity = (DataListActivity) getActivity();
+                        dataListActivity.deleteProcess(returnValue);
                     }
                 });
 
