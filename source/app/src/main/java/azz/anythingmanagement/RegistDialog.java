@@ -20,58 +20,49 @@ import azz.anythingmanagement.TestActivity;
  */
 public class RegistDialog extends DialogFragment {
 
-    String title="登録確認";
+    String title = "登録確認";
 
-    boolean answer = false;
-
-    private static final int REQUEST_CHOOSER = 1000;
-    private Uri m_uri;
     // ダイアログが生成された時に呼ばれるメソッド ※必須
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);
 
-        String dialogTag = this.getTag();
-        boolean resultValue = false;
+        TextView textView;
+        // タイトル部分を編集
+        textView = TitleStyle(title);
+        // タイトル部分を設定
+        dialogBuilder.setCustomTitle(textView);
+        // 表示する文章設定
+        dialogBuilder.setMessage("登録しますか？");
 
-                TextView textView = new TextView(getActivity());
-                // タイトル部分を編集
-                textView = TitleStyle(title);
-                // タイトル部分を設定
-                dialogBuilder.setCustomTitle(textView);
-                // 表示する文章設定
-                dialogBuilder.setMessage("登録しますか？");
+        // 登録確認ボタン作成
+        dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
 
-                // 登録確認ボタン作成
-                dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean returnValue = true;
+                // 選択結果をGenreInsへ渡す
+                GenreIns genreInsActivity = (GenreIns) getActivity();
+                genreInsActivity.registProcess(returnValue);
+            }
+        });
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        // NGボタン作成
+        dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
 
-                        boolean returnValue = true;
-                        // MainActivityのインスタンスを取得
-                        //TODO GenreIns genreInsActivity = (GenreIns) getActivity(); (ジャンル作成用登録に実装する際はこっち)
-                        //TODO genreInsActivity.setResultView(returnValue);
-                        GenreListActivity genreInsActivity = (GenreListActivity) getActivity();
-                        genreInsActivity.setResultView(returnValue);
-                    }
-                });
-
-                // NGボタン作成
-                dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                       // 何もしない
-                    }
-                });
-
-
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean returnValue = false;
+                // 選択結果をGenreInsへ渡す
+                GenreIns genreInsActivity = (GenreIns) getActivity();
+                genreInsActivity.registProcess(returnValue);
+            }
+        });
         // dialogBulderを返す
         return dialogBuilder.create();
     }
 
-    private TextView TitleStyle(String titleText){
+    private TextView TitleStyle(String titleText) {
         // タイトル部分のTextView
         TextView textView = new TextView(getActivity());
         // タイトルの文字色

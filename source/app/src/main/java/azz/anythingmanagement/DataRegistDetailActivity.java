@@ -63,6 +63,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
     private boolean permissionCameraResult = false;
     private boolean permissionReadDataResult = false;
+    private RegistData registData = new RegistData();
 
     // 画像選択機能呼び出し時の戻り値確認用ID
     private static final int REQUEST_CHOOSER = 1000;
@@ -188,24 +189,9 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                 if(titleText.getText().toString() == null || titleText.getText().toString().equals("")){
                     Toast.makeText(context,"タイトルを入力してください",Toast.LENGTH_LONG).show();
                 } else {
-                    RegistData registData = new RegistData();
-
-                    registData.setTitle(titleText.getText().toString());
-                    registData.setMemo(memoText.getText().toString());
-                    registData.setEvaluate(evaluate);
-                    registData.setGenre(genreSpinner.getSelectedItem().toString());
-                    if(imageUri != null){
-                        registData.setImagePath(imageUri.toString());
-                    }
-
-                    if(zumiCheck.isChecked()){
-                        registData.setTorokuFlg(common.CHECKED);
-                    }else{
-                        registData.setTorokuFlg(common.UNCHECKED);
-                    }
-
-                    Data data = new Data();
-                    data.registRegistData(registData,context);
+                    // 登録ダイアログ表示
+                    DetailRegistDialog dialog = new DetailRegistDialog();
+                    dialog.show(getSupportFragmentManager(),"DetailRegist");
                 }
             }
         });
@@ -236,14 +222,21 @@ public class DataRegistDetailActivity extends AppCompatActivity {
 
             // ジャンル名プルダウン表示
             int index = 0;
+            boolean genreSetFlg = false;
             // 遷移元画面から取得したジャンル名からプルダウンに設定したジャンル名リストを比較する
             for(;index < nameList.size(); index++){
                 if(nameList.get(index).equals(genre)){
+                    genreSetFlg = true;
                     break;
                 }
             }
             // 一致するジャンル名をプルダウンの初期値に設定する
-            genreSpinner.setSelection(index);
+            if(genreSetFlg){
+                genreSpinner.setSelection(index);
+            }else{
+                genreSpinner.setSelection(0);
+            }
+
 
             // 評価値設定
             if(registData.getEvaluate() != null){
@@ -330,6 +323,42 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void registProcess(boolean dialogResult){
+        if(dialogResult) {
+            registData.setTitle(titleText.getText().toString());
+            registData.setMemo(memoText.getText().toString());
+            registData.setEvaluate(evaluate);
+            registData.setGenre(genreSpinner.getSelectedItem().toString());
+            if (imageUri != null) {
+                registData.setImagePath(imageUri.toString());
+            }
+
+            if (zumiCheck.isChecked()) {
+                registData.setTorokuFlg(common.CHECKED);
+            } else {
+                registData.setTorokuFlg(common.UNCHECKED);
+            }
+
+            Data data = new Data();
+            data.registRegistData(registData, context);
+
+            // 連続確認ダイアログ表示
+            ContinueRegistDialog dialog = new ContinueRegistDialog();
+            dialog.show(getSupportFragmentManager(),"ContinueRegist");
+        }
+    }
+
+    public void continueProcess(boolean dialogResult){
+        if(dialogResult){
+            Intent intent = new Intent(getApplication(), DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(getApplication(), GenreListActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void showGallery(){

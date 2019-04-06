@@ -21,6 +21,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
     private Data data;
     private Context context;
     private int button_count = 8;
+    private String genreName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +88,14 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             btn.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
                     DeleteDialog dialog = new DeleteDialog();
-                    String GenreName = btn.getText().toString();
-                    dialog.show(getSupportFragmentManager(),GenreName);
+                    genreName = btn.getText().toString();
+                    dialog.show(getSupportFragmentManager(),"DeleteDialog");
                     return true;
                 }
             });
         }
     }
-    public boolean deleteProcess(String genreName, boolean dialogResult) {
+    public boolean deleteProcess(boolean dialogResult) {
         if(dialogResult) {
             // 削除処理
             Genre delData = new Genre();

@@ -11,20 +11,20 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-/*
- データ登録用ダイアログ
- */
-public class DetailRegistDialog extends DialogFragment {
+import azz.anythingmanagement.DataRegistDetailActivity;
+import azz.anythingmanagement.R;
 
-    String title = "登録確認";
+/*
+ データ登録用(連続登録確認)ダイアログ
+ */
+public class ContinueRegistDialog extends DialogFragment {
+
+    String title = "登録しました";
 
     // ダイアログが生成された時に呼ばれるメソッド ※必須
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);
-
-        String dialogTag = this.getTag();
-        boolean resultValue = false;
 
         TextView textView;
         // タイトル部分を編集
@@ -32,7 +32,7 @@ public class DetailRegistDialog extends DialogFragment {
         // タイトル部分を設定
         dialogBuilder.setCustomTitle(textView);
         // 表示する文章設定
-        dialogBuilder.setMessage("登録しますか？");
+        dialogBuilder.setMessage("続けて登録しますか？");
 
         // 登録確認ボタン作成
         dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
@@ -40,10 +40,10 @@ public class DetailRegistDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                boolean returnValue = true;
+                boolean resultValue = true;
                 // 選択結果をDataRegistDetailActivityへ渡す
                 DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                dataRegistDetailActivity.registProcess(returnValue);
+                dataRegistDetailActivity.continueProcess(resultValue);
             }
         });
 
@@ -52,11 +52,10 @@ public class DetailRegistDialog extends DialogFragment {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                boolean returnValue = false;
+                boolean resultValue = false;
                 // 選択結果をDataRegistDetailActivityへ渡す
                 DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                dataRegistDetailActivity.registProcess(returnValue);
+                dataRegistDetailActivity.continueProcess(resultValue);
             }
         });
 
@@ -64,8 +63,6 @@ public class DetailRegistDialog extends DialogFragment {
         // dialogBulderを返す
         return dialogBuilder.create();
     }
-
-
 
     private TextView TitleStyle(String titleText) {
         // タイトル部分のTextView

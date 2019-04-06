@@ -12,19 +12,16 @@ import android.util.TypedValue;
 import android.widget.TextView;
 
 /*
- データ登録用ダイアログ
+ データ一覧用削除ダイアログ
  */
-public class DetailRegistDialog extends DialogFragment {
+public class DeleteDateListDialog extends DialogFragment {
 
-    String title = "登録確認";
+    String title = "削除確認";
 
     // ダイアログが生成された時に呼ばれるメソッド ※必須
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);
-
-        String dialogTag = this.getTag();
-        boolean resultValue = false;
 
         TextView textView;
         // タイトル部分を編集
@@ -32,18 +29,18 @@ public class DetailRegistDialog extends DialogFragment {
         // タイトル部分を設定
         dialogBuilder.setCustomTitle(textView);
         // 表示する文章設定
-        dialogBuilder.setMessage("登録しますか？");
+        dialogBuilder.setMessage("削除しますか？");
 
-        // 登録確認ボタン作成
+        // 削除確認ボタン作成
         dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 boolean returnValue = true;
-                // 選択結果をDataRegistDetailActivityへ渡す
-                DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                dataRegistDetailActivity.registProcess(returnValue);
+                // 選択結果をDataListActivityへ渡す
+                DataListActivity dataListActivity = (DataListActivity) getActivity();
+                dataListActivity.deleteProcess(returnValue);
             }
         });
 
@@ -54,9 +51,9 @@ public class DetailRegistDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
 
                 boolean returnValue = false;
-                // 選択結果をDataRegistDetailActivityへ渡す
-                DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                dataRegistDetailActivity.registProcess(returnValue);
+                // 選択結果をDataListActivityへ渡す
+                DataListActivity dataListActivity = (DataListActivity) getActivity();
+                dataListActivity.deleteProcess(returnValue);
             }
         });
 
@@ -64,8 +61,6 @@ public class DetailRegistDialog extends DialogFragment {
         // dialogBulderを返す
         return dialogBuilder.create();
     }
-
-
 
     private TextView TitleStyle(String titleText) {
         // タイトル部分のTextView
