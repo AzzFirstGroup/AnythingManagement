@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -228,5 +229,16 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         }else{
             //何もしない
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            Intent intent = new Intent (this, FirstActivity.class);
+            finishActivity(R.id.genrelist);
+            startActivity(intent);
+            return true;
+        }
+        return false;
     }
 }
