@@ -451,13 +451,13 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         if (id == R.id.action_menuList3) {
             Intent intent = new Intent (this, DataRegistDetailActivity.class);
             intent.putExtra("mode", common.MODE_REGIST);
+            finish();
             startActivity(intent);
         }
 
         // データ一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList4) {
             Intent intent = new Intent (this, DataListActivity.class);
-            finish();
             startActivity(intent);
         }
 
