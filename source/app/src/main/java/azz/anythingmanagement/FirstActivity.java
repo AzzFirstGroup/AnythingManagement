@@ -3,6 +3,7 @@ package azz.anythingmanagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,11 +30,13 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             // ジャンル一覧画面へ遷移する
             case R.id.bGenreList:
+            case R.id.imageButton:
                 intent = new Intent (this, GenreListActivity.class);
                 startActivity(intent);
                 break;
             // 新規登録画面に遷移する
             case R.id.bNewCreate:
+            case R.id.imageButton2:
                 intent = new Intent (this, DataRegistDetailActivity.class);
                 intent.putExtra("mode", common.MODE_REGIST);
                 startActivity(intent);
@@ -80,5 +83,15 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            finish();
+            return true;
+        }
+        finish();
+        return false;
     }
 }

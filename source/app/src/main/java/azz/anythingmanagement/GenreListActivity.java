@@ -1,10 +1,13 @@
 package azz.anythingmanagement;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
     private int button_count = 8;
     private String genreName = null;
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,21 +63,36 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
                 return;
             }
 
+            // ボタンの初期設定
             Button btn;
             btn = findViewById(R.id.genruList_botton + y);
-            System.out.print(btn);
+
+            // ボタンのレイアウト関連の初期設定
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.mutate();
+            drawable.setShape(0);
+            drawable.setCornerRadius(25);
+
             // ボタンの非透明化
             btn.setVisibility(View.VISIBLE);
             final String genrename = String.valueOf(genreList.get(i).getGenreName());
+
             // ボタンに登録したジャンル名を設定
             btn.setText(genrename);
             String genreColorInfo = genreList.get(i).getColorInfo();
+
             // カラーコードが不正なものはデフォルトカラー
             if (!colorCdCheck(genreColorInfo)) {
                 genreColorInfo = "#00FA9A";
             }
+
             // ボタンのカラーコードを設定
-            btn.setBackgroundColor(Color.parseColor(genreColorInfo));
+            //btn.setBackgroundColor(Color.parseColor(genreColorInfo));
+            drawable.setColor(Color.parseColor(genreColorInfo));
+
+            // ボタンのレイアウトを設定
+            btn.setBackground(drawable);
+
             // 各ボタン押下時の挙動設定
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,6 +167,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         // ジャンル一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList1) {
             Intent intent = new Intent (this, GenreListActivity.class);
+            finish();
             startActivity(intent);
         }
 
@@ -209,5 +229,16 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
         }else{
             //何もしない
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            Intent intent = new Intent (this, FirstActivity.class);
+            finishActivity(R.id.genrelist);
+            startActivity(intent);
+            return true;
+        }
+        return false;
     }
 }
