@@ -16,22 +16,19 @@ import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
 
+/*
+ 破棄確認ダイアログ
+ */
 public class DiscardDialog extends DialogFragment {
 
-    String title="作成中です";
+    String title = "作成中です";
 
-    boolean answer = false;
-
-    private static final int REQUEST_CHOOSER = 1000;
-    private Uri m_uri;
     // ダイアログが生成された時に呼ばれるメソッド ※必須
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);
 
-        String dialogTag = this.getTag();
-        boolean resultValue = false;
-        TextView textView = new TextView(getActivity());
+        TextView textView;
         // タイトル部分を編集
         textView = TitleStyle(title);
         // タイトル部分を設定
@@ -42,29 +39,29 @@ public class DiscardDialog extends DialogFragment {
         // 削除確認ボタン作成
         dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO 登録処理(現在：トーストを出すのみ)
-                        Toast toast = Toast.makeText(getActivity(), "破棄します。", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO 登録処理(現在：トーストを出すのみ)
+                Toast toast = Toast.makeText(getActivity(), "破棄します。", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
-                // NGボタン作成
-                dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
+        // NGボタン作成
+        dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                       // 何もしない
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 何もしない
+            }
+        });
 
 
         // dialogBulderを返す
         return dialogBuilder.create();
     }
 
-    private TextView TitleStyle(String titleText){
+    private TextView TitleStyle(String titleText) {
         // タイトル部分のTextView
         TextView textView = new TextView(getActivity());
         // タイトルの文字色
