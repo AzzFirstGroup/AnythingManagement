@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
 
+/*
+ 破棄確認ダイアログ
+ */
 public class DiscardDialog extends DialogFragment {
 
     String title = "作成中です";
