@@ -20,18 +20,14 @@ import azz.anythingmanagement.TestActivity;
  */
 public class RegistDialog extends DialogFragment {
 
-    String title="登録確認";
+    String title = "登録確認";
 
-    boolean answer = false;
-
-    private static final int REQUEST_CHOOSER = 1000;
-    private Uri m_uri;
     // ダイアログが生成された時に呼ばれるメソッド ※必須
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);
 
-        TextView textView = new TextView(getActivity());
+        TextView textView;
         // タイトル部分を編集
         textView = TitleStyle(title);
         // タイトル部分を設定
@@ -45,28 +41,28 @@ public class RegistDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 boolean returnValue = true;
-                // MainActivityのインスタンスを取得
+                // 選択結果をGenreInsへ渡す
                 GenreIns genreInsActivity = (GenreIns) getActivity();
                 genreInsActivity.registProcess(returnValue);
             }
         });
 
         // NGボタン作成
-        dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
+        dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 boolean returnValue = false;
-                // MainActivityのインスタンスを取得
+                // 選択結果をGenreInsへ渡す
                 GenreIns genreInsActivity = (GenreIns) getActivity();
                 genreInsActivity.registProcess(returnValue);
-                }
+            }
         });
         // dialogBulderを返す
         return dialogBuilder.create();
     }
 
-    private TextView TitleStyle(String titleText){
+    private TextView TitleStyle(String titleText) {
         // タイトル部分のTextView
         TextView textView = new TextView(getActivity());
         // タイトルの文字色

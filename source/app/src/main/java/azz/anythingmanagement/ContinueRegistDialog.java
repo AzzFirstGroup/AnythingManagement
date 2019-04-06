@@ -15,63 +15,56 @@ import azz.anythingmanagement.DataRegistDetailActivity;
 import azz.anythingmanagement.R;
 
 /*
- データ登録用ダイアログ
+ データ登録用(連続登録確認)ダイアログ
  */
 public class ContinueRegistDialog extends DialogFragment {
 
-    String title="登録しました";
+    String title = "登録しました";
 
-    boolean answer = false;
-
-    private static final int REQUEST_CHOOSER = 1000;
-    private Uri m_uri;
     // ダイアログが生成された時に呼ばれるメソッド ※必須
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),R.style.MyAlertDialogStyle);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);
 
-        String dialogTag = this.getTag();
-        boolean resultValue = false;
+        TextView textView;
+        // タイトル部分を編集
+        textView = TitleStyle(title);
+        // タイトル部分を設定
+        dialogBuilder.setCustomTitle(textView);
+        // 表示する文章設定
+        dialogBuilder.setMessage("続けて登録しますか？");
 
-                TextView textView = new TextView(getActivity());
-                // タイトル部分を編集
-                textView = TitleStyle(title);
-                // タイトル部分を設定
-                dialogBuilder.setCustomTitle(textView);
-                // 表示する文章設定
-                dialogBuilder.setMessage("続けて登録しますか？");
+        // 登録確認ボタン作成
+        dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
 
-                // 登録確認ボタン作成
-                dialogBuilder.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                boolean resultValue = true;
+                // 選択結果をDataRegistDetailActivityへ渡す
+                DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
+                dataRegistDetailActivity.continueProcess(resultValue);
+            }
+        });
 
-                        boolean resultValue = true;
-                        // DataRegistDetailActivityのインスタンスを取得
-                        DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                        dataRegistDetailActivity.continueProcess(resultValue);
-                    }
-                });
+        // NGボタン作成
+        dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
 
-                // NGボタン作成
-                dialogBuilder.setNegativeButton("いいえ", new DialogInterface.OnClickListener(){
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean resultValue = false;
-                        // DataRegistDetailActivityのインスタンスを取得
-                        DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
-                        dataRegistDetailActivity.continueProcess(resultValue);
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean resultValue = false;
+                // 選択結果をDataRegistDetailActivityへ渡す
+                DataRegistDetailActivity dataRegistDetailActivity = (DataRegistDetailActivity) getActivity();
+                dataRegistDetailActivity.continueProcess(resultValue);
+            }
+        });
 
 
         // dialogBulderを返す
         return dialogBuilder.create();
     }
 
-    private TextView TitleStyle(String titleText){
+    private TextView TitleStyle(String titleText) {
         // タイトル部分のTextView
         TextView textView = new TextView(getActivity());
         // タイトルの文字色
