@@ -29,11 +29,13 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             // ジャンル一覧画面へ遷移する
             case R.id.bGenreList:
+            case R.id.imageButton:
                 intent = new Intent (this, GenreListActivity.class);
                 startActivity(intent);
                 break;
             // 新規登録画面に遷移する
             case R.id.bNewCreate:
+            case R.id.imageButton2:
                 intent = new Intent (this, DataRegistDetailActivity.class);
                 intent.putExtra("mode", common.MODE_REGIST);
                 startActivity(intent);

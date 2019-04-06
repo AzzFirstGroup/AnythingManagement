@@ -178,6 +178,7 @@ public class DataListActivity extends AppCompatActivity {
         // データ一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList4) {
             Intent intent = new Intent(this, DataListActivity.class);
+            finish();
             startActivity(intent);
         }
 

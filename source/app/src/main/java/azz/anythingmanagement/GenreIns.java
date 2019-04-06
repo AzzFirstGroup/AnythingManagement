@@ -268,6 +268,7 @@ public class GenreIns extends AppCompatActivity {
         // ジャンル作成に遷移(メニューボタン)
         if (id == R.id.action_menuList2) {
             Intent intent = new Intent (this, GenreIns.class);
+            finish();
             startActivity(intent);
         }
 

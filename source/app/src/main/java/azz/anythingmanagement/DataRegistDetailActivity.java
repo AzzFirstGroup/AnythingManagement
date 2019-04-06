@@ -434,9 +434,31 @@ public class DataRegistDetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // ジャンル一覧に遷移(メニューボタン)
         if (id == R.id.action_menuList1) {
-            return true;
+            Intent intent = new Intent (this, GenreListActivity.class);
+            startActivity(intent);
+        }
+
+        // ジャンル作成に遷移(メニューボタン)
+        if (id == R.id.action_menuList2) {
+            Intent intent = new Intent (this, GenreIns.class);
+            finish();
+            startActivity(intent);
+        }
+
+        // 新規作成に遷移(メニューボタン)
+        if (id == R.id.action_menuList3) {
+            Intent intent = new Intent (this, DataRegistDetailActivity.class);
+            intent.putExtra("mode", common.MODE_REGIST);
+            startActivity(intent);
+        }
+
+        // データ一覧に遷移(メニューボタン)
+        if (id == R.id.action_menuList4) {
+            Intent intent = new Intent (this, DataListActivity.class);
+            finish();
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
