@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,13 +65,17 @@ public class GenreIns extends AppCompatActivity {
                 text = et.getText().toString();
                 colorlist = tv.getTextColors();
 
-                // テキストに何も記載が無かったら登録しない
+                // テキストに何も記載が無かったら登録せず注意喚起する
                 if(text.isEmpty()) {
-                    return;
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context,"ジャンルを入力してください",Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 650);
+                    toast.show();
+                } else {
+                    // 登録ダイアログ表示
+                    RegistDialog dialog = new RegistDialog();
+                    dialog.show(getSupportFragmentManager(), "DetailRegist");
                 }
-                // 登録ダイアログ表示
-                RegistDialog dialog = new RegistDialog();
-                dialog.show(getSupportFragmentManager(),"DetailRegist");
 
 //                int colordate = colorlist.getDefaultColor();
 //                String str = Integer.toHexString(colordate);
