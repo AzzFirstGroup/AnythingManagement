@@ -65,7 +65,8 @@ public class DataListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         intentGenreName = intent.getStringExtra("genre");
         if (intentGenreName == null) {
-            dataGenreNameTextView.setText("ジャンル未選択");
+            //dataGenreNameTextView.setText("ジャンル未選択");
+            dataGenreNameTextView.setText("すべて");
         } else {
             dataGenreNameTextView.setText(this.intentGenreName);
         }
