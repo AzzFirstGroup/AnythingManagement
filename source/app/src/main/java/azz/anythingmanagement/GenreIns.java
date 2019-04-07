@@ -292,16 +292,4 @@ public class GenreIns extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    boolean a = false;
-    public void setResultView(boolean resultValue) {
-        Context context = getApplicationContext();
-        a = resultValue;
-        if (a) {
-            Toast toast = Toast.makeText(context, "登録します。", Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-            //何もしない
-        }
-    }
 }
