@@ -43,7 +43,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/genrelist_background"
-            android:text="@string/unsetName"
+            android:text="@string/allName"
             android:textSize="15sp"
             app:layout_column="0"
             app:layout_constraintBottom_toBottomOf="parent"

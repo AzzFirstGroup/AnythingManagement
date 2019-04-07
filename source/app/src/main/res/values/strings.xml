@@ -24,4 +24,5 @@
     <string name="dateName">"yyyy/MM/dd"</string>
     <string name="memoName">"メモ"</string>
     <string name="tempregistName">"登録"</string>
+    <string name="allName">"すべて"</string>
 </resources>

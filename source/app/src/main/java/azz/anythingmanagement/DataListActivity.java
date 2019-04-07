@@ -65,7 +65,7 @@ public class DataListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         intentGenreName = intent.getStringExtra("genre");
         if (intentGenreName == null) {
-            dataGenreNameTextView.setText("ジャンル未選択");
+            dataGenreNameTextView.setText("すべて");
         } else {
             dataGenreNameTextView.setText(this.intentGenreName);
         }
@@ -83,7 +83,6 @@ public class DataListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // DataListActivity.this.setTitle(String.valueOf(position) + "番目がクリックされました。");
                 Log.i("onItemClickNo.", position + " / " + regDataMapList.get(position).get("dataGenre") + " / " + regDataMapList.get(position).get("dataTitle"));
                 // 詳細画面移動処理
                 String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
