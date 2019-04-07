@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -146,7 +147,10 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
             }
         }else{
-            return;
+            Context context = getApplicationContext();
+            Toast toast = Toast.makeText(context,"ジャンルは最大8つまで登録可能です。",Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 650);
+            toast.show();
         }
     }
 
