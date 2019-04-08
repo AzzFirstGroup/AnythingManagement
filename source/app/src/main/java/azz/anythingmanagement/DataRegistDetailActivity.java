@@ -1,26 +1,20 @@
 package azz.anythingmanagement;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +26,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,7 +65,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set layout
+
         setContentView(R.layout.data_regist_detail);
         context = super.getApplicationContext();
         contextThis = this;
@@ -180,7 +172,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
             }
         });
 
-        // （テスト用）登録ボタン押下時の処理
+        // 登録ボタン押下時の処理
         Button registButton = (Button)findViewById(R.id.torokuButton);
         registButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,10 +304,7 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                 if(permissionCheckCamera != PackageManager.PERMISSION_GRANTED || permissionCheckReadStrage != PackageManager.PERMISSION_GRANTED){
                     final int REQUEST_CODE = 1;
                     ActivityCompat.requestPermissions(DataRegistDetailActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_CODE);
-                    // カメラ使用と外部ストレージ使用のパーミッションが許可された場合
-                    if(permissionCameraResult && permissionReadDataResult){
-                        showGallery();
-                    }
+
                 }else{
                     showGallery();
                 }
@@ -497,6 +486,10 @@ public class DataRegistDetailActivity extends AppCompatActivity {
                         break;
                 }
             }
+        }
+        // カメラ使用と外部ストレージ使用のパーミッションが許可された場合
+        if(permissionCameraResult && permissionReadDataResult){
+            showGallery();
         }
     }
     boolean dialogResult = false; // Dialogから取得したboolean用の変数
