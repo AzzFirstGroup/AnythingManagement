@@ -83,7 +83,7 @@ public class GenreIns extends AppCompatActivity {
         // カラー選択
         // デフォルトは白
 
-        // 赤色選択
+        // カラーボタン１
         genreColor1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +95,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // 青色選択
+        // カラーボタン２
         genreColor2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +107,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // 黄色選択
+        // カラーボタン３
         genreColor3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +119,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // 緑色選択
+        // カラーボタン４
         genreColor4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +131,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // 水色選択
+        // カラーボタン５
         genreColor5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +143,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // 紫色選択
+        // カラーボタン６
         genreColor6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // ヤマブキ色選択
+        // カラーボタン７
         genreColor7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +167,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // 空色選択
+        // カラーボタン８
         genreColor8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +179,7 @@ public class GenreIns extends AppCompatActivity {
             }
         });
 
-        // ﾊﾞｲｵﾚｯﾄ色選択
+        // カラーボタン９
         genreColor9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
