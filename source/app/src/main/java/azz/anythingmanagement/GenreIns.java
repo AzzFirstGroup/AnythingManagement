@@ -44,15 +44,15 @@ public class GenreIns extends AppCompatActivity {
         tv.setTextColor(Color.WHITE);
         intent = new Intent(this, GenreListActivity.class);
         final Button bt = findViewById(R.id.button);
-        final Button red = findViewById(R.id.ButtonR);
-        final Button blue = findViewById(R.id.ButtonB);
-        final Button yello = findViewById(R.id.ButtonY);
-        final Button green = findViewById(R.id.ButtonG);
-        final Button mizblue = findViewById(R.id.ButtonMB);
-        final Button puple = findViewById(R.id.ButtonPl);
-        final Button yamabuki = findViewById(R.id.ButtonYB);
-        final Button skyblue = findViewById(R.id.ButtonSBL);
-        final Button vaiolet = findViewById(R.id.ButtonVA);
+        final Button genreColor1 = findViewById(R.id.ButtonGenreColor1);
+        final Button genreColor2 = findViewById(R.id.ButtonGenreColor2);
+        final Button genreColor3 = findViewById(R.id.ButtonGenreColor3);
+        final Button genreColor4 = findViewById(R.id.ButtonGenreColor4);
+        final Button genreColor5 = findViewById(R.id.ButtonGenreColor5);
+        final Button genreColor6 = findViewById(R.id.ButtonGenreColor6);
+        final Button genreColor7 = findViewById(R.id.ButtonGenreColor7);
+        final Button genreColor8 = findViewById(R.id.ButtonGenreColor8);
+        final Button genreColor9 = findViewById(R.id.ButtonGenreColor9);
 
         // テキストボックスの背景を白くする
         et.setBackgroundColor(Color.WHITE);
@@ -84,51 +84,59 @@ public class GenreIns extends AppCompatActivity {
         // デフォルトは白
 
         // 赤色選択
-        red.setOnClickListener(new View.OnClickListener() {
+        genreColor1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.RED);
-                tv.setTextColor(Color.RED);
-                tv.setBackgroundColor(Color.RED);
+                Resources res = getResources();
+                int color_code = res.getColor(R.color.genreColor1);
+                v.setBackgroundColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
         // 青色選択
-        blue.setOnClickListener(new View.OnClickListener() {
+        genreColor2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.BLUE);
-                tv.setTextColor(Color.BLUE);
-                tv.setBackgroundColor(Color.BLUE);
+                Resources res = getResources();
+                int color_code = res.getColor(R.color.genreColor2);
+                v.setBackgroundColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
         // 黄色選択
-        yello.setOnClickListener(new View.OnClickListener() {
+        genreColor3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.YELLOW);
-                tv.setTextColor(Color.YELLOW);
-                tv.setBackgroundColor(Color.YELLOW);
+                Resources res = getResources();
+                int color_code = res.getColor(R.color.genreColor3);
+                v.setBackgroundColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
         // 緑色選択
-        green.setOnClickListener(new View.OnClickListener() {
+        genreColor4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.GREEN);
-                tv.setTextColor(Color.GREEN);
-                tv.setBackgroundColor(Color.GREEN);
+                Resources res = getResources();
+                int color_code = res.getColor(R.color.genreColor4);
+                v.setBackgroundColor(color_code);
+                tv.setTextColor(color_code);
+                tv.setBackgroundColor(color_code);
             }
         });
 
         // 水色選択
-        mizblue.setOnClickListener(new View.OnClickListener() {
+        genreColor5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Resources res = getResources();
-                int color_code = res.getColor(R.color.buttonColormiz);
+                int color_code = res.getColor(R.color.genreColor5);
                 v.setBackgroundColor(color_code);
                 tv.setTextColor(color_code);
                 tv.setBackgroundColor(color_code);
@@ -136,11 +144,11 @@ public class GenreIns extends AppCompatActivity {
         });
 
         // 紫色選択
-        puple.setOnClickListener(new View.OnClickListener() {
+        genreColor6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Resources res = getResources();
-                int color_code = res.getColor(R.color.buttonColorpoplr);
+                int color_code = res.getColor(R.color.genreColor6);
                 v.setBackgroundColor(color_code);
                 tv.setTextColor(color_code);
                 tv.setBackgroundColor(color_code);
@@ -148,11 +156,11 @@ public class GenreIns extends AppCompatActivity {
         });
 
         // ヤマブキ色選択
-        yamabuki.setOnClickListener(new View.OnClickListener() {
+        genreColor7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Resources res = getResources();
-                int color_code = res.getColor(R.color.buttonColorgold);
+                int color_code = res.getColor(R.color.genreColor7);
                 v.setBackgroundColor(color_code);
                 tv.setTextColor(color_code);
                 tv.setBackgroundColor(color_code);
@@ -160,11 +168,11 @@ public class GenreIns extends AppCompatActivity {
         });
 
         // 空色選択
-        skyblue.setOnClickListener(new View.OnClickListener() {
+        genreColor8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Resources res = getResources();
-                int color_code = res.getColor(R.color.buttonColorskyblue);
+                int color_code = res.getColor(R.color.genreColor8);
                 v.setBackgroundColor(color_code);
                 tv.setTextColor(color_code);
                 tv.setBackgroundColor(color_code);
@@ -172,11 +180,11 @@ public class GenreIns extends AppCompatActivity {
         });
 
         // ﾊﾞｲｵﾚｯﾄ色選択
-        vaiolet.setOnClickListener(new View.OnClickListener() {
+        genreColor9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Resources res = getResources();
-                int color_code = res.getColor(R.color.buttonColorviolet);
+                int color_code = res.getColor(R.color.genreColor9);
                 v.setBackgroundColor(color_code);
                 tv.setTextColor(color_code);
                 tv.setBackgroundColor(color_code);

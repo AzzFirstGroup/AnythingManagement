@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ButtonSBL"
+        app:layout_constraintTop_toBottomOf="@+id/ButtonGenreColor8"
         app:layout_constraintVertical_bias="0.859" />
 
     <TextView
@@ -69,7 +69,7 @@
         android:ems="40"
         android:inputType="textPersonName"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/ButtonB"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonGenreColor2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,10 +77,10 @@
         app:layout_constraintVertical_bias="0.917" />
 
     <Button
-        android:id="@+id/ButtonR"
+        android:id="@+id/ButtonGenreColor1"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#ff0000"
+        android:background="#ffd6d6"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
@@ -90,10 +90,10 @@
         app:layout_constraintVertical_bias="0.351" />
 
     <Button
-        android:id="@+id/ButtonB"
+        android:id="@+id/ButtonGenreColor2"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#0000FF"
+        android:background="#ffb2d8"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
@@ -103,10 +103,10 @@
         app:layout_constraintVertical_bias="0.35" />
 
     <Button
-        android:id="@+id/ButtonG"
+        android:id="@+id/ButtonGenreColor3"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#00FF00"
+        android:background="#ffb2ff"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.694"
@@ -117,10 +117,10 @@
         tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/ButtonY"
+        android:id="@+id/ButtonGenreColor4"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#FFFF00"
+        android:background="#b2b2ff"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
@@ -131,10 +131,10 @@
         tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/ButtonMB"
+        android:id="@+id/ButtonGenreColor5"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#00FFFF"
+        android:background="#b2d8ff"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -145,10 +145,10 @@
         tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/ButtonPl"
+        android:id="@+id/ButtonGenreColor6"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#FF00FF"
+        android:background="#b2ffff"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.693"
@@ -159,10 +159,10 @@
         tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/ButtonYB"
+        android:id="@+id/ButtonGenreColor7"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#FFBF00"
+        android:background="#b2ffb2"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
@@ -173,10 +173,10 @@
         tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/ButtonSBL"
+        android:id="@+id/ButtonGenreColor8"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#0080FF"
+        android:background="#ffffb2"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -187,10 +187,10 @@
         tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/ButtonVA"
+        android:id="@+id/ButtonGenreColor9"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:background="#FF0080"
+        android:background="#ffc489"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.693"

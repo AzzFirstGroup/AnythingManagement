@@ -3,12 +3,17 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="buttonColormiz">#00FFFF</color>
-    <color name="buttonColorpoplr">#FF00FF</color>
-    <color name="buttonColorgold">#FFBF00</color>
-    <color name="buttonColorskyblue">#0080FF</color>
-    <color name="buttonColorviolet">#FF0080</color>
     <color name="white">#FFFFFF</color>
     <color name="MediumSpringGreen">#00FA9A</color>
+
+    <color name="genreColor1">#ffd6d6</color>
+    <color name="genreColor2">#ffb2d8</color>
+    <color name="genreColor3">#ffb2ff</color>
+    <color name="genreColor4">#b2b2ff</color>
+    <color name="genreColor5">#b2d8ff</color>
+    <color name="genreColor6">#b2ffff</color>
+    <color name="genreColor7">#b2ffb2</color>
+    <color name="genreColor8">#ffffb2</color>
+    <color name="genreColor9">#ffc489</color>
 
 </resources>
