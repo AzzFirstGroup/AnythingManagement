@@ -265,11 +265,11 @@ public class DataListActivity extends AppCompatActivity {
                     // 更新処理
                     String dataTitle = regDataMapList.get(position).get("dataTitle").toString();
                     String dataGenreName = regDataMapList.get(position).get("dataGenre").toString();
-                    RegistData updData = new RegistData();
+                    data = new Data();
+                    RegistData updData = data.getRegistData(context,dataTitle,dataGenreName);
                     updData.setGenre(dataGenreName);
                     updData.setTitle(dataTitle);
                     updData.setTorokuFlg(!isChecked ? "1" : "0");
-                    data = new Data();
                     data.registRegistData(updData, context);
                 }
             });
