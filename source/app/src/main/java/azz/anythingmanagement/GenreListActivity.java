@@ -148,7 +148,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             }
         }else{
             Context context = getApplicationContext();
-            Toast toast = Toast.makeText(context,"ジャンルは最大8つまで登録可能です。",Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(context,"　　　　　　　ジャンルは最大8つまで登録可能です。\r\n 新たに追加したい場合は長押しで削除してから登録してください。",Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 650);
             toast.show();
         }
