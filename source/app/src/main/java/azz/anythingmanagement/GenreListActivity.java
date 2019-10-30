@@ -65,7 +65,7 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             }
 
             // ボタンの初期設定
-            Button btn;
+            final Button btn;
             btn = findViewById(R.id.genruList_botton + y);
 
             // ボタンのレイアウト関連の初期設定
