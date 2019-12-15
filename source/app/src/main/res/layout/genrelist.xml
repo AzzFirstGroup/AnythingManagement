@@ -38,10 +38,10 @@
 
         <Button
             android:id="@+id/genruList_botton"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text="@string/allName"
             android:textSize="15sp"
@@ -54,8 +54,8 @@
 
         <Button
             android:id="@+id/genruList_botton1"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""
@@ -70,8 +70,8 @@
 
         <Button
             android:id="@+id/genruList_botton2"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""
@@ -86,8 +86,8 @@
 
         <Button
             android:id="@+id/genruList_botton3"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/genrelist_background"
@@ -103,8 +103,8 @@
 
         <Button
             android:id="@+id/genruList_botton4"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""
@@ -119,8 +119,8 @@
 
         <Button
             android:id="@+id/genruList_botton5"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""
@@ -135,8 +135,8 @@
 
         <Button
             android:id="@+id/genruList_botton6"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""
@@ -151,8 +151,8 @@
 
         <Button
             android:id="@+id/genruList_botton7"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""
@@ -167,8 +167,8 @@
 
         <Button
             android:id="@+id/genruList_botton8"
-            android:layout_width="185dp"
-            android:layout_height="185dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/genrelist_background"
             android:text=""

@@ -4,14 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -55,6 +58,11 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
+        Button btnAll;
+        btnAll = findViewById(R.id.genruList_botton);
+        btnAll.setWidth(getButtonSize());
+        btnAll.setHeight(getButtonSize());
+
         // 動的にボタンを生成しているように設定する
         for (int i = 0; i < genreList.size(); i++) {
 
@@ -93,6 +101,8 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
 
             // ボタンのレイアウトを設定
             btn.setBackground(drawable);
+            btn.setWidth(getButtonSize());
+            btn.setHeight(getButtonSize());
 
             // 各ボタン押下時の挙動設定
             btn.setOnClickListener(new View.OnClickListener() {
@@ -232,5 +242,21 @@ public class GenreListActivity extends AppCompatActivity implements View.OnClick
             return true;
         }
         return false;
+    }
+
+    /**
+     * 画面の横幅からボタンの横幅を取得
+     *
+     * @return result ジャンルボタンの横幅
+     */
+    private int getButtonSize(){
+        int result = 0;
+        WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+        Display disp = wm.getDefaultDisplay();
+        Point size = new Point();
+        disp.getSize(size);
+        result = size.x / 4 ;
+
+        return result;
     }
 }
